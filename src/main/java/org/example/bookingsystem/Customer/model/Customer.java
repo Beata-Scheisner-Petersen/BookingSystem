@@ -7,6 +7,7 @@ import jakarta.validation.constraints.*;
 @Table(name = "customer")
 public class Customer {
     @Id
+    @Column(name = "id", unique = true)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
