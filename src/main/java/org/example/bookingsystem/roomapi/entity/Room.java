@@ -25,9 +25,7 @@ public class Room {
         this.roomSize = roomSize;
     }
 
-    public Room() {
-
-    }
+    public Room() {}
 
     public Long getId() {
         return id;
