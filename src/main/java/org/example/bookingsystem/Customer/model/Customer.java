@@ -30,6 +30,7 @@ public class Customer {
     @NotBlank(message = "You must enter a password.")
     private String password;
 
+    @Column(name = "phone_number", unique = true)
     private String phoneNumber;
 
     public Customer() {}
