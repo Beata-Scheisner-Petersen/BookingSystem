@@ -22,6 +22,7 @@ public class Customer {
     @Pattern(regexp = "^(\\d{6}|\\d{8})-\\d{4}$", message = "invalid format of identification number.")
     private String identificationNumber;
 
+    @Column(name = "email", unique = true)
     @NotNull(message = "You must enter a email.")
     @Email(message = "Email format is invalid.")
     private String email;
