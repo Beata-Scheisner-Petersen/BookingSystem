@@ -28,10 +28,6 @@ public class Customer {
     private String email;
 
     @NotBlank(message = "You must enter a password.")
-    @Pattern(regexp = ".*[^a-zA-Z0-9].*", message = "Password have to contain a least one special character")
-    @Pattern(regexp = ".*[A-Z].*", message = "Password have to contain a least one uppercase letter")
-    @Pattern(regexp = ".*[a-z].*", message = "Password have to contain a least one lowercase letter")
-    @Pattern(regexp = ".*[0-9].*", message = "Password have to contain a least one number")
     private String password;
 
     private String phoneNumber;
