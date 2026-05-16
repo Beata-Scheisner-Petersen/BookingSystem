@@ -11,19 +11,19 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @NotNull(message = "You must enter a firstname.")
+    @NotBlank(message = "You must enter a firstname.")
     private String firstname;
 
-    @NotNull(message = "You must enter a lastname.")
+    @NotBlank(message = "You must enter a lastname.")
     private String lastname;
 
     @Column(name = "identification_number", unique = true)
-    @NotNull(message = "You must enter an identification number.")
+    @NotBlank(message = "You must enter an identification number.")
     @Pattern(regexp = "^(\\d{6}|\\d{8})-\\d{4}$", message = "invalid format of identification number.")
     private String identificationNumber;
 
     @Column(name = "email", unique = true)
-    @NotNull(message = "You must enter a email.")
+    @NotBlank(message = "You must enter a email.")
     @Email(message = "Email format is invalid.")
     private String email;
 
