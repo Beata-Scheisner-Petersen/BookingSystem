@@ -17,7 +17,7 @@ public class Customer {
     @NotNull(message = "You must enter a lastname.")
     private String lastname;
 
-    @Column(name = "identification_number")
+    @Column(name = "identification_number", unique = true)
     @NotNull(message = "You must enter an identification number.")
     @Pattern(regexp = "^(\\d{6}|\\d{8})-\\d{4}$", message = "invalid format of identification number.")
     private String identificationNumber;
