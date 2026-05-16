@@ -17,17 +17,14 @@ public class RoomController {
     }
 
 
-    @GetMapping("/api/test")
+    @GetMapping("/api/room/save")
     public ResponseEntity<?> roomSet(
             @RequestParam int number,
             @RequestParam int size) {
-
 
         if (!roomService.saveRoom(number, size)) {
             return ResponseEntity.badRequest().body("Something went wrong");
         }
         return ResponseEntity.ok().body("Room saved successfully");
-
-
     }
 }
