@@ -2,7 +2,7 @@ package org.example.bookingsystem.customer.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
-public record CreateCustomer(
+public record CreateCustomerRequest(
         @NotNull(message = "You must enter a firstname.")
         String firstname,
 
