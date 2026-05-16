@@ -1,4 +1,4 @@
-package org.example.bookingsystem.bookingapi.entity;
+package org.example.bookingsystem.roomapi.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Positive;
