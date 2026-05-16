@@ -1,4 +1,4 @@
-package org.example.bookingsystem.Customer.model;
+package org.example.bookingsystem.customer.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
