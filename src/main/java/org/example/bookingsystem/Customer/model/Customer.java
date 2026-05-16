@@ -2,7 +2,7 @@ package org.example.bookingsystem.customer.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
-@SuppressWarnings("JpaDataSourceORMInspection")
+
 @Entity
 @Table(name = "customer")
 public class Customer {
