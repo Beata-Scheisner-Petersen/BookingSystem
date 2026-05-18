@@ -11,31 +11,33 @@ public class Reservation {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne (optional = false)
     @JoinColumn (name="customer_id", updatable = false)
     private Customer customer;
 
-    @ManyToOne
+    @ManyToOne (optional = false)
     @JoinColumn(name = "room_id", updatable = false)
     private Room room;
 
-    private boolean isReserved;
     private boolean extraBed;
     private LocalDate checkIn;
     private LocalDate checkOut;
     private double totalCost;
 
+    @Enumerated (EnumType.STRING)
+    private ReservationStatus status;
+
     public Reservation (){
     }
 
-    public Reservation(Customer customer, Room room, boolean isReserved, boolean extraBed, LocalDate checkIn, LocalDate checkOut, double totalCost) {
+    public Reservation(Customer customer, Room room, boolean extraBed, LocalDate checkIn, LocalDate checkOut, double totalCost) {
         this.customer = customer;
         this.room = room;
-        this.isReserved = isReserved;
         this.extraBed = extraBed;
         this.checkIn = checkIn;
         this.checkOut = checkOut;
         this.totalCost = totalCost;
+        this.status = ReservationStatus.ACTIVE;
     }
 
     public Long getId() {
@@ -60,14 +62,6 @@ public class Reservation {
 
     public void setRoom(Room room) {
         this.room = room;
-    }
-
-    public boolean isReserved() {
-        return isReserved;
-    }
-
-    public void setReserved(boolean reserved) {
-        isReserved = reserved;
     }
 
     public boolean isExtraBed() {

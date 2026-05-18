@@ -12,9 +12,6 @@ public class CreateReservationRequest {
     @NotNull (message = "Customer Id is required")
     private Long roomId;
 
-    @NotNull (message = "Reservation status is required")
-    private Boolean isReserved;
-
     @NotNull(message = "Please specify whether an extra bed is needed" )
     private Boolean extraBed;
 
@@ -30,5 +27,29 @@ public class CreateReservationRequest {
     private Double totalCost;
 
     public CreateReservationRequest() {
+    }
+
+    public Long getCustomerId() {
+        return customerId;
+    }
+
+    public Long getRoomId() {
+        return roomId;
+    }
+
+    public Boolean getExtraBed() {
+        return extraBed;
+    }
+
+    public LocalDate getCheckIn() {
+        return checkIn;
+    }
+
+    public LocalDate getCheckOut() {
+        return checkOut;
+    }
+
+    public Double getTotalCost() {
+        return totalCost;
     }
 }
