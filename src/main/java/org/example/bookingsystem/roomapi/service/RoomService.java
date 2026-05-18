@@ -63,4 +63,13 @@ public class RoomService {
         return true;
 
     }
+
+    public boolean deleteRoom(Long id) {
+        Optional<Room> optionalRoom = repository.findById(id);
+        if (optionalRoom.isEmpty()) {
+            return false;
+        }
+        repository.deleteById(id);
+        return true;
+    }
 }

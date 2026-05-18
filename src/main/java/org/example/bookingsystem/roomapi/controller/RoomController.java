@@ -56,4 +56,12 @@ public class RoomController {
         }
         return ResponseEntity.ok().body("Room updated successfully");
     }
+
+    @DeleteMapping("api/room/delete/{id}")
+    public ResponseEntity<?> roomDelete(@PathVariable Long id) {
+        if (!service.deleteRoom(id)) {
+            return ResponseEntity.badRequest().body("Room could not be Deleted/Found");
+        }
+        return ResponseEntity.ok().body("Room deleted successfully");
+    }
 }
