@@ -23,8 +23,13 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(errors);
     }
 
-//    @ExceptionHandler(UsernameAlreadyExistsException.class)
-//    public ResponseEntity<String> handleUsernameExists(UsernameAlreadyExistsException e) {
-//        return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
-//    }
+    @ExceptionHandler(CustomerExistException.class)
+    public ResponseEntity<String> handleUsernameExists(CustomerExistException e) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+    }
+
+    @ExceptionHandler(WrongEmailOrPasswordException.class)
+    public ResponseEntity<String> handleWrongEmailOrPassword(WrongEmailOrPasswordException e) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+    }
 }
