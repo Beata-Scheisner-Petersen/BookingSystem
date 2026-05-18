@@ -20,6 +20,7 @@ public class CustomerService {
 
     @Transactional
     public Customer createNewCustomer(CreateCustomerRequest request, String email) {
+
        if (repository.existsByEmail(email)) {
            throw new CustomerExistException("Customer already exist");
        }
