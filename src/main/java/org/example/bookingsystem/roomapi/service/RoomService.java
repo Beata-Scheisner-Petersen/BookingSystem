@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -28,6 +29,10 @@ public class RoomService {
 
         //Pageable pageable = PageRequest.of(page, amount);
         //return repository.findAll(pageable).getContent();
+    }
+
+    public Room getRoomById(long id) {
+        return repository.findById(id).orElse(null);
     }
 
     public boolean addRoom(int roomNumber, int roomSize, BigDecimal roomPrice) {

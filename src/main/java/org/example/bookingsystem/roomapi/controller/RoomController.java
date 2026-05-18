@@ -20,7 +20,7 @@ public class RoomController {
     @GetMapping("/api/room")
     public ResponseEntity<?>  getRooms(){
         if (service.getAllRooms().isEmpty()) {
-            return ResponseEntity.status(400).body("No rooms found");
+            return ResponseEntity.status(404).body("No rooms found");
         }
         return ResponseEntity.ok(service.getAllRooms());
     }
@@ -37,6 +37,14 @@ public class RoomController {
             return ResponseEntity.badRequest().body("Something went wrong");
         }
         return ResponseEntity.ok().body("Room saved successfully");
+    }
+
+    @GetMapping("/api/room/{id}")
+    public ResponseEntity<?> getRoomById(@PathVariable Integer id) {
+        if(service.getRoomById(id) == null) {
+            return ResponseEntity.status(404).body("Room not found");
+        }
+        return ResponseEntity.ok(service.getRoomById(id));
     }
 
     @PostMapping("/api/room/update/{id}")
