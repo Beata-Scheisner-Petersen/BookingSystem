@@ -1,14 +1,12 @@
 package org.example.bookingsystem.customer.service;
 
 import org.example.bookingsystem.customer.model.*;
+import org.example.bookingsystem.customer.model.dto.*;
 import org.example.bookingsystem.customer.repository.*;
 import org.example.bookingsystem.exceptionhandler.customexeptions.*;
 import org.example.bookingsystem.security.*;
-import org.hibernate.service.spi.*;
 import org.springframework.stereotype.*;
 import org.springframework.transaction.annotation.*;
-import org.springframework.web.*;
-import org.springframework.web.bind.*;
 
 @Service
 public class CustomerService {
