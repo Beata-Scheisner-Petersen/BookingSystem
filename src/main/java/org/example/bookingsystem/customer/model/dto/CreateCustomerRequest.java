@@ -1,4 +1,4 @@
-package org.example.bookingsystem.customer.model;
+package org.example.bookingsystem.customer.model.dto;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
@@ -24,5 +24,8 @@ public record CreateCustomerRequest(
         @Pattern(regexp = ".*[A-Z].*", message = "Password have to contain a least one uppercase letter")
         @Pattern(regexp = ".*[a-z].*", message = "Password have to contain a least one lowercase letter")
         @Pattern(regexp = ".*[0-9].*", message = "Password have to contain a least one number")
-        String password) {
+        String password,
+
+        @Column(name = "phone_number", unique = true)
+        String phoneNumber){
 }
