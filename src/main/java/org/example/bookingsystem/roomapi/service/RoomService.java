@@ -3,9 +3,13 @@ package org.example.bookingsystem.roomapi.service;
 import org.example.bookingsystem.roomapi.dto.UpdateRoomDto;
 import org.example.bookingsystem.roomapi.entity.Room;
 import org.example.bookingsystem.roomapi.repository.RoomRepository;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -15,6 +19,15 @@ public class RoomService {
 
     public RoomService(RoomRepository repository) {
         this.repository = repository;
+    }
+
+    //Rooms are sorted ascending by their roomNumber
+    public List<Room> getAllRooms() {
+
+        return repository.findAll(Sort.by("roomNumber").ascending());
+
+        //Pageable pageable = PageRequest.of(page, amount);
+        //return repository.findAll(pageable).getContent();
     }
 
     public boolean addRoom(int roomNumber, int roomSize, BigDecimal roomPrice) {
