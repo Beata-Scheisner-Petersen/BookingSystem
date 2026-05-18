@@ -1,0 +1,40 @@
+package org.example.bookingsystem.roomapi.dto;
+
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
+
+import java.math.BigDecimal;
+
+public class AddNewRoomDto {
+
+    @Positive(message = "Room number cant be 0 or below")
+    private int roomNumber;
+
+    @Positive(message = "Room size can't be 0 or below")
+    private int roomSize;
+
+    @PositiveOrZero(message = "Price can't be negative")
+    private BigDecimal roomPrice;
+
+    public AddNewRoomDto() {
+    }
+
+    public int getRoomNumber() {
+        return roomNumber;
+    }
+    public void setRoomNumber(int roomNumber) {
+        this.roomNumber = roomNumber;
+    }
+    public int getRoomSize() {
+        return roomSize;
+    }
+    public void setRoomSize(int roomSize) {
+        this.roomSize = roomSize;
+    }
+    public BigDecimal getRoomPrice() {
+        return roomPrice;
+    }
+    public void setRoomPrice(BigDecimal roomPrice) {
+        this.roomPrice = roomPrice;
+    }
+}
