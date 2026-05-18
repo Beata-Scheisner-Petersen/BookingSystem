@@ -33,4 +33,32 @@ public class CustomerService {
        return repository.save(customer);
     }
 
+    public Customer loginCustomer(String email, String password) {
+        Customer customer = repository.findByEmail(email).orElseThrow(() -> new WrongEmailOrPasswordException("Wrong email or password"));
+
+        if (!passwordService.matches(password, customer.getPassword())) {
+            throw new WrongEmailOrPasswordException("Wrong email or password");
+        }
+
+        return customer;
+    }
+
+    @Transactional
+    public void updateCustomerInfo(Long id, CustomerUpdateRequest request) {
+        Customer customer = repository.findById(id).orElseThrow(() -> new RuntimeException("Customer not found"));
+
+        if (request.email() != null) {
+            customer.setEmail(request.email());
+        }
+
+        if (request.phoneNumber() != null) {
+            customer.setPhoneNumber(request.phoneNumber());
+        }
+
+        if (request.password() != null) {
+            customer.setPassword(passwordService.hash(request.password()));
+        }
+
+        repository.save(customer);
+    }
 }
