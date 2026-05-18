@@ -28,7 +28,8 @@ public class CustomerService {
                request.firstname(),
                request.lastname(),
                request.identificationNumber(),
-               request.email(), passwordService.hash(request.password()));
+               request.email(),
+               passwordService.hash(request.password()));
        return repository.save(customer);
     }
 
