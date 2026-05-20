@@ -1,4 +1,4 @@
-package org.example.bookingsystem.security;
+package org.example.bookingsystem.security.jwt;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.*;
