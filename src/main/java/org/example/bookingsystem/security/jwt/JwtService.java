@@ -11,7 +11,7 @@ import java.util.*;
 public class JwtService {
     private final Key key;
 
-    public JwtService(@Value("$jwt.secret") String secret) {
+    public JwtService(@Value("${jwt.secret}") String secret) {
         this.key = Keys.hmacShaKeyFor(secret.getBytes());
     }
 
