@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("api/customers")
 public class CustomerController {
-    private final CustomerService service;
+    private final CustomerService customerService;
+    private final JwtService jwtService;
 
     public CustomerController(CustomerService service) {
         this.service = service;
