@@ -1,6 +1,7 @@
 package org.example.bookingsystem.customer.model.dto;
 
 import jakarta.validation.constraints.*;
+
 public record CreateCustomerRequest(
         @NotBlank(message = "You must enter a firstname.")
         String firstname,
