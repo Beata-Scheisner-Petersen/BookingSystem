@@ -9,12 +9,10 @@ public record CreateCustomerRequest(
         @NotBlank(message = "You must enter a lastname.")
         String lastname,
 
-        @Column(name = "identification_number", unique = true)
         @NotBlank(message = "You must enter an identification number.")
         @Pattern(regexp = "^(\\d{6}|\\d{8})-\\d{4}$", message = "invalid format of identification number.")
         String identificationNumber,
 
-        @Column(name = "email", unique = true)
         @NotBlank(message = "You must enter a email.")
         @Email(message = "Email format is invalid.")
         String email,
