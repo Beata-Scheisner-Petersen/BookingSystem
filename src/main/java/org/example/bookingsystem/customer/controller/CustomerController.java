@@ -21,7 +21,7 @@ public class CustomerController {
 
     @PostMapping
     public ResponseEntity<Customer> createCustomer(@Valid @RequestBody CreateCustomerRequest customer) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.createNewCustomer(customer, customer.email()));
+        return ResponseEntity.status(HttpStatus.CREATED).body(customerService.createNewCustomer(customer, customer.email()));
     }
 
     @PostMapping("/login")
