@@ -1,6 +1,5 @@
 package org.example.bookingsystem.customer.controller;
 
-import jakarta.servlet.http.*;
 import jakarta.validation.*;
 import org.example.bookingsystem.customer.model.*;
 import org.example.bookingsystem.customer.model.dto.*;
