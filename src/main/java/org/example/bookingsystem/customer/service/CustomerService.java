@@ -4,7 +4,7 @@ import org.example.bookingsystem.customer.model.*;
 import org.example.bookingsystem.customer.model.dto.*;
 import org.example.bookingsystem.customer.repository.*;
 import org.example.bookingsystem.exceptionhandler.customexeptions.*;
-import org.example.bookingsystem.security.*;
+import org.example.bookingsystem.security.password.*;
 import org.springframework.stereotype.*;
 import org.springframework.transaction.annotation.*;
 
