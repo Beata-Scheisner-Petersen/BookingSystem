@@ -3,7 +3,7 @@ package org.example.bookingsystem.security.jwt;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.*;
 import org.springframework.beans.factory.annotation.*;
-
+import org.springframework.stereotype.*;
 import java.security.*;
 import java.util.*;
 public class JwtService {
