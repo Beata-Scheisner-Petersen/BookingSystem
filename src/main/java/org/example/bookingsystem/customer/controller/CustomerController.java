@@ -29,7 +29,7 @@ public class CustomerController {
     public ResponseEntity login(@RequestBody CustomerLoginRequest request) {
         Customer customer = customerService.loginCustomer(request.email(), request.password());
         String token = jwtService.generatedToken(customer.getId(), customer.getEmail());
-     
+
         return ResponseEntity.ok(new JwtResponse(token));
     }
 
