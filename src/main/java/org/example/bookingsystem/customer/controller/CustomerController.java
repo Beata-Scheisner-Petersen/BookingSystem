@@ -37,7 +37,7 @@ public class CustomerController {
     public ResponseEntity updateCustomer(
             @RequestHeader("Authorization") String authHeader,
             @RequestBody CustomerUpdateRequest request) {
-        
+
         String token = authHeader.replace("Bearer ", "");
 
         Long id = jwtService.extractCustomerId(token);
