@@ -14,8 +14,9 @@ public class CustomerController {
     private final CustomerService customerService;
     private final JwtService jwtService;
 
-    public CustomerController(CustomerService service) {
-        this.service = service;
+    public CustomerController(CustomerService customerService, JwtService jwtService) {
+        this.customerService = customerService;
+        this.jwtService = jwtService;
     }
 
     @PostMapping
