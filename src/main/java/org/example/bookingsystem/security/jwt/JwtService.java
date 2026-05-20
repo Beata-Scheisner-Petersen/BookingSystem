@@ -19,8 +19,9 @@ public class JwtService {
         return Jwts.builder()
                 .setSubject(CustomerId.toString())
                 .claim("email", email)
-                .setIssuedAt(new Date(System.currentTimeMillis() + 1000 * 60 * 60)) // giltighetstid 1h
-                .signWith(key, SignatureAlgorithm.ES512)
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60))// giltighetstid 1h
+                .signWith(key, SignatureAlgorithm.HS512)
                 .compact();
     }
 
