@@ -68,9 +68,15 @@ public class ReservationService {
         );
     }
 
+    public void findActiveReservationByCustomerId (Long customerId){
+        List <Reservation> reservationWithActiveStatus = reservationRepository.findByCustomer_IdAndStatus(customerId, ReservationStatus.ACTIVE);
+    }
+
     //ToDO:
     //continue develop method validationRoomIsAvailable
-    //total cost method
+    //total cost
+    //visa atriva bookningare
+    //skapa som visar akriva bookningar
 
 
 }
