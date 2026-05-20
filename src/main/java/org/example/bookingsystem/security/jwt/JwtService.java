@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
 import java.security.*;
 import java.util.*;
+
+@Service
 public class JwtService {
     private final Key key;
 
