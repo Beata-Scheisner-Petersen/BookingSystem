@@ -25,10 +25,11 @@ public class CustomerController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody CustomerLoginRequest request, HttpSession session) {
-        Customer customer = service.loginCustomer(request.email(), request.password());
-        session.setAttribute("customerId", customer.getId());
-        return ResponseEntity.ok("Logged in");
+    public ResponseEntity login(@RequestBody CustomerLoginRequest request) {
+        Customer customer = customerService.loginCustomer(request.email(), request.password());
+        String token = jwtService.generatedToken(customer.getId(), customer.getEmail());
+     
+        return ResponseEntity.ok(new JwtResponse(token));
     }
 
     @PatchMapping("/me")
