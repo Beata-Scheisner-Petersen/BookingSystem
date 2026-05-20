@@ -32,7 +32,7 @@ public class Customer {
     private String password;
 
     @Column(name = "phone_number", unique = true)
-    @Pattern(regexp = "^(?:\\+46\\s?7\\d-\\d{7}|07\\d-\\d{7}|\\+46\\d{1,3}-\\d{5,8}|0\\d{1,3}-\\d{5,8})$\n"
+    @Pattern(regexp = "^(?:\\+46\\s?\\d{1,3}-\\d{5,8}|0\\d{1,3}-\\d{5,8})$\n"
             , message = "Phone number to be in phone or mobile format, for example xxx-xxxxxxx.")
     private String phoneNumber;
 

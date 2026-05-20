@@ -24,7 +24,7 @@ public record CreateCustomerRequest(
         @Pattern(regexp = ".*[0-9].*", message = "Password have to contain a least one number")
         String password,
 
-        @Pattern(regexp = "^(?:\\+46\\s?7\\d-\\d{7}|07\\d-\\d{7}|\\+46\\d{1,3}-\\d{5,8}|0\\d{1,3}-\\d{5,8})$\n"
+        @Pattern(regexp = "^(?:\\+46\\s?\\d{1,3}-\\d{5,8}|0\\d{1,3}-\\d{5,8})$\n"
                 , message = "Phone number to be in phone or mobile format, for example xxx-xxxxxxx.")
         String phoneNumber){
 }
