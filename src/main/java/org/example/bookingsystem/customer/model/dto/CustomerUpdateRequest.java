@@ -1,6 +1,7 @@
 package org.example.bookingsystem.customer.model.dto;
 
 import jakarta.validation.constraints.*;
+
 public record CustomerUpdateRequest(
 
         @NotBlank(message = "You must enter a email.")
