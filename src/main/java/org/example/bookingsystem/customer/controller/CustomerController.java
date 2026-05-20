@@ -33,15 +33,19 @@ public class CustomerController {
     }
 
     @PatchMapping("/me")
-    public ResponseEntity updateCustomer(@RequestBody CustomerUpdateRequest request,
-                                         HttpSession session) {
-        Long id = (Long) session.getAttribute("customerId");
+    public ResponseEntity updateCustomer(
+            @RequestHeader("Authorization") String authHeader,
+            @RequestBody CustomerUpdateRequest request) {
+        
+        String token = authHeader.replace("Bearer ", "");
+
+        Long id = jwtService.extractCustomerId(token);
 
         if (id == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login failed");
         }
 
-        service.updateCustomerInfo(id, request);
+        customerService.updateCustomerInfo(id, request);
         return ResponseEntity.noContent().build();
     }
 }
