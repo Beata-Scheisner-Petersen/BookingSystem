@@ -1,6 +1,5 @@
 package org.example.bookingsystem.customer.model.dto;
 
-import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 public record CustomerUpdateRequest(
 
