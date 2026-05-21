@@ -74,12 +74,12 @@ public class ReservationService {
                 request.getCheckIn(),
                 request.getCheckOut(),
                 countTotalPrice(
-                        request.getRoomId(),
+                        room,
                         request.getCheckIn(),
                         request.getCheckOut(),
-                        request.getExtraBed())
+                        request.getExtraBed()),
+                ReservationStatus.ACTIVE
         );
-        reservation.setStatus(ReservationStatus.ACTIVE);
 
         return reservationRepository.save(reservation);
     }
@@ -105,7 +105,7 @@ public class ReservationService {
     }
 
 
-    public BigDecimal countTotalPrice(Long roomId, LocalDate checkIn, LocalDate checkOut, Boolean extraBed) {
+    public BigDecimal countTotalPrice(Room room, LocalDate checkIn, LocalDate checkOut, Boolean extraBed) {
         long days = ChronoUnit.DAYS.between(checkIn, checkOut);
 
         BigDecimal extraBedPricePerDay = BigDecimal.ZERO;
@@ -115,9 +115,9 @@ public class ReservationService {
 
         }
 
-        BigDecimal roomPricePerDay = roomService.getRoomById(roomId).getRoomPrice();
+        BigDecimal roomPricePerDay = room.getRoomPrice();
         //Price for summer -  add 30%
-        BigDecimal extraPriceForHighSeason = BigDecimal.ZERO;
+        BigDecimal extraPriceForHighSeason = BigDecimal.ONE;
         if (checkIn.getMonthValue() >= 6 && checkIn.getMonthValue() <= 8) {
             extraPriceForHighSeason = BigDecimal.valueOf(1.3);
 
@@ -130,11 +130,17 @@ public class ReservationService {
 
     }
 
+    public Reservation cancelReservation(Long reservationId) {
+        Reservation reservation = reservationRepository.findById(reservationId)
+                .orElseThrow(() -> new NotFoundException("Reservation finns inte"));
+        reservation.setStatus(ReservationStatus.CANCELED);
+        return reservationRepository.save(reservation);
+    }
+
 
 }
 
 //ToDO:
 //continue develop method validationRoomIsAvailable
-//total cost
-//visa actrive booknings
-//skapa som visar akriva bookningar
+
+

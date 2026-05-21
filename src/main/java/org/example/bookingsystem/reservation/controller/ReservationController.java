@@ -6,10 +6,7 @@ import org.example.bookingsystem.reservation.model.Reservation;
 import org.example.bookingsystem.reservation.service.ReservationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/reservation")
@@ -21,13 +18,20 @@ public class ReservationController {
     }
 
     @PostMapping
-    public ResponseEntity <Reservation> createReservation (@Valid @RequestBody CreateReservationRequest request){
-      Reservation createReservation =  reservationService.createReservation(request);
+    public ResponseEntity<Reservation> createReservation(@Valid @RequestBody CreateReservationRequest request) {
+        Reservation createReservation = reservationService.createReservation(request);
 
-      return ResponseEntity
-              .status(HttpStatus.CREATED)
-              .body(createReservation);
-  }
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(createReservation);
+    }
+
+    @DeleteMapping("/{reservationId}")
+    public ResponseEntity<Reservation> cancelReservation(@PathVariable Long reservationId) {
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(reservationService.cancelReservation(reservationId));
+    }
 
 
 }
