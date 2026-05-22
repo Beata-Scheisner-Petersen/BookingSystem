@@ -21,16 +21,22 @@ public class CustomerService {
     @Transactional
     public Customer createNewCustomer(CreateCustomerRequest request, String email) {
 
-       if (repository.existsByEmail(email)) {
-           throw new CustomerExistException("Customer already exist");
-       }
-       Customer customer = new Customer(
-               request.firstname(),
-               request.lastname(),
-               request.identificationNumber(),
-               request.email(),
-               passwordService.hash(request.password()));
-       return repository.save(customer);
+        if (repository.existsByEmail(email)) {
+            throw new AlreadyExistException("Email already exist");
+        } else if (repository.existsByIdentificationNumber(request.identificationNumber())) {
+            throw new AlreadyExistException("Identification number already exist in the system");
+        } else if (repository.existsByPhoneNumber(request.phoneNumber())) {
+            throw new AlreadyExistException("Phone number already exist");
+        }
+
+        Customer customer = new Customer(
+                request.firstname(), request.lastname(),
+                request.identificationNumber(),
+                request.email(),
+                passwordService.hash(request.password()),
+                request.phoneNumber());
+
+        return repository.save(customer);
     }
 
     public Customer loginCustomer(String email, String password) {
