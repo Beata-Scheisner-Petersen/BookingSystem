@@ -1,10 +1,8 @@
 package org.example.bookingsystem.reservation.utils;
 
-import org.example.bookingsystem.error.BadRequestException;
-import org.example.bookingsystem.reservation.model.Reservation;
+import org.example.bookingsystem.exceptionhandler.customexeptions.BadRequestException;
 
 import java.time.LocalDate;
-import java.util.List;
 
 public class Validations {
 
