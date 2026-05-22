@@ -32,14 +32,14 @@ public class Reservation {
     public Reservation (){
     }
 
-    public Reservation(Customer customer, Room room, boolean extraBed, LocalDate checkIn, LocalDate checkOut, BigDecimal totalCost) {
+    public Reservation(Customer customer, Room room, boolean extraBed, LocalDate checkIn, LocalDate checkOut, BigDecimal totalCost, ReservationStatus status) {
         this.customer = customer;
         this.room = room;
         this.extraBed = extraBed;
         this.checkIn = checkIn;
         this.checkOut = checkOut;
         this.totalCost = totalCost;
-        this.status = ReservationStatus.ACTIVE;
+        this.status = status;
     }
 
     public Long getId() {
@@ -98,6 +98,11 @@ public class Reservation {
         this.totalCost = totalCost;
     }
 
+    public ReservationStatus getStatus() {
+        return status;
+    }
+
     public void setStatus(ReservationStatus reservationStatus) {
+        this.status = reservationStatus;
     }
 }
