@@ -13,6 +13,8 @@ public class RoomController {
 
     private final RoomService service;
 
+    //todo reset master
+
     public RoomController(RoomService roomService) {
         this.service = roomService;
     }
