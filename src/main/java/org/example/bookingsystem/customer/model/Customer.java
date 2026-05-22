@@ -38,12 +38,13 @@ public class Customer {
 
     public Customer() {}
 
-    public Customer(String firstname, String lastname, String identificationNumber, String email, String password) {
+    public Customer(String firstname, String lastname, String identificationNumber, String email, String password, String phoneNumber) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.identificationNumber = identificationNumber;
         this.email = email;
         this.password = password;
+        this.phoneNumber = phoneNumber;
     }
 
     public long getId() {
