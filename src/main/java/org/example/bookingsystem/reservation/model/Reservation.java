@@ -2,6 +2,8 @@ package org.example.bookingsystem.reservation.model;
 import jakarta.persistence.*;
 import org.example.bookingsystem.customer.model.Customer;
 import org.example.bookingsystem.roomapi.entity.Room;
+
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
@@ -22,7 +24,7 @@ public class Reservation {
     private boolean extraBed;
     private LocalDate checkIn;
     private LocalDate checkOut;
-    private double totalCost;
+    private BigDecimal totalCost;
 
     @Enumerated (EnumType.STRING)
     private ReservationStatus status;
@@ -30,14 +32,14 @@ public class Reservation {
     public Reservation (){
     }
 
-    public Reservation(Customer customer, Room room, boolean extraBed, LocalDate checkIn, LocalDate checkOut, double totalCost) {
+    public Reservation(Customer customer, Room room, boolean extraBed, LocalDate checkIn, LocalDate checkOut, BigDecimal totalCost, ReservationStatus status) {
         this.customer = customer;
         this.room = room;
         this.extraBed = extraBed;
         this.checkIn = checkIn;
         this.checkOut = checkOut;
         this.totalCost = totalCost;
-        this.status = ReservationStatus.ACTIVE;
+        this.status = status;
     }
 
     public Long getId() {
@@ -88,11 +90,19 @@ public class Reservation {
         this.checkOut = checkOut;
     }
 
-    public double getTotalCost() {
+    public BigDecimal getTotalCost() {
         return totalCost;
     }
 
-    public void setTotalCost(double totalCost) {
+    public void setTotalCost(BigDecimal totalCost) {
         this.totalCost = totalCost;
+    }
+
+    public ReservationStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(ReservationStatus reservationStatus) {
+        this.status = reservationStatus;
     }
 }

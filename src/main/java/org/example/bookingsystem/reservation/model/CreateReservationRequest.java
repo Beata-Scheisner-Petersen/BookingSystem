@@ -23,12 +23,8 @@ public class CreateReservationRequest {
     @Future (message = "Date has to be in the future")
     private LocalDate checkOut;
 
-    @NotNull (message = "Total Cost is required")
-    private Double totalCost;
-
     public CreateReservationRequest() {
     }
-
     public Long getCustomerId() {
         return customerId;
     }
@@ -49,7 +45,4 @@ public class CreateReservationRequest {
         return checkOut;
     }
 
-    public Double getTotalCost() {
-        return totalCost;
-    }
 }
