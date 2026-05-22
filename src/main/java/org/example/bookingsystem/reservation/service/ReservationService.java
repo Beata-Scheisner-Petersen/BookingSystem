@@ -1,22 +1,19 @@
 package org.example.bookingsystem.reservation.service;
 
-import jakarta.transaction.Transactional;
-import org.example.bookingsystem.customer.model.Customer;
-import org.example.bookingsystem.customer.repository.CustomerRepository;
-import org.example.bookingsystem.error.NotFoundException;
-import org.example.bookingsystem.reservation.model.CreateReservationRequest;
-import org.example.bookingsystem.reservation.model.Reservation;
-import org.example.bookingsystem.reservation.model.ReservationStatus;
-import org.example.bookingsystem.reservation.repository.ReservationRepository;
-import org.example.bookingsystem.reservation.utils.Validations;
-import org.example.bookingsystem.roomapi.entity.Room;
-import org.example.bookingsystem.roomapi.repository.RoomRepository;
-import org.springframework.stereotype.Service;
+import jakarta.transaction.*;
+import org.example.bookingsystem.customer.model.*;
+import org.example.bookingsystem.customer.repository.*;
+import org.example.bookingsystem.exceptionhandler.customexeptions.*;
+import org.example.bookingsystem.reservation.model.*;
+import org.example.bookingsystem.reservation.repository.*;
+import org.example.bookingsystem.roomapi.entity.*;
+import org.example.bookingsystem.roomapi.repository.*;
+import org.springframework.stereotype.*;
 
-import java.time.LocalDate;
-import java.util.List;
+import java.time.*;
+import java.util.*;
 
-import static org.example.bookingsystem.reservation.utils.Validations.validateDateRange;
+import static org.example.bookingsystem.reservation.utils.Validations.*;
 
 @Service
 public class ReservationService {
