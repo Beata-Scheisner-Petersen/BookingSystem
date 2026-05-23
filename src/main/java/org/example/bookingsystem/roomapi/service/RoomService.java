@@ -74,7 +74,7 @@ public class RoomService {
 
         Room resultRoom = repository.save(fetchedRoom);
 
-        RoomResponseDto resultDto = new RoomResponseDto(
+        return new RoomResponseDto(
                 resultRoom.getId(),
                 resultRoom.getRoomNumber(),
                 resultRoom.getRoomSize(),
