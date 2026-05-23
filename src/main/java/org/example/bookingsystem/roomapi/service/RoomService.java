@@ -26,9 +26,6 @@ public class RoomService {
     public List<Room> getAllRooms() {
 
         return repository.findAll(Sort.by("roomNumber").ascending());
-
-        //Pageable pageable = PageRequest.of(page, amount);
-        //return repository.findAll(pageable).getContent();
     }
 
     public Room getRoomById(long id) {
