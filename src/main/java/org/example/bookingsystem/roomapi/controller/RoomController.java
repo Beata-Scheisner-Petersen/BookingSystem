@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import org.example.bookingsystem.roomapi.dto.AddNewRoomDto;
 import org.example.bookingsystem.roomapi.dto.RoomResponseDto;
 import org.example.bookingsystem.roomapi.dto.UpdateRoomDto;
+import org.example.bookingsystem.roomapi.entity.Room;
 import org.example.bookingsystem.roomapi.service.RoomService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -45,10 +46,11 @@ public class RoomController {
 
     @GetMapping("/api/room/{id}")
     public ResponseEntity<?> getRoomById(@PathVariable Integer id) {
-        if(service.getRoomById(id) == null) {
+        Room room = service.getRoomById(id);
+        if(room == null) {
             return ResponseEntity.status(404).body("Room not found");
         }
-        return ResponseEntity.ok(service.getRoomById(id));
+        return ResponseEntity.ok(room);
     }
 
     @PostMapping("/api/room/update/{id}")
