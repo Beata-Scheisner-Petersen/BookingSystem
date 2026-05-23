@@ -16,7 +16,7 @@ public class RoomService {
 
     private final RoomRepository repository;
 
-    public RoomService(RoomRepository repository, RoomResponseDto roomResponseDto) {
+    public RoomService(RoomRepository repository) {
         this.repository = repository;
         this.roomResponseDto = roomResponseDto;
     }
