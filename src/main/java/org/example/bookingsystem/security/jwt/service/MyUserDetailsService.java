@@ -26,7 +26,7 @@ public class MyUserDetailsService implements UserDetailsService {
         return org.springframework.security.core.userdetails.User
                 .withUsername(customer.getEmail())
                 .password(customer.getPassword())
-                .authorities(new ArrayList<>()) // inga roller, tom lista
+                .authorities(new ArrayList<>()) // inga roller
                 .build();
     }
 }
