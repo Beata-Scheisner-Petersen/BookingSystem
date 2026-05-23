@@ -1,6 +1,8 @@
 package org.example.bookingsystem.roomapi.controller;
 
+import jakarta.validation.Valid;
 import org.example.bookingsystem.roomapi.dto.AddNewRoomDto;
+import org.example.bookingsystem.roomapi.dto.RoomResponseDto;
 import org.example.bookingsystem.roomapi.dto.UpdateRoomDto;
 import org.example.bookingsystem.roomapi.service.RoomService;
 import org.springframework.http.ResponseEntity;
@@ -27,16 +29,18 @@ public class RoomController {
 
     @PostMapping("/api/room/add")
     public ResponseEntity<?> roomSet(
-            @RequestBody AddNewRoomDto addNewRoomDto) {
+            @Valid @RequestBody AddNewRoomDto addNewRoomDto) {
 
-        if (!service.addRoom(
+        RoomResponseDto roomDto = service.addRoom(
                 addNewRoomDto.getRoomNumber(),
                 addNewRoomDto.getRoomSize(),
-                addNewRoomDto.getRoomPrice())
-        ) {
+                addNewRoomDto.getRoomPrice()
+        );
+
+        if (roomDto == null) {
             return ResponseEntity.badRequest().body("Something went wrong");
         }
-        return ResponseEntity.ok().body("Room saved successfully");
+        return ResponseEntity.ok(roomDto);
     }
 
     @GetMapping("/api/room/{id}")
