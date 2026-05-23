@@ -24,6 +24,18 @@ public class CustomerController {
         return ResponseEntity.status(HttpStatus.CREATED).body(customerService.createNewCustomer(customer));
     }
 
+    /*
+     * Login -> create JWT
+     * The password is checked against the database (via customerService + PasswordEncoder).
+     * If that is correct, you will get a Customer object.
+     * You call jwtService.generateToken(...) with:
+        * customerId → is placed as the subject
+        * email → is added as claim "email"
+     * JwtService signs the token with your secret key (jwt.secret) and sets the expiration time.
+     * Result: the client (frontend / Postman / Thunder client) receives a JWT string back (a token that is stored in the client).
+     * For each protected request, the header is sent: Authorization: Bearer <your-token-here>
+     * At Login, the request is sent to JwtAuthFilter.
+     */
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody CustomerLoginRequest request) {
         Customer customer = customerService.loginCustomer(request.email(), request.password());

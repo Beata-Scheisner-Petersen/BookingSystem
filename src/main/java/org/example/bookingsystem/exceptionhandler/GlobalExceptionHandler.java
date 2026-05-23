@@ -6,6 +6,15 @@ import org.springframework.web.bind.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
+
+/**
+ * GlobalExceptionHandler = handles everything else
+    * Business Error
+    * Validation Error
+    * Database Error
+    * Controller Error
+ * JWT error never makes it here.
+ */
 @ControllerAdvice
 public class GlobalExceptionHandler {
 

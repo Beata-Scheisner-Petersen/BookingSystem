@@ -14,24 +14,50 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+/**
+ * SecurityConfig = the doorman
+    * Determines which doors require identification
+    * Determines which doors are open to everyone
+    * Stops unauthorized access to protected endpoints
+    * How Spring Security should handle tokens
+    * Which filters should be run
+    * How errors should be handled
+ */
 @Configuration
 public class SecurityConfig {
 
     private final JwtAuthFilter jwtAuthFilter;
     private final MyUserDetailsService myUserDetailsService;
-
+    private final JwtAuthEntryPoint jwtAuthEntryPoint;
 
     public SecurityConfig(JwtAuthFilter jwtAuthFilter,
-                          MyUserDetailsService myUserDetailsService) {
+                          MyUserDetailsService myUserDetailsService,
+                          JwtAuthEntryPoint jwtAuthEntryPoint) {
         this.jwtAuthFilter = jwtAuthFilter;
         this.myUserDetailsService = myUserDetailsService;
+        this.jwtAuthEntryPoint = jwtAuthEntryPoint;
     }
 
+    /*
+    * Spring Security needs a PasswordEncoder to compare passwords.
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+    /*
+     * The one who verifies users at login
+     * The one who uses:
+        * MyUserDetailsService to fetch the user
+        * PasswordEncoder to compare passwords
+     * This is used only at login, not during JWT validation
+     * DaoAuthenticationProvider -> a built-in component in Spring Security that is responsible for:
+        * to log in users
+        * to fetch users from the database
+        * to compare passwords
+        * to throw an error if something is wrong
+     */
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider(myUserDetailsService);
@@ -39,6 +65,16 @@ public class SecurityConfig {
         return provider;
     }
 
+    /*
+    * Spring Security builds the entire security chain here.
+    * .csrf(csrf -> csrf.disable()) -> disable cookies because you are using JWT, not cookies.
+    * .authorizeHttpRequests(auth -> auth etc. -> determines who needs a token to be used.
+    * .sessionManagement(...) -> make the application stateless.
+    * .authenticationProvider(authenticationProvider()) -> is a part of the Spring Security library and is a Spring Security interface.
+    * .exceptionHandling(..) -> connects JwtAuthEntryPoint.
+    * .addFilterBefore(...); -> connects JwtAuthFilter.
+    * return http.build(); -> build and return the chain.
+     */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -50,6 +86,7 @@ public class SecurityConfig {
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())
+                .exceptionHandling(ex -> ex.authenticationEntryPoint(jwtAuthEntryPoint))
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
