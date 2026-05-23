@@ -131,9 +131,22 @@ public class ReservationService {
     }
 
     public Reservation cancelReservation(Long reservationId) {
-        Reservation reservation = reservationRepository.findById(reservationId)
-                .orElseThrow(() -> new NotFoundException("Reservation finns inte"));
+        Reservation reservation = getReservationById(reservationId);
         reservation.setStatus(ReservationStatus.CANCELED);
+        return reservationRepository.save(reservation);
+    }
+
+    public Reservation getReservationById(Long reservationId) {
+        return reservationRepository.findById(reservationId)
+                .orElseThrow(() -> new NotFoundException("Reservation finns inte"));
+    }
+
+    public Reservation updateReservation(Long reservationId, LocalDate checkIn, LocalDate checkOut) {
+        Reservation reservation = getReservationById(reservationId);
+        validationRoomIsAvailable(reservation.getRoom().getId(), checkIn, checkOut, reservationId);
+        reservation.setCheckIn(checkIn);
+        reservation.setCheckOut(checkOut);
+        reservation.setTotalCost(countTotalPrice(reservation.getRoom(), checkIn, checkOut, reservation.isExtraBed()));
         return reservationRepository.save(reservation);
     }
 
