@@ -79,8 +79,6 @@ public class RoomService {
                 resultRoom.getRoomPrice()
         );
 
-        return resultDto;
-
     }
 
     public boolean deleteRoom(Long id) {
