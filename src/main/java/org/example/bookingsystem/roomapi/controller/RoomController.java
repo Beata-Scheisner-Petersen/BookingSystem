@@ -1,12 +1,12 @@
 package org.example.bookingsystem.roomapi.controller;
 
+import jakarta.validation.Valid;
 import org.example.bookingsystem.roomapi.dto.AddNewRoomDto;
+import org.example.bookingsystem.roomapi.dto.RoomResponseDto;
 import org.example.bookingsystem.roomapi.dto.UpdateRoomDto;
 import org.example.bookingsystem.roomapi.service.RoomService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.math.BigDecimal;
 
 @RestController
 public class RoomController {
@@ -28,41 +28,46 @@ public class RoomController {
     }
 
     @PostMapping("/api/room/add")
-    public ResponseEntity<?> roomSet(
-            @RequestBody AddNewRoomDto addNewRoomDto) {
+    public ResponseEntity<?> addRoom(
+            @Valid @RequestBody AddNewRoomDto addNewRoomDto) {
 
-        if (!service.addRoom(
+        RoomResponseDto roomDto = service.addRoom(
                 addNewRoomDto.getRoomNumber(),
                 addNewRoomDto.getRoomSize(),
-                addNewRoomDto.getRoomPrice())
-        ) {
-            return ResponseEntity.badRequest().body("Something went wrong");
+                addNewRoomDto.getRoomPrice()
+        );
+
+        if (roomDto == null) {
+            return ResponseEntity.status(404).body("Something went wrong");
         }
-        return ResponseEntity.ok().body("Room saved successfully");
+        return ResponseEntity.ok(roomDto);
     }
 
     @GetMapping("/api/room/{id}")
     public ResponseEntity<?> getRoomById(@PathVariable Integer id) {
-        if(service.getRoomById(id) == null) {
+        RoomResponseDto resultDto = service.getRoomById(id);
+        if(resultDto == null) {
             return ResponseEntity.status(404).body("Room not found");
         }
-        return ResponseEntity.ok(service.getRoomById(id));
+        return ResponseEntity.ok(resultDto);
     }
 
     @PostMapping("/api/room/update/{id}")
     public ResponseEntity<?> roomUpdate(@PathVariable Long id,
-                                        @RequestBody UpdateRoomDto roomDto) {
+                                        @Valid @RequestBody UpdateRoomDto roomDto) {
 
-        if (!service.updateRoom(id, roomDto)) {
-            return ResponseEntity.badRequest().body("Room could not be found");
+        RoomResponseDto resultDto = service.updateRoom(id, roomDto);
+
+        if (resultDto == null) {
+            return ResponseEntity.status(404).body("Room could not be found");
         }
-        return ResponseEntity.ok().body("Room updated successfully");
+        return ResponseEntity.ok(resultDto);
     }
 
     @DeleteMapping("api/room/delete/{id}")
     public ResponseEntity<?> roomDelete(@PathVariable Long id) {
         if (!service.deleteRoom(id)) {
-            return ResponseEntity.badRequest().body("Room could not be Deleted/Found");
+            return ResponseEntity.status(404).body("Room could not be Deleted/Found");
         }
         return ResponseEntity.ok().body("Room deleted successfully");
     }
