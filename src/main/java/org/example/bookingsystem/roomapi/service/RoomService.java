@@ -15,7 +15,6 @@ import java.util.Optional;
 public class RoomService {
 
     private final RoomRepository repository;
-    private final RoomResponseDto roomResponseDto;
 
     public RoomService(RoomRepository repository, RoomResponseDto roomResponseDto) {
         this.repository = repository;
