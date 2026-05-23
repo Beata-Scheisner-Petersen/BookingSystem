@@ -9,8 +9,6 @@ import org.example.bookingsystem.roomapi.service.RoomService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
-
 @RestController
 public class RoomController {
 
@@ -29,7 +27,7 @@ public class RoomController {
     }
 
     @PostMapping("/api/room/add")
-    public ResponseEntity<?> roomSet(
+    public ResponseEntity<?> addRoom(
             @Valid @RequestBody AddNewRoomDto addNewRoomDto) {
 
         RoomResponseDto roomDto = service.addRoom(
