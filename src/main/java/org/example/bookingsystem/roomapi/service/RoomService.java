@@ -7,6 +7,7 @@ import org.example.bookingsystem.roomapi.repository.RoomRepository;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -46,12 +47,12 @@ public class RoomService {
 
     }
 
-    public boolean updateRoom(Long id, UpdateRoomDto dto) {
+    public RoomResponseDto updateRoom(Long id, UpdateRoomDto dto) {
 
         Optional<Room> optionalRoom = repository.findById(id);
 
         if (optionalRoom.isEmpty()) {
-            return false;
+            return null;
         }
 
         Room fetchedRoom = optionalRoom.get();
@@ -60,9 +61,16 @@ public class RoomService {
         fetchedRoom.setRoomSize(dto.getRoomSize());
         fetchedRoom.setRoomPrice(dto.getRoomPrice());
 
-        repository.save(fetchedRoom);
+        Room resultRoom = repository.save(fetchedRoom);
 
-        return true;
+        RoomResponseDto resultDto = new RoomResponseDto(
+                resultRoom.getId(),
+                resultRoom.getRoomNumber(),
+                resultRoom.getRoomSize(),
+                resultRoom.getRoomPrice()
+        );
+
+        return resultDto;
 
     }
 

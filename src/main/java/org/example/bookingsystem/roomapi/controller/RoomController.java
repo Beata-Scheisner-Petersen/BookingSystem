@@ -55,10 +55,12 @@ public class RoomController {
     public ResponseEntity<?> roomUpdate(@PathVariable Long id,
                                         @RequestBody UpdateRoomDto roomDto) {
 
-        if (!service.updateRoom(id, roomDto)) {
-            return ResponseEntity.badRequest().body("Room could not be found");
+        RoomResponseDto resultDto = service.updateRoom(id, roomDto);
+
+        if (resultDto == null) {
+            return ResponseEntity.status(404).body("Room could not be found");
         }
-        return ResponseEntity.ok().body("Room updated successfully");
+        return ResponseEntity.ok(resultDto);
     }
 
     @DeleteMapping("api/room/delete/{id}")
