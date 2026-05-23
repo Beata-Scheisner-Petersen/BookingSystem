@@ -37,23 +37,23 @@ public class RoomController {
         );
 
         if (roomDto == null) {
-            return ResponseEntity.badRequest().body("Something went wrong");
+            return ResponseEntity.status(404).body("Something went wrong");
         }
         return ResponseEntity.ok(roomDto);
     }
 
     @GetMapping("/api/room/{id}")
     public ResponseEntity<?> getRoomById(@PathVariable Integer id) {
-        Room room = service.getRoomById(id);
-        if(room == null) {
+        RoomResponseDto resultDto = service.getRoomById(id);
+        if(resultDto == null) {
             return ResponseEntity.status(404).body("Room not found");
         }
-        return ResponseEntity.ok(room);
+        return ResponseEntity.ok(resultDto);
     }
 
     @PostMapping("/api/room/update/{id}")
     public ResponseEntity<?> roomUpdate(@PathVariable Long id,
-                                        @RequestBody UpdateRoomDto roomDto) {
+                                        @Valid @RequestBody UpdateRoomDto roomDto) {
 
         RoomResponseDto resultDto = service.updateRoom(id, roomDto);
 
@@ -66,7 +66,7 @@ public class RoomController {
     @DeleteMapping("api/room/delete/{id}")
     public ResponseEntity<?> roomDelete(@PathVariable Long id) {
         if (!service.deleteRoom(id)) {
-            return ResponseEntity.badRequest().body("Room could not be Deleted/Found");
+            return ResponseEntity.status(404).body("Room could not be Deleted/Found");
         }
         return ResponseEntity.ok().body("Room deleted successfully");
     }

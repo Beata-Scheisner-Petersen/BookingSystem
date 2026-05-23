@@ -27,8 +27,23 @@ public class RoomService {
         return repository.findAll(Sort.by("roomNumber").ascending());
     }
 
-    public Room getRoomById(long id) {
-        return repository.findById(id).orElse(null);
+    public RoomResponseDto getRoomById(long id) {
+
+        Optional<Room> optionalRoom = repository.findById(id);
+
+        if (optionalRoom.isEmpty()) {
+            return null;
+        }
+
+        Room room = optionalRoom.get();
+
+        return new RoomResponseDto(
+                room.getId(),
+                room.getRoomNumber(),
+                room.getRoomSize(),
+                room.getRoomPrice()
+        );
+
     }
 
     public RoomResponseDto addRoom(int roomNumber, int roomSize, BigDecimal roomPrice) {
