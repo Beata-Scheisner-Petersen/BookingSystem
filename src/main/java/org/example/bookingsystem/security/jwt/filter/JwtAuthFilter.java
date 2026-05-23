@@ -9,13 +9,20 @@ import org.example.bookingsystem.security.jwt.service.JwtService;
 import org.example.bookingsystem.security.jwt.service.MyUserDetailsService;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.*;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import javax.security.sasl.*;
 import java.io.IOException;
 
+/**
+ * JwtAuthFilter = the authentication controller
+    * Sees a token → checks it
+    * Sees no token → lets the person proceed as anonymous
+    * Sees a broken token → sends the person to the bouncer (EntryPoint)
+ */
 @Component
 public class JwtAuthFilter extends OncePerRequestFilter {
 
@@ -27,6 +34,15 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         this.userDetailsService = userDetailsService;
     }
 
+    /*
+     * The client calls a protected endpoint, example
+        GET /api/customers/me
+        Authorization: Bearer <JWT_HERE>
+     * The request enters Spring Security's filter chain.
+     * Your JwtAuthFilter runs before the controller.
+     * The filter tries to authenticate the user based on the token.
+     * If error goes to JwtAuthEntryPoint else goes to SecurityConfig.
+     */
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
@@ -35,33 +51,45 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         String authHeader = request.getHeader("Authorization");
 
+        // None or incorrect header → pass through as anonymous. It is SecurityConfigs job to catch unauthorized login.
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;
         }
 
-        String token = authHeader.substring(7);
-        String email = jwtService.extractEmail(token);
-
-        if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-
-            UserDetails userDetails = userDetailsService.loadUserByUsername(email);
-
-            // Token är giltig → autentisera användaren
-            UsernamePasswordAuthenticationToken authToken =
-                    new UsernamePasswordAuthenticationToken(
-                            userDetails,
-                            null,
-                            userDetails.getAuthorities()
-                    );
-
-            authToken.setDetails(
-                    new WebAuthenticationDetailsSource().buildDetails(request)
-            );
-
-            SecurityContextHolder.getContext().setAuthentication(authToken);
+        String token = null;
+        try {
+            token = authHeader.substring(7);
+        } catch (StringIndexOutOfBoundsException eOutOfBound) {
+            // AuthenticationException → goes to JwtAuthEntryPoint
+            throw new AuthenticationException("Invalid Authorization header format", eOutOfBound) {};
         }
 
-        filterChain.doFilter(request, response);
+        try {
+            String email = jwtService.extractEmail(token);
+
+            if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+
+                UserDetails userDetails = userDetailsService.loadUserByUsername(email);
+
+                UsernamePasswordAuthenticationToken authToken =
+                        new UsernamePasswordAuthenticationToken(
+                                userDetails,
+                                null,
+                                userDetails.getAuthorities()
+                        );
+
+                authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request)
+                );
+
+                SecurityContextHolder.getContext().setAuthentication(authToken);
+            }
+
+            filterChain.doFilter(request, response);
+
+            //All JWT errors → trigger AuthenticationEntryPoint
+        } catch (io.jsonwebtoken.JwtException | IllegalArgumentException eIllegalArgument) {
+            throw new org.springframework.security.core.AuthenticationException("Invalid JWT", eIllegalArgument) {};
+        }
     }
 }

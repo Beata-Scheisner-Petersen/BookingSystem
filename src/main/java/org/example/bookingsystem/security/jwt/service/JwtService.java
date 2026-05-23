@@ -45,10 +45,9 @@ public class JwtService {
         return claims.get("email", String.class);
     }
 
-    // 🔹 NY METOD – den som JwtAuthFilter vill anropa
+
     public boolean isTokenValid(String token, org.springframework.security.core.userdetails.UserDetails userDetails) {
         String email = extractEmail(token);
-        // bara enkel koll: samma email och inte utgången (expiry kollas redan av parseClaimsJws)
         return email != null && email.equals(userDetails.getUsername());
     }
 }
