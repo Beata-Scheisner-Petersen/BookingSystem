@@ -9,7 +9,7 @@ public class Customer {
     @Id
     @Column(name = "id", unique = true)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @NotBlank(message = "You must enter a firstname.")
     private String firstname;
@@ -31,16 +31,19 @@ public class Customer {
     private String password;
 
     @Column(name = "phone_number", unique = true)
+    @Pattern(regexp = "^(?:\\+46\\s?7\\d-\\d{7}|07\\d-\\d{7}|\\+46\\d{1,3}-\\d{5,8}|0\\d{1,3}-\\d{5,8})$"
+            , message = "Phone number to be in phone or mobile format, for example xxx-xxxxxxx.")
     private String phoneNumber;
 
     public Customer() {}
 
-    public Customer(String firstname, String lastname, String identificationNumber, String email, String password) {
+    public Customer(String firstname, String lastname, String identificationNumber, String email, String password, String phoneNumber) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.identificationNumber = identificationNumber;
         this.email = email;
         this.password = password;
+        this.phoneNumber = phoneNumber;
     }
 
     public long getId() {

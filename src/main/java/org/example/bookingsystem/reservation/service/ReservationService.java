@@ -3,7 +3,7 @@ package org.example.bookingsystem.reservation.service;
 import jakarta.transaction.Transactional;
 import org.example.bookingsystem.customer.model.Customer;
 import org.example.bookingsystem.customer.repository.CustomerRepository;
-import org.example.bookingsystem.error.NotFoundException;
+import org.example.bookingsystem.exceptionhandler.customexeptions.NotFoundException;
 import org.example.bookingsystem.reservation.model.CreateReservationRequest;
 import org.example.bookingsystem.reservation.model.Reservation;
 import org.example.bookingsystem.reservation.model.ReservationStatus;

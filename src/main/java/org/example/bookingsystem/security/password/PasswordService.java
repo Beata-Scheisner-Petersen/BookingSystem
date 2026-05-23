@@ -1,4 +1,4 @@
-package org.example.bookingsystem.security;
+package org.example.bookingsystem.security.password;
 
 import org.springframework.security.crypto.bcrypt.*;
 import org.springframework.stereotype.*;
