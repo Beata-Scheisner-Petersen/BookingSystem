@@ -18,7 +18,6 @@ public class RoomService {
 
     public RoomService(RoomRepository repository) {
         this.repository = repository;
-        this.roomResponseDto = roomResponseDto;
     }
 
     //Rooms are sorted ascending by their roomNumber
