@@ -4,15 +4,11 @@ import org.example.bookingsystem.roomapi.dto.RoomResponseDto;
 import org.example.bookingsystem.roomapi.dto.UpdateRoomDto;
 import org.example.bookingsystem.roomapi.entity.Room;
 import org.example.bookingsystem.roomapi.repository.RoomRepository;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
