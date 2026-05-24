@@ -70,9 +70,9 @@ public class SecurityConfig {
     * .csrf(csrf -> csrf.disable()) -> disable cookies because you are using JWT, not cookies.
     * .authorizeHttpRequests(auth -> auth etc. -> determines who needs a token to be used.
     * .sessionManagement(...) -> make the application stateless.
-    * .authenticationProvider(authenticationProvider()) -> is a part of the Spring Security library and is a Spring Security interface.
-    * .exceptionHandling(..) -> connects JwtAuthEntryPoint.
-    * .addFilterBefore(...); -> connects JwtAuthFilter.
+    * .authenticationProvider(...) -> is a part of the Spring Security library and is a Spring Security interface. Used for login.
+    * .exceptionHandling(..) -> connects JwtAuthEntryPoint. Used for JWT-errors.
+    * .addFilterBefore(...); -> connects JwtAuthFilter. Used for read token.
     * return http.build(); -> build and return the chain.
      */
     @Bean
