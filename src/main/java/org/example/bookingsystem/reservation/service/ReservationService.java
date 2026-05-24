@@ -40,8 +40,10 @@ public class ReservationService {
     }
 
     //Hitta reservationer med aktiv status med kundId
-    public void getActiveReservationByCustomerId(Long customerId) {
-        List<Reservation> reservationWithActiveStatus = reservationRepository.findByCustomer_IdAndStatus(customerId, ReservationStatus.ACTIVE);
+
+    public List <Reservation> getActiveReservationByCustomerId(Long customerId) {
+
+        return reservationRepository.findByCustomer_IdAndStatus(customerId, ReservationStatus.ACTIVE);
     }
 
 
