@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Black Cat</title>
+    <link
+            href="/vendor/bootstrap.min.css"
+            rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/side_menu_style.css" />
+    <script defer src="/javascript/create_header.js"></script>
+</head>
+<body>
+<div class="d-flex m-5 align-content-center justify-content-center">
+    <div>
+        <h3>Login</h3>
+        <form action="/api/customers/login" method="POST" class="p-3 rounded-3" style="outline: 2px solid grey;">
+            <div>
+                <label for="email_input" class="form-label">Email</label>
+                <input
+                        id="email_input"
+                        type="email"
+                        placeholder="Email"
+                        class="form-control"
+                />
+            </div>
+            <div>
+                <label for="password_input" class="form-label">Password</label>
+                <input
+                        id="password_input"
+                        type="password"
+                        placeholder="Password"
+                        class="form-control"
+                />
+            </div>
+            <br>
+            <div class="p-2 bg-info rounded-2">
+                <button class="ms-auto rounded-3 shadow">Login</button>
+                <button class="ms-auto rounded-3 shadow">Register new User</button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
