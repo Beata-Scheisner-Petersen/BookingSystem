@@ -46,7 +46,13 @@ public class JwtAuthFilter extends OncePerRequestFilter {
      * The filter tries to authenticate the user based on the token.
      * If error goes to JwtAuthEntryPoint else goes to SecurityConfig.
      * If none or incorrect header → pass through as anonymous. It is SecurityConfigs job to catch unauthorized login.
+     * userDetails loads the user from the database with its password, role, authorities and email.
+     * authToken creates authentication-object.
      * All errors trigger AuthenticationException and sends to JwtAuthEntryPoint.
+     * authToken.setDetails(...) -> adds metadata about the request as IP-adress, sessionId and user agent. This is standard.
+     * SecurityContextHolder.getContext().setAuthentication(authToken); -> sets the user in SecurityContext
+        * Controllers can now use: @AuthenticationPrincipal and SecurityContextHolder.getContext().getAuthentication()
+     * filterChain.doFilter(request, response); -> The request goes on to the next filter and eventually reaches the controller.
      */
     @Override
     protected void doFilterInternal(HttpServletRequest request,
