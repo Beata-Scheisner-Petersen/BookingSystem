@@ -8,8 +8,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-
 /*
 * Is the link between a database (CustomerRepository) and Spring Security's authentication system.
 * @Service → Spring creates an instance and registers it as a bean.
