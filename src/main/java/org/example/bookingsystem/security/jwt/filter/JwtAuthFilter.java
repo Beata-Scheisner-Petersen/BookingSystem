@@ -56,7 +56,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         String authHeader = request.getHeader("Authorization");
 
-        // None or incorrect header → pass through as anonymous. It is SecurityConfigs job to catch unauthorized login.
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;
@@ -66,7 +65,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         try {
             token = authHeader.substring(7);
         } catch (StringIndexOutOfBoundsException eOutOfBound) {
-            // AuthenticationException → goes to JwtAuthEntryPoint
             throw new AuthenticationException("Invalid Authorization header format", eOutOfBound) {};
         }
 
@@ -92,7 +90,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
             filterChain.doFilter(request, response);
 
-            //All JWT errors → trigger AuthenticationEntryPoint
         } catch (io.jsonwebtoken.JwtException | IllegalArgumentException eIllegalArgument) {
             throw new org.springframework.security.core.AuthenticationException("Invalid JWT", eIllegalArgument) {};
         }
