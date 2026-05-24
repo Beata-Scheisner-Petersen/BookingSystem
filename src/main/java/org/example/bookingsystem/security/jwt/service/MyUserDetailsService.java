@@ -33,10 +33,10 @@ public class MyUserDetailsService implements UserDetailsService {
         Customer customer = customerRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
-        return org.springframework.security.core.userdetails.User
-                .withUsername(customer.getEmail())
-                .password(customer.getPassword())
-                .authorities(new ArrayList<>())
-                .build();
+        return new CustomUserDetails(
+                customer.getId(),
+                customer.getEmail(),
+                customer.getPassword()
+        );
     }
 }
