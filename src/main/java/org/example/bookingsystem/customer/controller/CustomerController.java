@@ -4,9 +4,11 @@ import jakarta.validation.*;
 import org.example.bookingsystem.customer.model.*;
 import org.example.bookingsystem.customer.model.dto.*;
 import org.example.bookingsystem.customer.service.*;
-import org.example.bookingsystem.security.jwt.dto.*;
+import org.example.bookingsystem.security.jwt.model.CustomUserDetails;
+import org.example.bookingsystem.security.jwt.model.dto.JwtResponse;
 import org.example.bookingsystem.security.jwt.service.*;
 import org.springframework.http.*;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("api/customers")
@@ -37,7 +39,7 @@ public class CustomerController {
      * At Login, the request is sent to JwtAuthFilter.
      */
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody CustomerLoginRequest request) {
+    public ResponseEntity<?> login(@RequestBody CustomerLoginRequest request) {
         Customer customer = customerService.loginCustomer(request.email(), request.password());
         String token = jwtService.generateToken(customer.getId(), customer.getEmail());
 
@@ -45,17 +47,13 @@ public class CustomerController {
     }
 
     @PatchMapping("/me")
-    public ResponseEntity updateCustomer(
-            @RequestHeader("Authorization") String authHeader,
+    public ResponseEntity<?> updateCustomer(
+            @AuthenticationPrincipal CustomUserDetails user,
             @RequestBody CustomerUpdateRequest request) {
 
-        String token = authHeader.replace("Bearer ", "");
+        Long id = user.getId();
 
-        Long id = jwtService.extractCustomerId(token);
-
-        String email = jwtService.extractEmail(token);
-
-        if (id == null || email == null) {
+        if (id == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login failed");
         }
 
