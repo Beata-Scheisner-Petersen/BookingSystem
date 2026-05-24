@@ -75,10 +75,4 @@ public class JwtService {
 
         return claims.get("email", String.class);
     }
-
-
-    public boolean isTokenValid(String token, org.springframework.security.core.userdetails.UserDetails userDetails) {
-        String email = extractEmail(token);
-        return email != null && email.equals(userDetails.getUsername());
-    }
 }
