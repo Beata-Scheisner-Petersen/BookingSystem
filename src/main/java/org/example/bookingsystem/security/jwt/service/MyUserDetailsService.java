@@ -9,6 +9,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 
+/*
+* Is the link between a database (CustomerRepository) and Spring Security's authentication system.
+* @Service → Spring creates an instance and registers it as a bean.
+* implements UserDetailsService → you tell Spring Security: 'When you need to load a user, use me.'
+ */
 @Service
 public class MyUserDetailsService implements UserDetailsService {
 
@@ -18,6 +23,12 @@ public class MyUserDetailsService implements UserDetailsService {
         this.customerRepository = customerRepository;
     }
 
+    /*
+    * Fetching the customer from the database.
+    * Convert your Customer into an object that Spring Security understands.
+    * Creates a User object (Spring Security's built-in implementation of UserDetails).
+    * .authorities(new ArrayList<>()) -> because where are no roles yet
+     */
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Customer customer = customerRepository.findByEmail(email)
