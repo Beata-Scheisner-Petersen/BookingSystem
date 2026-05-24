@@ -3,6 +3,7 @@ package org.example.bookingsystem.reservation.controller;
 import jakarta.validation.Valid;
 import org.example.bookingsystem.reservation.model.CreateReservationRequest;
 import org.example.bookingsystem.reservation.model.Reservation;
+import org.example.bookingsystem.reservation.model.UpdateReservationRequest;
 import org.example.bookingsystem.reservation.service.ReservationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +33,16 @@ public class ReservationController {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(reservationService.cancelReservation(reservationId));
     }
+
+    @PutMapping("/{reservationId}")
+    public ResponseEntity<Reservation>updateReservation (@PathVariable Long reservationId, @Valid @RequestBody UpdateReservationRequest request){
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(reservationService.updateReservation(reservationId, request.getCheckIn(), request.getCheckOut()));
+    }
+
+
+
+
 
 
 }
