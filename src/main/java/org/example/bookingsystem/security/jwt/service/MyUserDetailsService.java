@@ -26,9 +26,7 @@ public class MyUserDetailsService implements UserDetailsService {
 
     /*
     * Fetching the customer from the database.
-    * Convert your Customer into an object that Spring Security understands.
-    * Creates a User object (Spring Security's built-in implementation of UserDetails).
-    * .authorities(new ArrayList<>()) -> because where are no roles yet
+    * Create and return a customer-object.
      */
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
