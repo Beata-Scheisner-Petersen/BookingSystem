@@ -2,16 +2,19 @@ package org.example.bookingsystem.security.jwt.config;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
+
 import org.springframework.stereotype.Component;
+
 import java.io.IOException;
 
 /**
  * JwtAuthEntryPoint = the one who says “you shall not pass”
-    * Returns 401 Unauthorized
-    * Always in JSON
-    * Always consistent
+ * Returns 401 Unauthorized
+ * Always in JSON
+ * Always consistent
  */
 @Component
 public class JwtAuthEntryPoint implements AuthenticationEntryPoint {
@@ -26,7 +29,11 @@ public class JwtAuthEntryPoint implements AuthenticationEntryPoint {
      * response.getWriter().write(body); -> Sends the JSON response to the client and ends the request.
      */
     @Override
-    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException {
+    public void commence(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            AuthenticationException authException)
+            throws IOException {
 
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         response.setContentType("application/json");

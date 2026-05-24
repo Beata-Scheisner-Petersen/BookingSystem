@@ -1,12 +1,17 @@
 package org.example.bookingsystem.customer.service;
 
-import org.example.bookingsystem.customer.model.*;
-import org.example.bookingsystem.customer.model.dto.*;
-import org.example.bookingsystem.customer.repository.*;
-import org.example.bookingsystem.exceptionhandler.customexeptions.*;
-import org.example.bookingsystem.security.password.*;
-import org.springframework.stereotype.*;
-import org.springframework.transaction.annotation.*;
+import org.example.bookingsystem.customer.model.Customer;
+import org.example.bookingsystem.customer.model.dto.CreateCustomerRequest;
+import org.example.bookingsystem.customer.model.dto.CustomerUpdateRequest;
+import org.example.bookingsystem.customer.repository.CustomerRepository;
+
+import org.example.bookingsystem.exceptionhandler.customexeptions.AlreadyExistException;
+import org.example.bookingsystem.exceptionhandler.customexeptions.WrongEmailOrPasswordException;
+
+import org.example.bookingsystem.security.password.PasswordService;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CustomerService {
@@ -30,7 +35,8 @@ public class CustomerService {
         }
 
         Customer customer = new Customer(
-                request.firstname(), request.lastname(),
+                request.firstname(),
+                request.lastname(),
                 request.identificationNumber(),
                 request.email(),
                 passwordService.hash(request.password()),
@@ -40,7 +46,8 @@ public class CustomerService {
     }
 
     public Customer loginCustomer(String email, String password) {
-        Customer customer = repository.findByEmail(email).orElseThrow(() -> new WrongEmailOrPasswordException("Wrong email or password"));
+        Customer customer = repository.findByEmail(email)
+                .orElseThrow(() -> new WrongEmailOrPasswordException("Wrong email or password"));
 
         if (!passwordService.matches(password, customer.getPassword())) {
             throw new WrongEmailOrPasswordException("Wrong email or password");
@@ -51,7 +58,8 @@ public class CustomerService {
 
     @Transactional
     public void updateCustomerInfo(Long id, CustomerUpdateRequest request) {
-        Customer customer = repository.findById(id).orElseThrow(() -> new RuntimeException("Customer not found"));
+        Customer customer = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Customer not found"));
 
         if (request.email() != null && !request.email().isBlank()) {
             if (repository.existsByEmail(request.email())) {

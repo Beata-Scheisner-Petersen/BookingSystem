@@ -7,24 +7,25 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import org.example.bookingsystem.security.jwt.service.JwtService;
 import org.example.bookingsystem.security.jwt.service.MyUserDetailsService;
+
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.*;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import javax.security.sasl.*;
 import java.io.IOException;
 
 /**
  * JwtAuthFilter = the authentication controller
-    * Sees a token → checks it
-    * Sees no token → lets the person proceed as anonymous
-    * Sees a broken token → sends the person to the bouncer (EntryPoint)
+ * Sees a token → checks it
+ * Sees no token → lets the person proceed as anonymous
+ * Sees a broken token → sends the person to the bouncer (EntryPoint)
  * @Component -> Spring automatically creates the filter as a bean.
  * OncePerRequestFilter -> Spring guarantees that the filter runs exactly once per request.
-    * It is important, because some filters can run multiple times — but JWT filters should only run once.
+ * It is important, because some filters can run multiple times — but JWT filters should only run once.
  */
 @Component
 public class JwtAuthFilter extends OncePerRequestFilter {
@@ -55,9 +56,10 @@ public class JwtAuthFilter extends OncePerRequestFilter {
      * filterChain.doFilter(request, response); -> The request goes on to the next filter and eventually reaches the controller.
      */
     @Override
-    protected void doFilterInternal(HttpServletRequest request,
-                                    HttpServletResponse response,
-                                    FilterChain filterChain)
+    protected void doFilterInternal(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            FilterChain filterChain)
             throws ServletException, IOException {
 
         String authHeader = request.getHeader("Authorization");
@@ -67,11 +69,12 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             return;
         }
 
-        String token = null;
+        String token;
         try {
             token = authHeader.substring(7);
         } catch (StringIndexOutOfBoundsException eOutOfBound) {
-            throw new AuthenticationException("Invalid Authorization header format", eOutOfBound) {};
+            throw new AuthenticationException("Invalid Authorization header format", eOutOfBound) {
+            };
         }
 
         try {
@@ -81,15 +84,12 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
                 UserDetails userDetails = userDetailsService.loadUserByUsername(email);
 
-                UsernamePasswordAuthenticationToken authToken =
-                        new UsernamePasswordAuthenticationToken(
-                                userDetails,
-                                null,
-                                userDetails.getAuthorities()
-                        );
+                UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+                        userDetails,
+                        null,
+                        userDetails.getAuthorities());
 
-                authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request)
-                );
+                authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }
@@ -97,7 +97,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
 
         } catch (io.jsonwebtoken.JwtException | IllegalArgumentException eIllegalArgument) {
-            throw new org.springframework.security.core.AuthenticationException("Invalid JWT", eIllegalArgument) {};
+            throw new AuthenticationException("Invalid JWT", eIllegalArgument) {
+            };
         }
     }
 }
