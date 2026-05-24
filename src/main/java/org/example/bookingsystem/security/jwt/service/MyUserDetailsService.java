@@ -2,6 +2,7 @@ package org.example.bookingsystem.security.jwt.service;
 
 import org.example.bookingsystem.customer.model.Customer;
 import org.example.bookingsystem.customer.repository.CustomerRepository;
+import org.example.bookingsystem.security.jwt.model.CustomUserDetails;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
