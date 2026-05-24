@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   //Logo Column
   const logoLink = document.createElement("a");
-  logoLink.href = "index.html";
+  logoLink.href = "static/index.html";
 
   const logoColumn = document.createElement("div");
   logoColumn.className = "col-1";
@@ -57,8 +57,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const sideMenuItems = [
     { name: "Start Page", url: "index.html" },
     { name: "Booking", url: "" },
-    { name: "Login", url: "" },
-    { name: "My Page", url: "" },
+    { name: "Login", url: "login.html" },
+    { name: "Register", url: "" },
+    { name: "My Page", url: "MyPage.html" },
   ];
 
   const nav = document.createElement("nav");
