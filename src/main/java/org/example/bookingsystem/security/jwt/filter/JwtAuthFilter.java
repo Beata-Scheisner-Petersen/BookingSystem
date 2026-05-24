@@ -22,6 +22,9 @@ import java.io.IOException;
     * Sees a token → checks it
     * Sees no token → lets the person proceed as anonymous
     * Sees a broken token → sends the person to the bouncer (EntryPoint)
+ * @Component -> Spring automatically creates the filter as a bean.
+ * OncePerRequestFilter -> Spring guarantees that the filter runs exactly once per request.
+    * It is important, because some filters can run multiple times — but JWT filters should only run once.
  */
 @Component
 public class JwtAuthFilter extends OncePerRequestFilter {
@@ -42,6 +45,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
      * Your JwtAuthFilter runs before the controller.
      * The filter tries to authenticate the user based on the token.
      * If error goes to JwtAuthEntryPoint else goes to SecurityConfig.
+     * If none or incorrect header → pass through as anonymous. It is SecurityConfigs job to catch unauthorized login.
+     * All errors trigger AuthenticationException and sends to JwtAuthEntryPoint.
      */
     @Override
     protected void doFilterInternal(HttpServletRequest request,
