@@ -1,7 +1,8 @@
 package org.example.bookingsystem.reservation.controller;
 
 import jakarta.validation.Valid;
-import org.example.bookingsystem.reservation.model.CreateAvailabilityRequest;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import org.example.bookingsystem.reservation.model.CreateReservationRequest;
 import org.example.bookingsystem.reservation.model.Reservation;
 import org.example.bookingsystem.reservation.model.UpdateReservationRequest;
@@ -11,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -44,10 +46,13 @@ public class ReservationRestController {
                 .body(reservationService.updateReservation(reservationId, request.getCheckIn(), request.getCheckOut()));
     }
 
-    @PostMapping("/available")
-    public List<Room> getAvailableRooms(@Valid @RequestBody CreateAvailabilityRequest request) {
-
-        return reservationService.getAvailableRooms(request);
+    @GetMapping()
+    public List<Room> getAvailableRooms(
+            @RequestParam @NotNull LocalDate checkIn,
+            @RequestParam @NotNull LocalDate checkOut,
+            @RequestParam @Min(1) int guests)      
+    {
+        return  reservationService.getAvailableRooms(checkIn, checkOut, guests);
     }
 
 

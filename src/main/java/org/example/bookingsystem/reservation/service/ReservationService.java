@@ -4,7 +4,6 @@ import jakarta.transaction.Transactional;
 import org.example.bookingsystem.customer.model.Customer;
 import org.example.bookingsystem.customer.repository.CustomerRepository;
 import org.example.bookingsystem.exceptionhandler.customexeptions.NotFoundException;
-import org.example.bookingsystem.reservation.model.CreateAvailabilityRequest;
 import org.example.bookingsystem.reservation.model.CreateReservationRequest;
 import org.example.bookingsystem.reservation.model.Reservation;
 import org.example.bookingsystem.reservation.model.ReservationStatus;
@@ -154,24 +153,19 @@ public class ReservationService {
     }
 
 
-    public List<Room> getAvailableRooms(CreateAvailabilityRequest request) {
-        validateDateRange(
-                request.getCheckIn(),
-                request.getCheckOut()
-        );
+    public List<Room> getAvailableRooms(LocalDate checkIn, LocalDate checkOut, int guests) {
+        validateDateRange(checkIn, checkOut);
 
 
         return roomService.getAllRooms()
                 .stream()
-                .filter(room ->
-                        room.getRoomSize() >= request.getGuests()
-                )
+                .filter(room -> room.getRoomSize() >=guests)
                 .filter(room -> {
                     try {
                         validationRoomIsAvailable(
                                 room.getId(),
-                                request.getCheckIn(),
-                                request.getCheckOut(),
+                                checkIn,
+                                checkOut,
                                 null
                         );
                         return true;
