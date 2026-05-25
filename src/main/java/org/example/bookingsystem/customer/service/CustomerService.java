@@ -89,7 +89,7 @@ public class CustomerService {
     }
 
     public void removeCustomer(Long id) {
-        if (!repository.existsById(id) || reservationService.getActiveReservationByCustomerId(id) != null) {
+        if (!repository.existsById(id) || reservationService.getActiveReservationByCustomerId(id) == null) {
             throw new BadRequestException("You cannot delete the account while you have active bookings.");
         }
         repository.deleteById(id);
