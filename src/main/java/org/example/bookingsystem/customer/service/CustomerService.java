@@ -4,12 +4,11 @@ import org.example.bookingsystem.customer.model.Customer;
 import org.example.bookingsystem.customer.model.dto.CreateCustomerRequest;
 import org.example.bookingsystem.customer.model.dto.CustomerUpdateRequest;
 import org.example.bookingsystem.customer.repository.CustomerRepository;
-
 import org.example.bookingsystem.exceptionhandler.customexeptions.AlreadyExistException;
+import org.example.bookingsystem.exceptionhandler.customexeptions.HaveReservationException;
 import org.example.bookingsystem.exceptionhandler.customexeptions.WrongEmailOrPasswordException;
-
+import org.example.bookingsystem.reservation.service.ReservationService;
 import org.example.bookingsystem.security.password.PasswordService;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,10 +16,12 @@ import org.springframework.transaction.annotation.Transactional;
 public class CustomerService {
     private final CustomerRepository repository;
     private final PasswordService passwordService;
+    private final ReservationService reservationService;
 
-    public CustomerService(CustomerRepository repository, PasswordService passwordService) {
+    public CustomerService(CustomerRepository repository, PasswordService passwordService, ReservationService reservationService) {
         this.repository = repository;
         this.passwordService = passwordService;
+        this.reservationService = reservationService;
     }
 
     @Transactional
@@ -80,5 +81,12 @@ public class CustomerService {
         }
 
         repository.save(customer);
+    }
+
+    public void deleteCustomer(Long id) {
+        if (reservationService.getActiveReservationByCustomerId(id) != null) {
+            throw new HaveReservationException("You can't delete account while you have active reservations");
+        }
+        repository.deleteById(id);
     }
 }
