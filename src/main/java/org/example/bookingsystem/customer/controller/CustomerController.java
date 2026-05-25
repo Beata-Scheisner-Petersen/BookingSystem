@@ -7,24 +7,18 @@ import org.example.bookingsystem.customer.model.dto.CreateCustomerRequest;
 import org.example.bookingsystem.customer.model.dto.CustomerLoginRequest;
 import org.example.bookingsystem.customer.model.dto.CustomerUpdateRequest;
 import org.example.bookingsystem.customer.service.CustomerService;
-import org.example.bookingsystem.security.jwt.model.CustomUserDetails;
-import org.example.bookingsystem.security.jwt.model.dto.JwtResponse;
-import org.example.bookingsystem.security.jwt.service.JwtService;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/customers")
 public class CustomerController {
     private final CustomerService customerService;
-    private final JwtService jwtService;
 
-    public CustomerController(CustomerService customerService, JwtService jwtService) {
+    public CustomerController(CustomerService customerService) {
         this.customerService = customerService;
-        this.jwtService = jwtService;
     }
 
     @PostMapping
@@ -47,15 +41,12 @@ public class CustomerController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody CustomerLoginRequest request) {
         Customer customer = customerService.loginCustomer(request.email(), request.password());
-        String token = jwtService.generateToken(customer.getId(), customer.getEmail());
 
-        return ResponseEntity.ok(new JwtResponse(token));
+        return ResponseEntity.ok().body(customer.getId());
     }
 
-    @PatchMapping("/me")
-    public ResponseEntity<?> updateCustomer(@AuthenticationPrincipal CustomUserDetails user, @RequestBody CustomerUpdateRequest request) {
-
-        Long id = user.getId();
+    @PatchMapping("/me/{id}")
+    public ResponseEntity<?> updateCustomer(@RequestBody CustomerUpdateRequest request, @PathVariable Long id) {
 
         if (id == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login failed");
