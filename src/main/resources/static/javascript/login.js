@@ -15,3 +15,7 @@ async function login() {
         alert("Login failed");
     }
 }
+
+async function registerNewCustomer() {
+    window.location.href = "/register";
+}
