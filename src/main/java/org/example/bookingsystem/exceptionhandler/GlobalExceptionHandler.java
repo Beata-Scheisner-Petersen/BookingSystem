@@ -1,6 +1,7 @@
 package org.example.bookingsystem.exceptionhandler;
 
 import org.example.bookingsystem.exceptionhandler.customexeptions.AlreadyExistException;
+import org.example.bookingsystem.exceptionhandler.customexeptions.HaveReservationException;
 import org.example.bookingsystem.exceptionhandler.customexeptions.WrongEmailOrPasswordException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -49,4 +50,12 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.CONFLICT)
                 .body(e.getMessage());
     }
+
+    @ExceptionHandler(HaveReservationException.class)
+    public ResponseEntity<String> HaveReservation(HaveReservationException e) {
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT)
+                .body(e.getMessage());
+    }
+
 }
