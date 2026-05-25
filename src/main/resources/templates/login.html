@@ -9,18 +9,32 @@
             rel="stylesheet"
     />
     <link rel="stylesheet" href="/css/side_menu_style.css" />
+
+    <script th:inline="javascript">
+        const thymeleafUrls = {
+            home: [[@{/}]],
+            booking: [[@{/booking}]],
+            login: [[@{/login}]],
+            register: [[@{/register}]],
+            mypage: [[@{/mypage}]],
+            logo: [[@{/images/Black_Cat_Retirement_Home_Logo.png}]]
+        };
+    </script>
+
     <script defer src="/javascript/create_header.js"></script>
+    <script defer src="/javascript/login.js"></script>
 </head>
 <body>
 <div class="d-flex m-5 align-content-center justify-content-center">
     <div>
         <h3>Login</h3>
-        <form action="/api/customers/login" method="POST" class="p-3 rounded-3" style="outline: 2px solid grey;">
+
             <div>
                 <label for="email_input" class="form-label">Email</label>
                 <input
                         id="email_input"
                         type="email"
+                        name="email"
                         placeholder="Email"
                         class="form-control"
                 />
@@ -30,16 +44,17 @@
                 <input
                         id="password_input"
                         type="password"
+                        name="password"
                         placeholder="Password"
                         class="form-control"
                 />
             </div>
             <br>
             <div class="p-2 bg-info rounded-2">
-                <button class="ms-auto rounded-3 shadow">Login</button>
+                <button onclick="login()" class="ms-auto rounded-3 shadow">Login</button>
                 <button class="ms-auto rounded-3 shadow">Register new User</button>
             </div>
-        </form>
+
     </div>
 </div>
 </body>
