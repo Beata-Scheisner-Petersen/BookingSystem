@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Register</title>
+    <link
+            th:href="@{/vendor/bootstrap.min.css}"
+            rel="stylesheet"
+    />
+    <link rel="stylesheet" th:href="@{/css/side_menu_style.css}"/>
+
+    <script th:inline="javascript">
+        const thymeleafUrls = {
+            home: [[@{/}]],
+                booking
+        :
+        [[@{/booking}]],
+            login
+        :
+        [[@{/login}]],
+            register
+        :
+        [[@{/register}]],
+            mypage
+        :
+        [[@{/mypage}]],
+            logo
+        :
+        [[@{/images/Black_Cat_Retirement_Home_Logo.png
+        }]]
+        }
+        ;
+    </script>
+
+    <script defer th:src="@{/javascript/create_header.js}"></script>
+    <script defer th:src="@{/javascript/register.js}"></script>
+</head>
+<body>
+<div class="d-flex m-5 align-content-center justify-content-center">
+    <div>
+        <h3>Register new Account</h3>
+
+        <div>
+            <label for="firstname" class="form-label">First Name</label>
+            <input
+                    id="firstname"
+                    type="text"
+                    name="firstname"
+                    placeholder="first name"
+                    class="form-control"
+            />
+        </div>
+        <div>
+            <label for="lastname" class="form-label">Last Name</label>
+            <input
+                    id="lastname"
+                    type="text"
+                    name="lastname"
+                    placeholder="Last name"
+                    class="form-control"
+            />
+        </div>
+        <div>
+            <label for="id_number" class="form-label">ID-Number</label>
+            <input
+                    id="id_number"
+                    type="text"
+                    name="id_number"
+                    placeholder="Identification Number"
+                    class="form-control"
+            />
+        </div>
+        <div>
+            <label for="email" class="form-label">@Email</label>
+            <input
+                    id="email"
+                    type="email"
+                    name="email"
+                    placeholder="Email"
+                    class="form-control"
+            />
+        </div>
+        <div>
+            <label for="phonenumber" class="form-label">Phone</label>
+            <input
+                    id="phonenumber"
+                    type="text"
+                    name="phonenumber"
+                    placeholder="Phone Number"
+                    class="form-control"
+            />
+        </div>
+        <div>
+            <label for="password" class="form-label">Password</label>
+            <input
+                    id="password"
+                    type="password"
+                    name="password"
+                    placeholder="Password"
+                    class="form-control"
+            />
+        </div>
+        <br>
+        <div class="p-2 bg-info rounded-2">
+            <button onclick="registerCustomer()" class="ms-auto rounded-3 shadow">Register Account</button>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>
