@@ -4,43 +4,26 @@ import jakarta.validation.Valid;
 
 import org.example.bookingsystem.customer.model.Customer;
 import org.example.bookingsystem.customer.model.dto.CreateCustomerRequest;
-import org.example.bookingsystem.customer.model.dto.CreateCustomerResponse;
 import org.example.bookingsystem.customer.model.dto.CustomerLoginRequest;
 import org.example.bookingsystem.customer.model.dto.CustomerUpdateRequest;
 import org.example.bookingsystem.customer.service.CustomerService;
-import org.example.bookingsystem.security.jwt.model.CustomUserDetails;
-import org.example.bookingsystem.security.jwt.model.dto.JwtResponse;
-import org.example.bookingsystem.security.jwt.service.JwtService;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
 
 @RestController
 @RequestMapping("api/customers")
 public class CustomerController {
     private final CustomerService customerService;
-    private final JwtService jwtService;
 
-    public CustomerController(CustomerService customerService, JwtService jwtService) {
+    public CustomerController(CustomerService customerService) {
         this.customerService = customerService;
-        this.jwtService = jwtService;
     }
 
     @PostMapping
-    public ResponseEntity<CreateCustomerResponse> createCustomer(@Valid @RequestBody CreateCustomerRequest request) {
-        Customer savedCustomer = customerService.createNewCustomer(request);
-        return ResponseEntity
-                .status(HttpStatus.CREATED).
-                        body(new CreateCustomerResponse(
-                                savedCustomer.getFirstname(),
-                                savedCustomer.getLastname(),
-                                savedCustomer.getEmail(),
-                                savedCustomer.getPhoneNumber()
-                ));
+    public ResponseEntity<Customer> createCustomer(@Valid @RequestBody CreateCustomerRequest customer) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(customerService.createNewCustomer(customer));
     }
 
     /*
@@ -57,41 +40,20 @@ public class CustomerController {
      */
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody CustomerLoginRequest request) {
-        Customer customer = customerService
-                .loginCustomer(request.email(), request.password());
-        String token = jwtService
-                .generateToken(customer.getId(), customer.getEmail());
+        Customer customer = customerService.loginCustomer(request.email(), request.password());
 
-        return ResponseEntity.ok(new JwtResponse(token));
+        return ResponseEntity.ok().body(customer.getId());
     }
 
-    @PatchMapping("/me")
-    public ResponseEntity<?> updateCustomer(@AuthenticationPrincipal CustomUserDetails user,
-                                            @RequestBody CustomerUpdateRequest request) {
-
-        Long id = user.getId();
+    @PatchMapping("/me/{id}")
+    public ResponseEntity<?> updateCustomer(@RequestBody CustomerUpdateRequest request, @PathVariable Long id) {
 
         if (id == null) {
-            return ResponseEntity
-                    .status(HttpStatus.UNAUTHORIZED)
-                    .body(Map.of("error", "You are not authorized"));
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login failed");
         }
 
         customerService.updateCustomerInfo(id, request);
 
-        return ResponseEntity.ok(Map.of("message", "Info is updated"));
-    }
-
-    @DeleteMapping("/delete")
-    public ResponseEntity<?> deleteCustomer(@AuthenticationPrincipal CustomUserDetails user) {
-        Long id = user.getId();
-
-        if (id == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).
-                    body(Map.of("error", "You are not authorized"));
-        }
-        customerService.removeCustomer(id);
-
-        return ResponseEntity.ok(Map.of("message", "Account deleted"));
+        return ResponseEntity.noContent().build();
     }
 }
