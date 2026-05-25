@@ -10,6 +10,13 @@ public class ReservationThController {
     @GetMapping ("/reservation")
     public String reservation (Model model) {
         model.addAttribute("message", "Here you can make reservation");
-        return "reservation";
+        return "/reservation";
+    }
+
+
+    @GetMapping ("/myreservation")
+    public String myreservation (Model model) {
+        model.addAttribute("message", "Here you can make reservation");
+        return "/myreservation";
     }
 }
