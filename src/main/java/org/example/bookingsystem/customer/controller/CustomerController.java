@@ -1,5 +1,6 @@
 package org.example.bookingsystem.customer.controller;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
 import org.example.bookingsystem.customer.model.Customer;
@@ -11,6 +12,8 @@ import org.example.bookingsystem.customer.service.CustomerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("api/customers")
@@ -26,27 +29,18 @@ public class CustomerController {
         return ResponseEntity.status(HttpStatus.CREATED).body(customerService.createNewCustomer(customer));
     }
 
-    /*
-     * Login -> create JWT
-     * The password is checked against the database (via customerService + PasswordEncoder).
-     * If that is correct, you will get a Customer object.
-     * You call jwtService.generateToken(...) with:
-     * customerId → is placed as the subject
-     * email → is added as claim "email"
-     * JwtService signs the token with your secret key (jwt.secret) and sets the expiration time.
-     * Result: the client (frontend / Postman / Thunder client) receives a JWT string back (a token that is stored in the client).
-     * For each protected request, the header is sent: Authorization: Bearer <your-token-here>
-     * At Login, the request is sent to JwtAuthFilter.
-     */
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody CustomerLoginRequest request) {
+    public ResponseEntity<?> login(@RequestBody CustomerLoginRequest request, HttpSession session) {
         Customer customer = customerService.loginCustomer(request.email(), request.password());
 
-        return ResponseEntity.ok().body(customer.getId());
+        session.setAttribute("customerId", customer.getId());
+
+        return ResponseEntity.ok().body(Map.of("message", "login successful"));
     }
 
-    @PatchMapping("/me/{id}")
-    public ResponseEntity<?> updateCustomer(@RequestBody CustomerUpdateRequest request, @PathVariable Long id) {
+    @PatchMapping("/me")
+    public ResponseEntity<?> updateCustomer(@RequestBody CustomerUpdateRequest request, HttpSession session) {
+        Long id = (Long) session.getAttribute("customerId");
 
         if (id == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login failed");
@@ -54,6 +48,6 @@ public class CustomerController {
 
         customerService.updateCustomerInfo(id, request);
 
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().body(Map.of("message", "Customer info updated"));
     }
 }
