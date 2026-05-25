@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/reservation")
-public class ReservationController {
+public class ReservationRestController {
     private final ReservationService reservationService;
 
-    public ReservationController(ReservationService reservationService) {
+    public ReservationRestController(ReservationService reservationService) {
         this.reservationService = reservationService;
     }
 
