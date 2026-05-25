@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import org.example.bookingsystem.customer.model.Customer;
 import org.example.bookingsystem.customer.repository.CustomerRepository;
 import org.example.bookingsystem.exceptionhandler.customexeptions.NotFoundException;
+import org.example.bookingsystem.reservation.model.CreateAvailabilityRequest;
 import org.example.bookingsystem.reservation.model.CreateReservationRequest;
 import org.example.bookingsystem.reservation.model.Reservation;
 import org.example.bookingsystem.reservation.model.ReservationStatus;
@@ -41,7 +42,7 @@ public class ReservationService {
 
     //Hitta reservationer med aktiv status med kundId
 
-    public List <Reservation> getActiveReservationByCustomerId(Long customerId) {
+    public List<Reservation> getActiveReservationByCustomerId(Long customerId) {
 
         return reservationRepository.findByCustomer_IdAndStatus(customerId, ReservationStatus.ACTIVE);
     }
@@ -153,7 +154,38 @@ public class ReservationService {
     }
 
 
+    public List<Room> getAvailableRoom(CreateAvailabilityRequest request) {
+        validateDateRange(
+                request.getCheckIn(),
+                request.getCheckOut()
+        );
+        return roomService.getAllRooms()
+                .stream()
+                .filter(room ->
+                        room.getRoomSize() >= request.getGuests()
+                )
+                .filter(room -> {
+                    try {
+                        validationRoomIsAvailable(
+                                room.getId(),
+                                request.getCheckIn(),
+                                request.getCheckOut(),
+                                null
+                        );
+                        return true;
+                    } catch (RuntimeException e) {
+                        return false;
+                    }
+
+                })
+                .toList();
+    }
+
+
 }
+
+
+
 
 //ToDO:
 //continue develop method validationRoomIsAvailable
