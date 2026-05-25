@@ -1,6 +1,7 @@
 package org.example.bookingsystem.customer.repository;
 
 import org.example.bookingsystem.customer.model.Customer;
+import org.example.bookingsystem.customer.model.dto.CustomerInfoRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
@@ -13,4 +14,6 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
     boolean existsByPhoneNumber(String phoneNumber);
 
     Optional<Customer> findByEmail(String email);
+
+    Optional<CustomerInfoRequest> getCustomersById(Long id);
 }
