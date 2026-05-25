@@ -38,16 +38,29 @@ public class CustomerController {
         return ResponseEntity.ok().body(Map.of("message", "login successful"));
     }
 
-    @PatchMapping("/me")
+    @PatchMapping
     public ResponseEntity<?> updateCustomer(@RequestBody CustomerUpdateRequest request, HttpSession session) {
         Long id = (Long) session.getAttribute("customerId");
 
         if (id == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login failed");
+            return ResponseEntity.status(HttpStatus.NETWORK_AUTHENTICATION_REQUIRED).body(Map.of("error", "authorization failed"));
         }
 
         customerService.updateCustomerInfo(id, request);
 
         return ResponseEntity.ok().body(Map.of("message", "Customer info updated"));
+    }
+
+    @DeleteMapping
+    public ResponseEntity<?> deleteCustomer(HttpSession session) {
+
+        Long id = (Long) session.getAttribute("customerId");
+
+        if (id == null) {
+            return ResponseEntity.status(HttpStatus.NETWORK_AUTHENTICATION_REQUIRED).body(Map.of("error", "authorization failed"));
+        }
+
+        customerService.deleteCustomer(id);
+        return ResponseEntity.ok().body(Map.of("message", "account deleted"));
     }
 }
