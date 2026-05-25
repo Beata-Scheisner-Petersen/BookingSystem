@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>My Page</title>
+        <link
+                href="/vendor/bootstrap.min.css"
+                rel="stylesheet"
+        />
+        <link rel="stylesheet" href="/css/side_menu_style.css"/>
+        <link rel="stylesheet" href="/css/my_page_style.css"/>
+
+        <script th:inline="javascript">
+            const thymeleafUrls = {
+                home: [[@{/}]],
+                    booking: [[@{/booking}]],
+                login: [[@{/login}]],
+                register: [[@{/register}]],
+                mypage: [[@{/mypage}]],
+                logo: [[@{/images/Black_Cat_Retirement_Home_Logo.png}]]
+            };
+        </script>
+
+        <script defer src="/javascript/create_header.js"></script>
+
+    </head>
+<body>
+<div class="content">
+    <h1>My Page</h1>
+
+    <h2>Customer information:</h2>
+    <p><strong>Firstname:</strong> [[${customer.firstname}]]</p>
+    <p><strong>Lastname:</strong> [[${customer.lastname}]]</p>
+    <p><strong>Email:</strong> [[${customer.email}]]</p>
+    <p><strong>Telefon:</strong> [[${customer.phoneNumber}]]</p>
+
+    <a href="/customer/edit">Uppdatera konto</a>
+    <a href="/customer/reservations">Mina reservationer</a>
+</div>
+
+</body>
+</html>
