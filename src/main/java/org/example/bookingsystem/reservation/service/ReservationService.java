@@ -154,11 +154,13 @@ public class ReservationService {
     }
 
 
-    public List<Room> getAvailableRoom(CreateAvailabilityRequest request) {
+    public List<Room> getAvailableRooms(CreateAvailabilityRequest request) {
         validateDateRange(
                 request.getCheckIn(),
                 request.getCheckOut()
         );
+
+
         return roomService.getAllRooms()
                 .stream()
                 .filter(room ->
