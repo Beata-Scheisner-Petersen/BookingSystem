@@ -41,7 +41,7 @@ public class ReservationService {
 
     //Hitta reservationer med aktiv status med kundId
 
-    public List <Reservation> getActiveReservationByCustomerId(Long customerId) {
+    public List<Reservation> getActiveReservationByCustomerId(Long customerId) {
 
         return reservationRepository.findByCustomer_IdAndStatus(customerId, ReservationStatus.ACTIVE);
     }
@@ -153,7 +153,35 @@ public class ReservationService {
     }
 
 
+    public List<Room> getAvailableRooms(LocalDate checkIn, LocalDate checkOut, int guests) {
+        validateDateRange(checkIn, checkOut);
+
+
+        return roomService.getAllRooms()
+                .stream()
+                .filter(room -> room.getRoomSize() >=guests)
+                .filter(room -> {
+                    try {
+                        validationRoomIsAvailable(
+                                room.getId(),
+                                checkIn,
+                                checkOut,
+                                null
+                        );
+                        return true;
+                    } catch (RuntimeException e) {
+                        return false;
+                    }
+
+                })
+                .toList();
+    }
+
+
 }
+
+
+
 
 //ToDO:
 //continue develop method validationRoomIsAvailable

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Black Cat</title>
+    <link
+            href="/vendor/bootstrap.min.css"
+            rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/side_menu_style.css"/>
+    <script defer src="/javascript/create_header.js"></script>
+    <script defer src="/javascript/reservation.js"></script>
+</head>
+
+
+<body class="bg-light">
+<div class="container mt-5">
+    <div class="card p-4 border-0">
+
+        <h2 class="mb-4">Reservation</h2>
+
+        <div class="mb-3">
+            <label class="form-label">Check In</label>
+            <input type="date" id="checkIn" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Check Out</label>
+            <input type="date" id="checkOut" class="form-control">
+        </div>
+        <div class="mb-4">
+            <label class="form-label">Guests</label>
+            <input type="number" id="guests" class="form-control" min="1">
+        </div>
+
+        <button onclick="getAvailableRooms()" class="btn btn-dark"> Hämta lediga rum </button>
+    </div>
+    <div id="roomsGrid">
+
+    </div>
+
+
+</div>
+
+
+</body>
+</html>
