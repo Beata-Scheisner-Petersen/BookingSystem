@@ -2,10 +2,14 @@ package org.example.bookingsystem.pages.controller;
 
 import jakarta.servlet.http.HttpSession;
 import org.example.bookingsystem.customer.model.dto.CustomerInfoRequest;
+import org.example.bookingsystem.exceptionhandler.customexeptions.NotFoundException;
 import org.example.bookingsystem.pages.service.PageService;
+import org.example.bookingsystem.reservation.model.GetReservationInfo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import java.util.List;
 
 @Controller
 public class PageController {
@@ -52,5 +56,13 @@ public class PageController {
         return "redirect:/login";
     }
 
+    @GetMapping("/reservationinfo")
+    public List<GetReservationInfo> myReservations(HttpSession session) {
+        Long id = (Long) session.getAttribute("CustomerId");
 
+        if (id == null) {
+            throw new NotFoundException("Customer is not logged in");
+        }
+        return  pageService.getCustomerReservations(id);
+    }
 }
