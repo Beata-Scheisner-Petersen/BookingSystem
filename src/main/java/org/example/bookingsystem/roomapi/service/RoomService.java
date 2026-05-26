@@ -22,7 +22,7 @@ public class RoomService {
 
     //Rooms are sorted ascending by their roomNumber
     public List<Room> getAllRooms() {
-        return repository.findAll(Sort.by("roomNumber").ascending());
+        return repository.findAll();
     }
 
     public RoomResponseDto getRoomById(long id) {
@@ -45,6 +45,8 @@ public class RoomService {
     }
 
     public RoomResponseDto addRoom(int roomNumber, int roomSize, BigDecimal roomPrice) {
+
+        try {
             Room returnedRoom = repository.save(new Room(roomNumber, roomSize, roomPrice));
 
             return new RoomResponseDto(
@@ -54,6 +56,9 @@ public class RoomService {
                     returnedRoom.getRoomPrice()
             );
 
+        }catch (Exception e){
+            return null;
+        }
     }
 
     public RoomResponseDto updateRoom(Long id, UpdateRoomDto dto) {
