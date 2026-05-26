@@ -3,18 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
     <title>My reservations</title>
     <link
-            href="/vendor/bootstrap.min.css"
+            th:href="@{/vendor/bootstrap.min.css}"
             rel="stylesheet"
     />
-    <link rel="stylesheet" href="/css/my_reservations.css"/>
+    <link rel="stylesheet" th:href="@{/css/my_reservation.css}"/>
     <th:block th:replace="fragments/header :: header"></th:block>
+    <script defer th:src="@{/javascript/my_reservation.js}"></script>
 </head>
 <body>
-<div id="header"></div>
-
 <h1>My reservations</h1>
 
 <table id="reservationTable" class="table table-striped">
@@ -33,6 +31,6 @@
 </table>
 
 
-<script src="/js/my_reservations.js"></script>
+
 </body>
 </html>

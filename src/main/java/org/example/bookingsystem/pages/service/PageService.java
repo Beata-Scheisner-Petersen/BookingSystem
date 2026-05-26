@@ -25,20 +25,4 @@ public class PageService {
                 .getCustomersById(id).orElseThrow(() -> new NotFoundException("Customer not found"));
     }
 
-    public List<GetReservationInfo> getCustomerReservations(Long CustomerId) {
-        Customer customer = customerRepository.findById(CustomerId).orElseThrow(() -> new NotFoundException("Customer not found"));
-        return reservationRepository
-                .findAllByCustomer(customer)
-                .stream()
-                .map(
-                        r -> new GetReservationInfo(
-                                r.getCheckIn(),
-                                r.getCheckOut(),
-                                r.getRoom(),
-                                r.isExtraBed(),
-                                r.getTotalCost(),
-                                r.getStatus()
-                        )
-                ).toList();
-    }
 }
