@@ -58,7 +58,7 @@ public class PageController {
     }
 
     @GetMapping("/myReservations")
-    public String myreservations(HttpSession session, Model model) {
+    public String myReservations(HttpSession session) {
         Long id = (Long) session.getAttribute("customerId");
 
         if (id == null) {
