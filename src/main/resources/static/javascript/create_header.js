@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
       { name: "Login", url: thymeleafUrls.login },
       { name: "Register", url: thymeleafUrls.register },
       { name: "My Page", url: thymeleafUrls.mypage },
-      { name: "Logout", url: "/logout"}
+      { name: "Logout", url: thymeleafUrls.logout}
   ];
 
   const nav = document.createElement("nav");
