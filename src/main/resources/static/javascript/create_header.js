@@ -55,11 +55,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   //Create Side Menu----------------------------
   const sideMenuItems = [
-    { name: "Start Page", url: thymeleafUrls.home },
-    { name: "Booking", url: thymeleafUrls.booking },
-    { name: "Login", url: thymeleafUrls.login },
-    { name: "Register", url: thymeleafUrls.register },
-    { name: "My Page", url: thymeleafUrls.mypage },
+      { name: "Start Page", url: thymeleafUrls.home },
+      { name: "Booking", url: thymeleafUrls.booking },
+      { name: "Login", url: thymeleafUrls.login },
+      { name: "Register", url: thymeleafUrls.register },
+      { name: "My Page", url: thymeleafUrls.mypage },
+      { name: "Logout", url: "/logout"}
   ];
 
   const nav = document.createElement("nav");
