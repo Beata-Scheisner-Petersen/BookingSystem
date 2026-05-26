@@ -7,6 +7,7 @@ import org.example.bookingsystem.customer.model.dto.CreateCustomerRequest;
 import org.example.bookingsystem.customer.model.dto.CustomerLoginRequest;
 import org.example.bookingsystem.customer.model.dto.CustomerUpdateRequest;
 import org.example.bookingsystem.customer.service.CustomerService;
+import org.example.bookingsystem.exceptionhandler.customexeptions.HaveReservationException;
 import org.example.bookingsystem.exceptionhandler.customexeptions.WrongEmailOrPasswordException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -59,7 +60,7 @@ public class CustomerController {
             Customer customer = customerService.loginCustomer(request.email(), request.password());
             session.setAttribute("customerId", customer.getId());
             return ResponseEntity.ok().body(Map.of("message", "login successful"));
-        }catch (WrongEmailOrPasswordException e){
+        } catch (WrongEmailOrPasswordException e) {
             return ResponseEntity.status(409).body(e.getMessage());
         }
 
@@ -92,7 +93,13 @@ public class CustomerController {
             return ResponseEntity.status(HttpStatus.NETWORK_AUTHENTICATION_REQUIRED).body(Map.of("error", "authorization failed"));
         }
 
-        customerService.deleteCustomer(id);
-        return ResponseEntity.ok().body(Map.of("message", "account deleted"));
+        try {
+            customerService.deleteCustomer(id);
+
+            return ResponseEntity.ok().body(Map.of("message", "account deleted"));
+        } catch (HaveReservationException e) {
+            return ResponseEntity.status(409).body(Map.of("error",  e.getMessage()));
+        }
+
     }
 }
