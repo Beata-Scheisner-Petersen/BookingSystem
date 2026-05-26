@@ -9,8 +9,11 @@ import org.example.bookingsystem.customer.model.dto.CustomerUpdateRequest;
 import org.example.bookingsystem.customer.service.CustomerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -28,7 +31,19 @@ public class CustomerController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody CustomerLoginRequest request, HttpSession session) {
+    public ResponseEntity<?> login(
+            @Valid @RequestBody CustomerLoginRequest request,
+            BindingResult result,
+            HttpSession session
+    ) {
+        if (result.hasErrors()) {
+            Map<String, String> errors = new HashMap<>();
+            result.getFieldErrors().forEach(error ->
+                    errors.put(error.getField(), error.getDefaultMessage())
+            );
+            return ResponseEntity.badRequest().body(errors);
+        }
+
         Customer customer = customerService.loginCustomer(request.email(), request.password());
 
         session.setAttribute("customerId", customer.getId());

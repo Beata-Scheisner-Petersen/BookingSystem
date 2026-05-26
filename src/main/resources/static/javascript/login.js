@@ -9,11 +9,27 @@ async function login() {
         body: JSON.stringify({email, password})
     });
 
+    const data = await response.json();
+
     if (response.ok) {
         window.location.href = "/mypage";
-    } else {
-        alert("Login failed");
+        return;
     }
+
+    //Validation errors
+    if(response.status === 400 && typeof data == "object") {
+        const messages = Object.values(data);
+        alert(messages.join("\n"));
+        return;
+    }
+
+    //Wrong Email/Password
+    if (response.status === 409) {
+        alert(data);
+        return;
+    }
+
+    alert("Login Failed");
 }
 
 async function registerNewCustomer() {
