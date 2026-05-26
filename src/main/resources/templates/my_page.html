@@ -7,10 +7,10 @@
         <title>My Page</title>
 
         <link
-                href="/vendor/bootstrap.min.css"
+                th:href="@{/vendor/bootstrap.min.css}"
                 rel="stylesheet"
         />
-        <link rel="stylesheet" href="/css/my_page_style.css"/>
+        <link rel="stylesheet" th:href="@{/css/my_page_style.css}"/>
         <th:block th:replace="fragments/header :: header"></th:block>
     </head>
 <body>
@@ -23,9 +23,9 @@
     <p><strong>Email:</strong> [[${customer.email}]]</p>
     <p><strong>Telefon:</strong> [[${customer.phoneNumber}]]</p>
 
-    <a href="/updateCustomer">update account</a>
-    <a href="/customer/reservations">my reservations</a>
-    <a href="/logout">logout</a>
+    <a th:href="@{/updateCustomer}">update account</a>
+    <a th:href="@{/customer/reservations}">my reservations</a>
+    <a th:href="@{/logout}">logout</a>
 
 </div>
 
