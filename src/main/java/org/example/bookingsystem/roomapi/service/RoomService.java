@@ -75,15 +75,18 @@ public class RoomService {
         fetchedRoom.setRoomSize(dto.getRoomSize());
         fetchedRoom.setRoomPrice(dto.getRoomPrice());
 
-        Room resultRoom = repository.save(fetchedRoom);
+        try {
+            Room resultRoom = repository.save(fetchedRoom);
 
-        return new RoomResponseDto(
-                resultRoom.getId(),
-                resultRoom.getRoomNumber(),
-                resultRoom.getRoomSize(),
-                resultRoom.getRoomPrice()
-        );
-
+            return new RoomResponseDto(
+                    resultRoom.getId(),
+                    resultRoom.getRoomNumber(),
+                    resultRoom.getRoomSize(),
+                    resultRoom.getRoomPrice()
+            );
+        }catch (Exception e){
+            return null;
+        }
     }
 
     public boolean deleteRoom(Long id) {
