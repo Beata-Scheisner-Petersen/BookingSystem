@@ -1,7 +1,13 @@
 async function login() {
 
+    //Values from Input
     const email = document.getElementById("email_input").value;
     const password = document.getElementById("password_input").value;
+
+    //Clear old errors
+    document.getElementById("email_error").innerText = "";
+    document.getElementById("password_error").innerText = "";
+
 
     const response = await fetch("/api/customers/login", {
         method: "POST",
@@ -17,9 +23,13 @@ async function login() {
     }
 
     //Validation errors
-    if(response.status === 400 && typeof data == "object") {
-        const messages = Object.values(data);
-        alert(messages.join("\n"));
+    if (response.status === 400 && typeof data == "object") {
+        for (const field in data) {
+            const errorDiv = document.getElementById(`${field}_error`);
+            if (errorDiv) {
+                errorDiv.innerHTML = data[field];
+            }
+        }
         return;
     }
 
