@@ -6,7 +6,6 @@ import java.time.LocalDate;
 
 public class CreateReservationRequest {
 
-    @NotNull (message = "Customer Id is required")
     private Long customerId;
 
     @NotNull (message = "Customer Id is required")
@@ -45,4 +44,7 @@ public class CreateReservationRequest {
         return checkOut;
     }
 
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
+    }
 }

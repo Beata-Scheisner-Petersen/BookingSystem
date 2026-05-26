@@ -1,5 +1,6 @@
 package org.example.bookingsystem.reservation.controller;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
@@ -25,7 +26,9 @@ public class ReservationRestController {
     }
 
     @PostMapping
-    public ResponseEntity<Reservation> createReservation(@Valid @RequestBody CreateReservationRequest request) {
+    public ResponseEntity<Reservation> createReservation(@Valid @RequestBody CreateReservationRequest request, HttpSession session) {
+        Long customerId = (Long) session.getAttribute("customerId");
+        request.setCustomerId(customerId);
         Reservation createReservation = reservationService.createReservation(request);
 
         return ResponseEntity

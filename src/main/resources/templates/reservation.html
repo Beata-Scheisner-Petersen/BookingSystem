@@ -8,9 +8,10 @@
             href="/vendor/bootstrap.min.css"
             rel="stylesheet"
     />
-    <link rel="stylesheet" href="/css/side_menu_style.css"/>
-    <script defer src="/javascript/create_header.js"></script>
+
+
     <script defer src="/javascript/reservation.js"></script>
+    <th:block th:replace="fragments/header :: header"></th:block>
 </head>
 
 
@@ -39,6 +40,70 @@
 
     </div>
 
+    <div id="confirmationMessage"></div>
+
+
+    <div class="modal fade"
+         id="confirmationModal"
+         tabindex="-1"
+         aria-hidden="true">
+
+        <div class="modal-dialog">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+
+                    <h5 class="modal-title">
+                        Bokningsbekräftelse
+                    </h5>
+
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal">
+                    </button>
+
+                </div>
+
+                <div class="modal-body">
+
+                    <p>
+                        Reservation ID:
+                        <span id="reservationId"></span>
+                    </p>
+
+                    <p>
+                        Check In:
+                        <span id="confirmationCheckIn"></span>
+                    </p>
+
+                    <p>
+                        Check Out:
+                        <span id="confirmationCheckOut"></span>
+                    </p>
+
+                    <p>
+                        Guests:
+                        <span id="confirmationGuests"></span>
+                    </p>
+
+                </div>
+
+                <div class="modal-footer">
+
+                    <button type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal">
+
+                        Close
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
 
 </div>
 
