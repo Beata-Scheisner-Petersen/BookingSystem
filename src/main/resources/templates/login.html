@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Black Cat</title>
     <link
-            href="/vendor/bootstrap.min.css"
+            th:href="@{/vendor/bootstrap.min.css}"
             rel="stylesheet"
     />
     <th:block th:replace="fragments/header :: header"></th:block>
-    <script defer src="/javascript/login.js"></script>
+    <script defer th:src="@{/javascript/login.js}"></script>
 </head>
 <body>
 <div class="d-flex m-5 align-content-center justify-content-center">
