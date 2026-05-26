@@ -28,7 +28,7 @@ public class ReservationRestController {
     @PostMapping
     public ResponseEntity<Reservation> createReservation(@Valid @RequestBody CreateReservationRequest request, HttpSession session) {
         Long customerId = (Long) session.getAttribute("customerId");
-        request.setCustomerId(customerId);
+        request.setCustomerId(1L);
         Reservation createReservation = reservationService.createReservation(request);
 
         return ResponseEntity

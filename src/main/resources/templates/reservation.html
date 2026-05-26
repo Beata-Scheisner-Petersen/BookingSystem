@@ -4,10 +4,9 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Black Cat</title>
-    <link
-            href="/vendor/bootstrap.min.css"
-            rel="stylesheet"
-    />
+    <link href="/vendor/bootstrap.min.css" rel="stylesheet"/>
+    <link href="/css/reservation.css" rel="stylesheet"/>
+    <script src="/vendor/bootstrap.bundle.min.js"></script>
 
 
     <script defer src="/javascript/reservation.js"></script>
@@ -17,91 +16,36 @@
 
 <body class="bg-light">
 <div class="container mt-5">
-    <div class="card p-4 border-0">
-
-        <h2 class="mb-4">Reservation</h2>
-
-        <div class="mb-3">
-            <label class="form-label">Check In</label>
-            <input type="date" id="checkIn" class="form-control">
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Check Out</label>
-            <input type="date" id="checkOut" class="form-control">
-        </div>
-        <div class="mb-4">
-            <label class="form-label">Guests</label>
-            <input type="number" id="guests" class="form-control" min="1">
-        </div>
-
-        <button onclick="getAvailableRooms()" class="btn btn-dark"> Hämta lediga rum </button>
-    </div>
-    <div id="roomsGrid">
-
-    </div>
-
-    <div id="confirmationMessage"></div>
-
-
-    <div class="modal fade"
-         id="confirmationModal"
-         tabindex="-1"
-         aria-hidden="true">
-
-        <div class="modal-dialog">
-
-            <div class="modal-content">
-
-                <div class="modal-header">
-
-                    <h5 class="modal-title">
-                        Bokningsbekräftelse
-                    </h5>
-
-                    <button type="button"
-                            class="btn-close"
-                            data-bs-dismiss="modal">
-                    </button>
-
-                </div>
-
-                <div class="modal-body">
-
-                    <p>
-                        Reservation ID:
-                        <span id="reservationId"></span>
-                    </p>
-
-                    <p>
-                        Check In:
-                        <span id="confirmationCheckIn"></span>
-                    </p>
-
-                    <p>
-                        Check Out:
-                        <span id="confirmationCheckOut"></span>
-                    </p>
-
-                    <p>
-                        Guests:
-                        <span id="confirmationGuests"></span>
-                    </p>
-
-                </div>
-
-                <div class="modal-footer">
-
-                    <button type="button"
-                            class="btn btn-secondary"
-                            data-bs-dismiss="modal">
-
-                        Close
-                    </button>
-
-                </div>
-
+    <div class="card p-3 border-0 shadow-sm">
+        <div class="row align-items-end g-2">
+            <div class="col-md-3">
+                <label class="form-label">Check In</label>
+                <input type="date" id="checkIn" class="form-control">
             </div>
+            <div class="col-md-3">
+                <label class="form-label">Check Out</label>
+                <input type="date" id="checkOut" class="form-control">
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">Guests</label>
+                <input type="number" id="guests" class="form-control" min="1" max="10" value="2">
+            </div>
+            <div class="col-md-3 get-available-rooms">
+                <button onclick="getAvailableRooms()" class="btn btn-dark"> Hämta lediga rum </button>
+            </div>
+        </div>
+    </div>
 
+    <div id="roomsGrid"></div>
+
+    <div class="toast-container position-fixed top-50 start-50 translate-middle p-3">
+        <div id="confirmationToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <strong class="me-auto">Confirmation</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div id="confirmationMessage" class="toast-body">
+            </div>
         </div>
     </div>
 

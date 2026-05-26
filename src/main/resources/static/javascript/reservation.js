@@ -42,14 +42,14 @@ function renderRooms(rooms) {
     grid.innerHTML = rooms.map(room => `
         <div class="card room-card">
             <div class="row g-0 align-items-center">
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <img
                             src="images/Black_Cat_Hotel_Room.png"
                             class="img-fluid rounded-start room-image"
                             alt="Room">
 
                 </div>
-                <div class="col-md-8">
+                <div class="col-md-7">
                     <div class="card-body py-2">
                         <p class="card-text mb-1">
                             Room nummer: ${room.id}
@@ -98,17 +98,18 @@ async function createReservation(roomId) {
 }
 
 function showConfirmation(reservation) {
-    console.log(reservation);
     const container = document.getElementById("confirmationMessage")
     container.innerHTML = `
-        <div class="alert alert-success mt-4">
-            <h4>Booking Confirmed  </h4>
-            <p> Reservation ID:${reservation.id} </p>
-            <p> Room Number:${reservation.room.roomNumber} </p>
-            <p> Check-in:${reservation.checkIn} </p>
-            <p>Check-out:${reservation.checkOut}</p>    
-
+        <div class="alert mt-4">
+            <h4>Booking Confirmed</h4>
+            <p> Reservation ID: ${reservation.id} </p>
+            <p> Room Number: ${reservation.room.roomNumber} </p>
+            <p> Check-in: ${reservation.checkIn} </p>
+            <p> Check-out: ${reservation.checkOut} </p>    
         </div>
     `;
 
+    // Show toast
+    const toast = document.getElementById('confirmationToast')
+    const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toast).show();
 }
