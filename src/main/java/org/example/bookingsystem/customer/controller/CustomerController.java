@@ -7,6 +7,7 @@ import org.example.bookingsystem.customer.model.dto.CreateCustomerRequest;
 import org.example.bookingsystem.customer.model.dto.CustomerLoginRequest;
 import org.example.bookingsystem.customer.model.dto.CustomerUpdateRequest;
 import org.example.bookingsystem.customer.service.CustomerService;
+import org.example.bookingsystem.exceptionhandler.customexeptions.WrongEmailOrPasswordException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -26,7 +27,17 @@ public class CustomerController {
     }
 
     @PostMapping
-    public ResponseEntity<Customer> createCustomer(@Valid @RequestBody CreateCustomerRequest customer) {
+    public ResponseEntity<?> createCustomer(
+            @Valid @RequestBody CreateCustomerRequest customer,
+            BindingResult result) {
+
+        if (result.hasErrors()) {
+            Map<String, String> errors = new HashMap<>();
+            result.getFieldErrors().forEach(error ->
+                    errors.put(error.getField(), error.getDefaultMessage())
+            );
+            return ResponseEntity.badRequest().body(errors);
+        }
         return ResponseEntity.status(HttpStatus.CREATED).body(customerService.createNewCustomer(customer));
     }
 
@@ -44,11 +55,14 @@ public class CustomerController {
             return ResponseEntity.badRequest().body(errors);
         }
 
-        Customer customer = customerService.loginCustomer(request.email(), request.password());
+        try {
+            Customer customer = customerService.loginCustomer(request.email(), request.password());
+            session.setAttribute("customerId", customer.getId());
+            return ResponseEntity.ok().body(Map.of("message", "login successful"));
+        }catch (WrongEmailOrPasswordException e){
+            return ResponseEntity.status(409).body(e.getMessage());
+        }
 
-        session.setAttribute("customerId", customer.getId());
-
-        return ResponseEntity.ok().body(Map.of("message", "login successful"));
     }
 
     @PostMapping("/update")
