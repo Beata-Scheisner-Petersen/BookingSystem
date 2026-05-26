@@ -52,5 +52,10 @@ public class PageController {
         return "redirect:/login";
     }
 
+    @GetMapping("/deleteAccount")
+    public String deleteAccount() {
+        return "delete_account";
+    }
+
 
 }
