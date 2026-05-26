@@ -1,0 +1,19 @@
+h1 {
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+.status-active {
+    color: green;
+    font-weight: bold;
+}
+
+.status-cancelled {
+    color: red;
+    font-weight: bold;
+}
+
+.status-completed {
+    color: gray;
+    font-weight: bold;
+}

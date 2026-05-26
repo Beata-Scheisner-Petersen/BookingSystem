@@ -1,23 +1,38 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Black Cat</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <title>My reservations</title>
     <link
             href="/vendor/bootstrap.min.css"
             rel="stylesheet"
     />
-    <link rel="stylesheet" href="/css/side_menu_style.css" />
-    <script defer src="/javascript/create_header.js"></script>
+    <link rel="stylesheet" href="/css/my_reservations.css"/>
+    <th:block th:replace="fragments/header :: header"></th:block>
 </head>
 <body>
-
 <div id="header"></div>
 
-<h1>My reservation </h1>
+<h1>My reservations</h1>
+
+<table id="reservationTable" class="table table-striped">
+    <thead>
+    <tr>
+        <th>Check in</th>
+        <th>Check out</th>
+        <th>Room</th>
+        <th>Extra bed</th>
+        <th>Total cost</th>
+        <th>Status</th>
+    </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
 
 
-
+<script src="/js/my_reservations.js"></script>
 </body>
 </html>
