@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   //Logo Column
   const logoLink = document.createElement("a");
-  logoLink.href = "static/index.html";
+  logoLink.href = thymeleafUrls.home;
 
   const logoColumn = document.createElement("div");
   logoColumn.className = "col-1";

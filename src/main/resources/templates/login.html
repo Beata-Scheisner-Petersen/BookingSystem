@@ -8,20 +8,7 @@
             href="/vendor/bootstrap.min.css"
             rel="stylesheet"
     />
-    <link rel="stylesheet" href="/css/side_menu_style.css" />
-
-    <script th:inline="javascript">
-        const thymeleafUrls = {
-            home: [[@{/}]],
-            booking: [[@{/booking}]],
-            login: [[@{/login}]],
-            register: [[@{/register}]],
-            mypage: [[@{/mypage}]],
-            logo: [[@{/images/Black_Cat_Retirement_Home_Logo.png}]]
-        };
-    </script>
-
-    <script defer src="/javascript/create_header.js"></script>
+    <th:block th:replace="fragments/header :: header"></th:block>
     <script defer src="/javascript/login.js"></script>
 </head>
 <body>
