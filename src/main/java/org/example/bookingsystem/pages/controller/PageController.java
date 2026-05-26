@@ -57,7 +57,7 @@ public class PageController {
         return "delete_account";
     }
 
-    @GetMapping("/myreservations")
+    @GetMapping("/myReservations")
     public String myreservations(HttpSession session, Model model) {
         Long id = (Long) session.getAttribute("customerId");
 
@@ -66,4 +66,5 @@ public class PageController {
         }
         return "my_reservation";
 
+    }
 }
