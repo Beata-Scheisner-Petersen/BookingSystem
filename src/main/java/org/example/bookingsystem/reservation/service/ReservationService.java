@@ -7,6 +7,7 @@ import org.example.bookingsystem.exceptionhandler.customexeptions.NotFoundExcept
 import org.example.bookingsystem.reservation.model.CreateReservationRequest;
 import org.example.bookingsystem.reservation.model.Reservation;
 import org.example.bookingsystem.reservation.model.ReservationStatus;
+import org.example.bookingsystem.reservation.model.dto.GetAllCustomerReservationsDto;
 import org.example.bookingsystem.reservation.repository.ReservationRepository;
 import org.example.bookingsystem.roomapi.entity.Room;
 import org.example.bookingsystem.roomapi.repository.RoomRepository;
@@ -44,6 +45,22 @@ public class ReservationService {
     public List<Reservation> getActiveReservationByCustomerId(Long customerId) {
 
         return reservationRepository.findByCustomer_IdAndStatus(customerId, ReservationStatus.ACTIVE);
+    }
+
+    public List<GetAllCustomerReservationsDto> getAllReservationByCustomerId(Long customerId) {
+
+        return reservationRepository.findAllByCustomer_Id(customerId)
+                .stream()
+                .map(r -> new GetAllCustomerReservationsDto(
+                        r.getId(),
+                        r.getCheckIn(),
+                        r.getCheckOut(),
+                        r.getRoom().getRoomNumber(),
+                        r.isExtraBed(),
+                        r.getTotalCost(),
+                        r.getStatus()
+                ))
+                .toList();
     }
 
 
@@ -159,7 +176,7 @@ public class ReservationService {
 
         return roomService.getAllRooms()
                 .stream()
-                .filter(room -> room.getRoomSize() >=guests)
+                .filter(room -> room.getRoomSize() >= guests)
                 .filter(room -> {
                     try {
                         validationRoomIsAvailable(
@@ -179,8 +196,6 @@ public class ReservationService {
 
 
 }
-
-
 
 
 //ToDO:

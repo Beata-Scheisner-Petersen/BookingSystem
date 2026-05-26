@@ -56,13 +56,14 @@ public class PageController {
         return "redirect:/login";
     }
 
-    @GetMapping("/reservationinfo")
-    public List<GetReservationInfo> myReservations(HttpSession session) {
-        Long id = (Long) session.getAttribute("CustomerId");
+    @GetMapping("/myreservations")
+    public String myreservations(HttpSession session, Model model) {
+        Long id = (Long) session.getAttribute("customerId");
 
         if (id == null) {
-            throw new NotFoundException("Customer is not logged in");
+            return "login";
         }
-        return  pageService.getCustomerReservations(id);
+        return "my_reservation";
     }
+
 }

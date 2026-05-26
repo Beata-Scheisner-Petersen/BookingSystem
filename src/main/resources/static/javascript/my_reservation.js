@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
-    fetch("http://localhost:8080/api/reservations/me/reservations", {
-        credentials: "include" // skickar session-cookien
+    fetch("/api/reservation/getAllCustomerReservation", {
+        credentials: "include"
     })
         .then(response => {
             if (!response.ok) {
@@ -22,7 +22,7 @@ function renderReservations(reservations) {
         row.innerHTML = `
             <td>${res.checkIn}</td>
             <td>${res.checkOut}</td>
-            <td>${res.room.roomNumber}</td>
+            <td>${res.roomNumber}</td>
             <td>${res.extraBed ? "Yes" : "No"}</td>
             <td>${res.totalCost} kr</td>
             <td class="status-${res.status.toLowerCase()}">${res.status}</td>
