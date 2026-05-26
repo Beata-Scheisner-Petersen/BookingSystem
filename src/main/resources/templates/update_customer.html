@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <title>Update Customer Info</title>
+
+    <link
+            href="/vendor/bootstrap.min.css"
+            rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="/css/side_menu_style.css"/>
+    <link rel="stylesheet" href="/css/update_page_style.css">
+
+    <script th:inline="javascript">
+        const thymeleafUrls = {
+            home: [[@{/}]],
+                booking: [[@{/booking}]],
+            login: [[@{/login}]],
+            register: [[@{/register}]],
+            mypage: [[@{/mypage}]],
+            logo: [[@{/images/Black_Cat_Retirement_Home_Logo.png}]]
+        };
+    </script>
+
+    <script defer src="/javascript/create_header.js"></script>
+</head>
+<body>
+
+<div class="update-page">
+    <h1>Uppdatera konto</h1>
+
+    <form action="/api/customers/update" method="post">
+
+        <label>Email:</label>
+        <input type="email" name="email" placeholder="Ny email">
+
+        <label>Telefonnummer:</label>
+        <input type="text" name="phoneNumber" placeholder="Nytt telefonnummer">
+
+        <label>Nytt lösenord:</label>
+        <input type="password" name="password" placeholder="Nytt lösenord">
+
+        <button type="submit" class="btn">Update</button>
+    </form>
+
+    <a href="/mypage" class="btn-secondary">Tillbaka</a>
+</div>
+
+</body>
+</html>
