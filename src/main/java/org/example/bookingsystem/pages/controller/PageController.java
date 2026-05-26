@@ -38,9 +38,12 @@ public class PageController {
         }
         CustomerInfoRequest customer = pageService.getCustomer(id);
         model.addAttribute("customer", customer);
-        return "MyPage";
+        return "my_page";
     }
 
-
+    @GetMapping("/updateCustomer")
+    public String editCustomerPage() {
+        return "update_customer";
+    }
 
 }

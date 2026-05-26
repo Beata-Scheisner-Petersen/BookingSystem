@@ -1,0 +1,47 @@
+.update-page {
+    margin: 40px auto;
+    max-width: 600px;
+}
+
+.update-page form {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+}
+
+.update-page label {
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+.update-page input {
+    padding: 8px;
+    margin-top: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.btn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #231477;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: rgb(9, 11, 94);
+    color: white !important;
+}
+
+.btn-secondary {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #231477;
+    color: white;
+    border-radius: 6px;
+    text-decoration: none;
+}
