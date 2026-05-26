@@ -15,7 +15,15 @@ async function login() {
         body: JSON.stringify({email, password})
     });
 
-    const data = await response.json();
+    const rawValue = await response.text();
+
+    //Parsing between text and json
+    let data;
+    try {
+        data = JSON.parse(rawValue);
+    } catch {
+        data = rawValue;
+    }
 
     if (response.ok) {
         window.location.href = "/mypage";
