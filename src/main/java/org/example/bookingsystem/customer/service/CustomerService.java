@@ -7,10 +7,13 @@ import org.example.bookingsystem.customer.repository.CustomerRepository;
 import org.example.bookingsystem.exceptionhandler.customexeptions.AlreadyExistException;
 import org.example.bookingsystem.exceptionhandler.customexeptions.HaveReservationException;
 import org.example.bookingsystem.exceptionhandler.customexeptions.WrongEmailOrPasswordException;
+import org.example.bookingsystem.reservation.model.Reservation;
 import org.example.bookingsystem.reservation.service.ReservationService;
 import org.example.bookingsystem.security.password.PasswordService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class CustomerService {
@@ -84,7 +87,10 @@ public class CustomerService {
     }
 
     public void deleteCustomer(Long id) {
-        if (reservationService.getActiveReservationByCustomerId(id) != null) {
+
+        List<Reservation> active = reservationService.getActiveReservationByCustomerId(id);
+
+        if (!active.isEmpty()) {
             throw new HaveReservationException("You can't delete account while you have active reservations");
         }
         repository.deleteById(id);
