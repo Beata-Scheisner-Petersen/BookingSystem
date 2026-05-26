@@ -2,13 +2,11 @@ package org.example.bookingsystem.customer.controller;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
-
 import org.example.bookingsystem.customer.model.Customer;
 import org.example.bookingsystem.customer.model.dto.CreateCustomerRequest;
 import org.example.bookingsystem.customer.model.dto.CustomerLoginRequest;
 import org.example.bookingsystem.customer.model.dto.CustomerUpdateRequest;
 import org.example.bookingsystem.customer.service.CustomerService;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -38,18 +36,23 @@ public class CustomerController {
         return ResponseEntity.ok().body(Map.of("message", "login successful"));
     }
 
-    @PatchMapping
-    public ResponseEntity<?> updateCustomer(@RequestBody CustomerUpdateRequest request, HttpSession session) {
+    @PostMapping("/update")
+    public ResponseEntity<Void> updateCustomer(HttpSession session, CustomerUpdateRequest request) {
         Long id = (Long) session.getAttribute("customerId");
 
         if (id == null) {
-            return ResponseEntity.status(HttpStatus.NETWORK_AUTHENTICATION_REQUIRED).body(Map.of("error", "authorization failed"));
+            return ResponseEntity.status(302)
+                    .header("Location", "/login")
+                    .build();
         }
 
         customerService.updateCustomerInfo(id, request);
 
-        return ResponseEntity.ok().body(Map.of("message", "Customer info updated"));
+        return ResponseEntity.status(302)
+                .header("Location", "/mypage")
+                .build();
     }
+
 
     @DeleteMapping
     public ResponseEntity<?> deleteCustomer(HttpSession session) {
