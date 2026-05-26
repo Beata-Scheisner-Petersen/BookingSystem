@@ -34,7 +34,7 @@ public class PageController {
     public String mypage(HttpSession session, Model model) {
         Long id = (Long) session.getAttribute("customerId");
         if (id == null) {
-            return "redirect:/login";
+            return "login";
         }
         CustomerInfoRequest customer = pageService.getCustomer(id);
         model.addAttribute("customer", customer);
@@ -45,5 +45,12 @@ public class PageController {
     public String editCustomerPage() {
         return "update_customer";
     }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/login";
+    }
+
 
 }

@@ -14,16 +14,7 @@
     <link rel="stylesheet" href="/css/side_menu_style.css"/>
     <link rel="stylesheet" href="/css/update_page_style.css">
 
-    <script th:inline="javascript">
-        const thymeleafUrls = {
-            home: [[@{/}]],
-                booking: [[@{/booking}]],
-            login: [[@{/login}]],
-            register: [[@{/register}]],
-            mypage: [[@{/mypage}]],
-            logo: [[@{/images/Black_Cat_Retirement_Home_Logo.png}]]
-        };
-    </script>
+    <th:block th:replace="fragments/header :: header"></th:block>
 
     <script defer src="/javascript/create_header.js"></script>
 </head>
