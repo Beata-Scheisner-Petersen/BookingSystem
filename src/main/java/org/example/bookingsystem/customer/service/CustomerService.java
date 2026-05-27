@@ -92,12 +92,18 @@ public class CustomerService {
     }
 
     public void deleteCustomer(Long id) {
+        Customer customer = customerRepository.findById(id).orElseThrow(() -> new NotFoundException("not found"));
+        List<Reservation> reservationList = reservationService.getAllReservations();
 
-        List<Reservation> active = reservationService.getActiveReservationByCustomerId(id);
-
-        if (!active.isEmpty()) {
-            throw new HaveReservationException("You can't delete account while you have active reservations");
+        for (Reservation r : reservationList) {
+            if (r.getStatus() == ReservationStatus.ACTIVE) {
+                throw new HaveReservationException("You cannot delete your account while you have active reservations.");
+            }
+            r.setCustomer(null);
+            reservationRepository.save(r);
         }
-        repository.deleteById(id);
+
+
+        customerRepository.delete(customer);
     }
 }
