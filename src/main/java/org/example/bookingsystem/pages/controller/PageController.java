@@ -41,6 +41,16 @@ public class PageController {
         return "my_page";
     }
 
+    @GetMapping("/reservation")
+    public String reservation(HttpSession session, Model model) {
+        Long id = (Long) session.getAttribute("customerId");
+        if (id == null) {
+            return "login";
+        }
+        model.addAttribute("message", "Here you can make reservation");
+        return "reservation";
+    }
+
     @GetMapping("/updateCustomer")
     public String editCustomerPage() {
         return "update_customer";

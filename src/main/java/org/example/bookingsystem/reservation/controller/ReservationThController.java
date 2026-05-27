@@ -7,16 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class ReservationThController {
 
-    @GetMapping ("/reservation")
-    public String reservation (Model model) {
-        model.addAttribute("message", "Here you can make reservation");
-        return "/reservation";
-    }
-
-
-    @GetMapping ("/myreservation")
-    public String myreservation (Model model) {
-        model.addAttribute("message", "Here you can make reservation");
-        return "/myreservation";
-    }
+//    @GetMapping ("/myreservation")
+//    public String myreservation (Model model) {
+//        model.addAttribute("message", "Here you can make reservation");
+//        return "/myreservation";
+//    }
 }

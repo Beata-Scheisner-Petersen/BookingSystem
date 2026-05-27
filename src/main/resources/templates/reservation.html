@@ -1,15 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Black Cat</title>
-    <link href="/vendor/bootstrap.min.css" rel="stylesheet"/>
-    <link href="/css/reservation.css" rel="stylesheet"/>
-    <script src="/vendor/bootstrap.bundle.min.js"></script>
+    <link th:href="@{/vendor/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/reservation.css}" rel="stylesheet"/>
 
-
-    <script defer src="/javascript/reservation.js"></script>
+    <script defer th:src="@{/javascript/reservation.js}"></script>
     <th:block th:replace="fragments/header :: header"></th:block>
 </head>
 
@@ -31,7 +29,7 @@
                 <input type="number" id="guests" class="form-control" min="1" max="10" value="2">
             </div>
             <div class="col-md-3 get-available-rooms">
-                <button onclick="getAvailableRooms()" class="btn btn-dark"> Hämta lediga rum </button>
+                <button onclick="getAvailableRooms()" class="btn btn-dark"> Get Available Rooms </button>
             </div>
         </div>
     </div>
