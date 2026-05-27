@@ -16,6 +16,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -136,7 +137,7 @@ class CustomerServiceTest {
     @Test
     void deleteCustomer_success() {
         when(reservationService.getActiveReservationByCustomerId(1L))
-                .thenReturn(null);
+                .thenReturn(Collections.emptyList());
 
         customerService.deleteCustomer(1L);
 
