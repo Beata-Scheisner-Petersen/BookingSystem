@@ -17,7 +17,7 @@ import java.util.List;
 
 @Service
 public class CustomerService {
-    private final CustomerRepository repository;
+    private final CustomerRepository customerRepository;
     private final PasswordService passwordService;
     private final ReservationService reservationService;
 
