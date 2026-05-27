@@ -55,7 +55,6 @@ public class ReservationService {
                         r.getCheckIn(),
                         r.getCheckOut(),
                         r.getRoom().getRoomNumber(),
-                        r.isExtraBed(),
                         r.getTotalCost(),
                         r.getStatus()
                 ))
@@ -85,17 +84,17 @@ public class ReservationService {
                 request.getCheckOut(),
                 null);
 
+        validateRoomCapacity(room, request.getGuests());
+
         Reservation reservation = new Reservation(
                 customer,
                 room,
-                request.getExtraBed(),
                 request.getCheckIn(),
                 request.getCheckOut(),
                 countTotalPrice(
                         room,
                         request.getCheckIn(),
                         request.getCheckOut(),
-                        request.getExtraBed(),
                         request.getGuests()
                 ),
                 ReservationStatus.ACTIVE,
@@ -125,13 +124,26 @@ public class ReservationService {
         }
     }
 
+    private void validateRoomCapacity(Room room, int requestedGuests) {
+        int maxCapacity = room.getMaxGuests();
 
-    public BigDecimal countTotalPrice(Room room, LocalDate checkIn, LocalDate checkOut, Boolean extraBed, int guests) {
+        if (room.isExtraBedAvailable()) {
+            maxCapacity += 1;
+        }
+
+        if (requestedGuests > maxCapacity) {
+            throw new IllegalArgumentException(
+                    "This room can accommodate a maximum of " + maxCapacity + " guests."
+            );
+        }
+    }
+
+    public BigDecimal countTotalPrice(Room room, LocalDate checkIn, LocalDate checkOut, int guests) {
         long days = ChronoUnit.DAYS.between(checkIn, checkOut);
 
         BigDecimal extraBedPricePerDay = BigDecimal.ZERO;
 
-        if (Boolean.TRUE.equals(extraBed)) {
+        if (guests > room.getMaxGuests()) {
             extraBedPricePerDay = BigDecimal.valueOf(500);
         }
 
@@ -166,7 +178,7 @@ public class ReservationService {
         validationRoomIsAvailable(reservation.getRoom().getId(), checkIn, checkOut, reservationId);
         reservation.setCheckIn(checkIn);
         reservation.setCheckOut(checkOut);
-        reservation.setTotalCost(countTotalPrice(reservation.getRoom(), checkIn, checkOut, reservation.isExtraBed(), reservation.getGuests()));
+        reservation.setTotalCost(countTotalPrice(reservation.getRoom(), checkIn, checkOut, reservation.getGuests()));
         return reservationRepository.save(reservation);
     }
 
@@ -178,7 +190,15 @@ public class ReservationService {
         return roomService.getAllRooms()
                 .stream()
                 .filter(room -> {
-                    return room.getMaxGuests() >= guests;
+
+                    int maxCapacity = room.getMaxGuests();
+
+                    // add extra place only if room supports extra bed
+                    if (room.isExtraBedAvailable()) {
+                        maxCapacity += 1;
+                    }
+
+                    return maxCapacity >= guests;
                 })
                 .filter(room -> {
                     try {
