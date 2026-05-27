@@ -8,18 +8,15 @@ public class CreateReservationRequest {
 
     private Long customerId;
 
-    @NotNull (message = "Customer Id is required")
+    @NotNull(message = "Room Id is required")
     private Long roomId;
 
-    @NotNull(message = "Please specify whether an extra bed is needed" )
-    private Boolean extraBed;
-
-    @NotNull (message = "Check-in date is required")
+    @NotNull(message = "Check-in date is required")
     @FutureOrPresent(message = "Date has to be in the future")
     private LocalDate checkIn;
 
-    @NotNull  (message = "Check-out date is required")
-    @Future (message = "Date has to be in the future")
+    @NotNull(message = "Check-out date is required")
+    @Future(message = "Date has to be in the future")
     private LocalDate checkOut;
 
     private int guests;
@@ -32,10 +29,6 @@ public class CreateReservationRequest {
 
     public Long getRoomId() {
         return roomId;
-    }
-
-    public Boolean getExtraBed() {
-        return extraBed;
     }
 
     public LocalDate getCheckIn() {
