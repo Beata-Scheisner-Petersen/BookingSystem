@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
+import org.example.bookingsystem.validation.ValidIdentification;
 
 @Entity
 @Table(name = "customer")
@@ -21,7 +22,7 @@ public class Customer {
 
     @Column(name = "identification_number", unique = true)
     @NotBlank(message = "You must enter an identification number.")
-    @Pattern(regexp = "^(\\d{6}|\\d{8})-\\d{4}$", message = "invalid format of identification number.")
+    @ValidIdentification
     private String identificationNumber;
 
     @Column(name = "email", unique = true)
