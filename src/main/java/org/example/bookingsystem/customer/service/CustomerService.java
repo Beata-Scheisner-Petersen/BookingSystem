@@ -102,7 +102,7 @@ public class CustomerService {
             r.setCustomer(null);
             reservationRepository.save(r);
         }
-        
+
         customerRepository.delete(customer);
     }
 }
