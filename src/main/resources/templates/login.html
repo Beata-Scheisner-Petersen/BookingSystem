@@ -1,48 +1,50 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Black Cat</title>
-    <link
-            th:href="@{/vendor/bootstrap.min.css}"
-            rel="stylesheet"
-    />
-    <th:block th:replace="fragments/header :: header"></th:block>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Black Cat Retirement</title>
+
+    <!-- css/Bootstrap -->
+    <link th:href="@{/vendor/bootstrap.min.css}" rel="stylesheet"/>
+    <!-- scripts -->
     <script defer th:src="@{/javascript/login.js}"></script>
+    <!-- header block -->
+    <th:block th:replace="~{fragments/header :: header}"></th:block>
+
 </head>
 <body>
 <div class="d-flex m-5 align-content-center justify-content-center">
     <div>
         <h3>Login</h3>
 
-            <div>
-                <label for="email_input" class="form-label">Email</label>
-                <input
-                        id="email_input"
-                        type="email"
-                        name="email"
-                        placeholder="Email"
-                        class="form-control"
-                />
-                <div id="email_error" class="text-danger small"></div>
-            </div>
-            <div>
-                <label for="password_input" class="form-label">Password</label>
-                <input
-                        id="password_input"
-                        type="password"
-                        name="password"
-                        placeholder="Password"
-                        class="form-control"
-                />
-                <div id="password_error" class="text-danger small"></div>
-            </div>
-            <br>
-            <div class="p-2 bg-info rounded-2">
-                <button onclick="login()" class="ms-auto rounded-3 shadow">Login</button>
-                <button onclick="registerNewCustomer()" class="ms-auto rounded-3 shadow">Register new User</button>
-            </div>
+        <div>
+            <label for="email_input" class="form-label">Email</label>
+            <input
+                    id="email_input"
+                    type="email"
+                    name="email"
+                    placeholder="Email"
+                    class="form-control"
+            />
+            <div id="email_error" class="text-danger small"></div>
+        </div>
+        <div>
+            <label for="password_input" class="form-label">Password</label>
+            <input
+                    id="password_input"
+                    type="password"
+                    name="password"
+                    placeholder="Password"
+                    class="form-control"
+            />
+            <div id="password_error" class="text-danger small"></div>
+        </div>
+        <br>
+        <div class="p-2 bg-info rounded-2">
+            <button onclick="login()" class="ms-auto rounded-3 shadow">Login</button>
+            <button onclick="registerNewCustomer()" class="ms-auto rounded-3 shadow">Register new User</button>
+        </div>
 
     </div>
 </div>
