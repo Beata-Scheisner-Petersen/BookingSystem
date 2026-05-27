@@ -20,11 +20,13 @@ public class CustomerService {
     private final CustomerRepository customerRepository;
     private final PasswordService passwordService;
     private final ReservationService reservationService;
+    private final ReservationRepository reservationRepository;
 
     public CustomerService(CustomerRepository repository, PasswordService passwordService, ReservationService reservationService) {
         this.repository = repository;
         this.passwordService = passwordService;
         this.reservationService = reservationService;
+        this.reservationRepository = reservationRepository;
     }
 
     @Transactional
