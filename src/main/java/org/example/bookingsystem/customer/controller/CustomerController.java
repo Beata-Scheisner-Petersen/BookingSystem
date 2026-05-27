@@ -7,6 +7,7 @@ import org.example.bookingsystem.customer.model.dto.CreateCustomerRequest;
 import org.example.bookingsystem.customer.model.dto.CustomerLoginRequest;
 import org.example.bookingsystem.customer.model.dto.CustomerUpdateRequest;
 import org.example.bookingsystem.customer.service.CustomerService;
+import org.example.bookingsystem.exceptionhandler.customexeptions.HaveReservationException;
 import org.example.bookingsystem.exceptionhandler.customexeptions.WrongEmailOrPasswordException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
