@@ -22,8 +22,11 @@ public class CustomerService {
     private final ReservationService reservationService;
     private final ReservationRepository reservationRepository;
 
-    public CustomerService(CustomerRepository repository, PasswordService passwordService, ReservationService reservationService) {
-        this.repository = repository;
+    public CustomerService(CustomerRepository customerRepository,
+                           PasswordService passwordService,
+                           ReservationService reservationService,
+                           ReservationRepository reservationRepository) {
+        this.customerRepository = customerRepository;
         this.passwordService = passwordService;
         this.reservationService = reservationService;
         this.reservationRepository = reservationRepository;
