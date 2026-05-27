@@ -17,3 +17,69 @@ h1 {
     color: gray;
     font-weight: bold;
 }
+
+.action-btn {
+    padding: 5px 10px;
+    margin-right: 5px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.edit-btn {
+    background-color: #007bff;
+    color: white;
+}
+
+.delete-btn {
+    background-color: #dc3545;
+    color: white;
+}
+
+.edit-form {
+    display: none;
+    background: #f8f9fa;
+    padding: 15px;
+    margin-top: 10px;
+    border-left: 3px solid #007bff;
+}
+
+.popup-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.popup-box {
+    background: white;
+    padding: 25px;
+    border-radius: 8px;
+    text-align: center;
+    width: 350px;
+}
+
+.popup-buttons {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.popup-btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.popup-btn.cancel {
+    background-color: #6c757d;
+    color: white;
+}
+
