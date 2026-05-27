@@ -4,6 +4,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import org.example.bookingsystem.validation.ValidIdentification;
 
 public record CreateCustomerRequest(
         @NotBlank(message = "You must enter a first name.")
@@ -13,7 +14,7 @@ public record CreateCustomerRequest(
         String lastname,
 
         @NotBlank(message = "You must enter an identification number.")
-        @Pattern(regexp = "^(\\d{6}|\\d{8})-\\d{4}$", message = "Invalid format. yyyymmdd-xxxx | yymmdd-xxxx")
+        @ValidIdentification
         String identificationNumber,
 
         @NotBlank(message = "You must enter an email.")

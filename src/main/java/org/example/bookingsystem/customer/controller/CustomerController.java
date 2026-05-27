@@ -12,7 +12,6 @@ import org.example.bookingsystem.exceptionhandler.customexeptions.WrongEmailOrPa
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -95,7 +94,6 @@ public class CustomerController {
 
         try {
             customerService.deleteCustomer(id);
-
             return ResponseEntity.ok().body(Map.of("message", "account deleted"));
         } catch (HaveReservationException e) {
             return ResponseEntity.status(409).body(Map.of("error",  e.getMessage()));

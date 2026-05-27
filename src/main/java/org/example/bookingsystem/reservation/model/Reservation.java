@@ -13,8 +13,8 @@ public class Reservation {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne (optional = false)
-    @JoinColumn (name="customer_id", updatable = false)
+    @ManyToOne
+    @JoinColumn (name="customer_id")
     private Customer customer;
 
     @ManyToOne (optional = false)

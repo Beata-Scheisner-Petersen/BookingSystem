@@ -83,7 +83,9 @@ function saveChanges(id) {
         body: JSON.stringify(body)
     })
         .then(res => {
-            if (!res.ok) throw new Error("Could not update reservation");
+            if (!res.ok) {
+                throw new Error("Could not update reservation");
+            }
             alert("Reservation updated successfully");
             location.reload();
         })
@@ -95,19 +97,23 @@ function saveChanges(id) {
 
 // DELETE RESERVATION
 function deleteReservation(id, btn) {
-    if (!confirm("Are you sure you want to delete this reservation?")) return;
+    if (!confirm("Are you sure you want to delete this reservation?")) {
+        return;
+    }
 
     fetch(`/api/reservation/${id}`, {
         method: "DELETE",
         credentials: "include"
     })
         .then(res => {
-            if (!res.ok) throw new Error("Could not delete reservation");
+            if (!res.ok) {
+                throw new Error("Could not delete reservation");
+            }
 
-            // Remove edit form row
             btn.closest("tr").nextSibling.remove();
-            // Remove main row
             btn.closest("tr").remove();
+            alert("Reservation updated successfully");
+            location.reload();
         })
         .catch(err => console.error(err));
 }
