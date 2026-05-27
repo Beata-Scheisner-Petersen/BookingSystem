@@ -6,6 +6,7 @@ import jakarta.validation.ConstraintValidatorContext;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.time.format.ResolverStyle;
 
 public class IdentificationValidator implements ConstraintValidator<ValidIdentification, String> {
 
@@ -15,6 +16,8 @@ public class IdentificationValidator implements ConstraintValidator<ValidIdentif
         if (value == null || value.isBlank()) {
             return false;
         }
+
+        value = value.trim();
 
         // Format: YYMMDD-XXXX or YYYYMMDD-XXXX
         if (!value.matches("^(\\d{6}|\\d{8})-\\d{4}$")) {
@@ -33,12 +36,17 @@ public class IdentificationValidator implements ConstraintValidator<ValidIdentif
             datePart = (yearInt <= 24 ? "20" : "19") + datePart;
         }
 
-        // Validate date
+        // Validate date (STRICT mode)
         try {
-            LocalDate.parse(datePart, DateTimeFormatter.ofPattern("yyyyMMdd"));
+            DateTimeFormatter formatter = DateTimeFormatter
+                    .ofPattern("uuuuMMdd")
+                    .withResolverStyle(ResolverStyle.STRICT);
+
+            LocalDate.parse(datePart, formatter);
         } catch (DateTimeParseException e) {
             return false;
         }
+
 
         return true;
     }
