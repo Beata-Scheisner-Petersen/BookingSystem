@@ -90,7 +90,7 @@ public class CustomerController {
         if (id == null) {
             return ResponseEntity.status(HttpStatus.NETWORK_AUTHENTICATION_REQUIRED).body(Map.of("error", "authorization failed"));
         }
-
+        
         try {
             customerService.deleteCustomer(id);
 
