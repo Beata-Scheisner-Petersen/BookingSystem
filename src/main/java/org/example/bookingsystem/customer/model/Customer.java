@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
-import org.example.bookingsystem.validation.ValidIdentification;
 
 @Entity
 @Table(name = "customer")
@@ -22,7 +21,6 @@ public class Customer {
 
     @Column(name = "identification_number", unique = true)
     @NotBlank(message = "You must enter an identification number.")
-    @ValidIdentification
     private String identificationNumber;
 
     @Column(name = "email", unique = true)
