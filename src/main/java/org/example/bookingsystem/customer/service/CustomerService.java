@@ -35,11 +35,11 @@ public class CustomerService {
     @Transactional
     public Customer createNewCustomer(CreateCustomerRequest request) {
 
-        if (repository.existsByEmail(request.email())) {
+        if (customerRepository.existsByEmail(request.email())) {
             throw new AlreadyExistException("Email already exist");
-        } else if (repository.existsByIdentificationNumber(request.identificationNumber())) {
+        } else if (customerRepository.existsByIdentificationNumber(request.identificationNumber())) {
             throw new AlreadyExistException("Identification number already exist in the system");
-        } else if (request.phoneNumber() != null && repository.existsByPhoneNumber(request.phoneNumber())) {
+        } else if (request.phoneNumber() != null && customerRepository.existsByPhoneNumber(request.phoneNumber())) {
             throw new AlreadyExistException("Phone number already exist");
         }
 
@@ -51,11 +51,11 @@ public class CustomerService {
                 passwordService.hash(request.password()),
                 request.phoneNumber());
 
-        return repository.save(customer);
+        return customerRepository.save(customer);
     }
 
     public Customer loginCustomer(String email, String password) {
-        Customer customer = repository.findByEmail(email)
+        Customer customer = customerRepository.findByEmail(email)
                 .orElseThrow(() -> new WrongEmailOrPasswordException("Wrong email or password"));
 
         if (!passwordService.matches(password, customer.getPassword())) {
@@ -67,18 +67,18 @@ public class CustomerService {
 
     @Transactional
     public void updateCustomerInfo(Long id, CustomerUpdateRequest request) {
-        Customer customer = repository.findById(id)
+        Customer customer = customerRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Customer not found"));
 
         if (request.email() != null && !request.email().isBlank()) {
-            if (repository.existsByEmail(request.email())) {
+            if (customerRepository.existsByEmail(request.email())) {
                 throw new AlreadyExistException("Email already exist");
             }
             customer.setEmail(request.email());
         }
 
         if (request.phoneNumber() != null && !request.phoneNumber().isBlank()) {
-            if (repository.existsByPhoneNumber(request.phoneNumber())) {
+            if (customerRepository.existsByPhoneNumber(request.phoneNumber())) {
                 throw new AlreadyExistException("Phone number already exist");
             }
             customer.setPhoneNumber(request.phoneNumber());
@@ -88,7 +88,7 @@ public class CustomerService {
             customer.setPassword(passwordService.hash(request.password()));
         }
 
-        repository.save(customer);
+        customerRepository.save(customer);
     }
 
     public void deleteCustomer(Long id) {
