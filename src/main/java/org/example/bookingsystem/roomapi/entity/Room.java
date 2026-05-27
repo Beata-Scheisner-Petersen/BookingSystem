@@ -1,6 +1,7 @@
 package org.example.bookingsystem.roomapi.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 
@@ -20,22 +21,32 @@ public class Room {
     @Positive(message = "Room number can't be 0 or Negative")
     private int roomNumber;
 
-    @Column(name = "room_size", nullable = false)
+    @Column(name = "room_type", nullable = false)
     @Positive(message = "Room size can't be 0 or Negative")
-    private int roomSize;
+    private String roomType;
 
     @Column(name = "room_price", nullable = false)
     @PositiveOrZero
     private BigDecimal roomPrice;
 
+
+    @Column(name = "max_guests", nullable = false)
+    @Positive
+    private int maxGuests;
+
+    @Column(name = "extra_bed_available", nullable = false)
+    private boolean extraBedAvailable;
+
     //Constructors
     public Room() {
     }
 
-    public Room(int roomNumber, int roomSize, BigDecimal roomPrice) {
+    public Room(int roomNumber, String roomType, BigDecimal roomPrice, int maxGuests, boolean extraBedAvailable) {
         this.roomNumber = roomNumber;
-        this.roomSize = roomSize;
-        this.roomPrice =  roomPrice;
+        this.roomType = roomType;
+        this.roomPrice = roomPrice;
+        this.maxGuests = maxGuests;
+        this.extraBedAvailable=extraBedAvailable;
     }
 
     //Get - Set
@@ -51,12 +62,12 @@ public class Room {
         this.roomNumber = roomNumber;
     }
 
-    public int getRoomSize() {
-        return roomSize;
+    public String getRoomType() {
+        return roomType;
     }
 
-    public void setRoomSize(int roomSize) {
-        this.roomSize = roomSize;
+    public void setRoomType(String roomType) {
+        this.roomType = roomType;
     }
 
     public BigDecimal getRoomPrice() {
@@ -65,5 +76,21 @@ public class Room {
 
     public void setRoomPrice(BigDecimal roomPrice) {
         this.roomPrice = roomPrice;
+    }
+
+    public int getMaxGuests() {
+        return maxGuests;
+    }
+
+    public void setMaxGuests(int maxGuests) {
+        this.maxGuests = maxGuests;
+    }
+
+    public boolean isExtraBedAvailable() {
+        return extraBedAvailable;
+    }
+
+    public void setExtraBedAvailable(boolean extraBedAvailable) {
+        this.extraBedAvailable = extraBedAvailable;
     }
 }

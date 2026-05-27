@@ -31,8 +31,10 @@ public class RoomController {
 
         RoomResponseDto roomDto = service.addRoom(
                 addNewRoomDto.getRoomNumber(),
-                addNewRoomDto.getRoomSize(),
-                addNewRoomDto.getRoomPrice()
+                addNewRoomDto.getRoomType(),
+                addNewRoomDto.getRoomPrice(),
+                addNewRoomDto.getMaxGuests(),
+                addNewRoomDto.isExtraBedAvailable()
         );
 
         if (roomDto == null) {

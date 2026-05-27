@@ -40,7 +40,6 @@ public class ReservationService {
         return reservationRepository.findAll();
     }
 
-    //Hitta reservationer med aktiv status med kundId
 
     public List<Reservation> getActiveReservationByCustomerId(Long customerId) {
 
@@ -96,8 +95,11 @@ public class ReservationService {
                         room,
                         request.getCheckIn(),
                         request.getCheckOut(),
-                        request.getExtraBed()),
-                ReservationStatus.ACTIVE
+                        request.getExtraBed(),
+                        request.getGuests()
+                ),
+                ReservationStatus.ACTIVE,
+                request.getGuests()
         );
 
         return reservationRepository.save(reservation);
@@ -124,14 +126,13 @@ public class ReservationService {
     }
 
 
-    public BigDecimal countTotalPrice(Room room, LocalDate checkIn, LocalDate checkOut, Boolean extraBed) {
+    public BigDecimal countTotalPrice(Room room, LocalDate checkIn, LocalDate checkOut, Boolean extraBed, int guests) {
         long days = ChronoUnit.DAYS.between(checkIn, checkOut);
 
         BigDecimal extraBedPricePerDay = BigDecimal.ZERO;
 
         if (Boolean.TRUE.equals(extraBed)) {
             extraBedPricePerDay = BigDecimal.valueOf(500);
-
         }
 
         BigDecimal roomPricePerDay = room.getRoomPrice();
@@ -165,7 +166,7 @@ public class ReservationService {
         validationRoomIsAvailable(reservation.getRoom().getId(), checkIn, checkOut, reservationId);
         reservation.setCheckIn(checkIn);
         reservation.setCheckOut(checkOut);
-        reservation.setTotalCost(countTotalPrice(reservation.getRoom(), checkIn, checkOut, reservation.isExtraBed()));
+        reservation.setTotalCost(countTotalPrice(reservation.getRoom(), checkIn, checkOut, reservation.isExtraBed(), reservation.getGuests()));
         return reservationRepository.save(reservation);
     }
 
@@ -176,7 +177,9 @@ public class ReservationService {
 
         return roomService.getAllRooms()
                 .stream()
-                .filter(room -> room.getRoomSize() >= guests)
+                .filter(room -> {
+                    return room.getMaxGuests() >= guests;
+                })
                 .filter(room -> {
                     try {
                         validationRoomIsAvailable(
@@ -196,9 +199,5 @@ public class ReservationService {
 
 
 }
-
-
-//ToDO:
-//continue develop method validationRoomIsAvailable
 
 

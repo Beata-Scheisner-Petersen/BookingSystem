@@ -22,6 +22,8 @@ public class CreateReservationRequest {
     @Future (message = "Date has to be in the future")
     private LocalDate checkOut;
 
+    private int guests;
+
     public CreateReservationRequest() {
     }
     public Long getCustomerId() {
@@ -46,5 +48,13 @@ public class CreateReservationRequest {
 
     public void setCustomerId(Long customerId) {
         this.customerId = customerId;
+    }
+
+    public int getGuests() {
+        return guests;
+    }
+
+    public void setGuests(int guests) {
+        this.guests = guests;
     }
 }

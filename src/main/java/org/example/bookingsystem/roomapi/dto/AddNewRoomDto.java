@@ -1,5 +1,6 @@
 package org.example.bookingsystem.roomapi.dto;
 
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 
@@ -11,10 +12,18 @@ public class AddNewRoomDto {
     private int roomNumber;
 
     @Positive(message = "Room size can't be 0 or below")
-    private int roomSize;
+    private String roomType;
 
     @PositiveOrZero(message = "Price can't be negative")
     private BigDecimal roomPrice;
+
+    @Column(name = "max_guests", nullable = false)
+    @Positive
+    private int maxGuests;
+
+    @Column(name = "extra_bed_available", nullable = false)
+    private boolean extraBedAvailable;
+
 
     public AddNewRoomDto() {
     }
@@ -25,16 +34,26 @@ public class AddNewRoomDto {
     public void setRoomNumber(int roomNumber) {
         this.roomNumber = roomNumber;
     }
-    public int getRoomSize() {
-        return roomSize;
+    public String getRoomType() {
+        return roomType;
     }
-    public void setRoomSize(int roomSize) {
-        this.roomSize = roomSize;
+    public void setRoomType(String roomType) {
+        this.roomType = roomType;
     }
     public BigDecimal getRoomPrice() {
         return roomPrice;
     }
     public void setRoomPrice(BigDecimal roomPrice) {
         this.roomPrice = roomPrice;
+    }
+    public int getMaxGuests() {return maxGuests;}
+    public void setMaxGuests(int maxGuests) {this.maxGuests = maxGuests;}
+
+    public boolean isExtraBedAvailable() {
+        return extraBedAvailable;
+    }
+
+    public void setExtraBedAvailable(boolean extraBedAvailable) {
+        this.extraBedAvailable = extraBedAvailable;
     }
 }

@@ -25,6 +25,7 @@ public class Reservation {
     private LocalDate checkIn;
     private LocalDate checkOut;
     private BigDecimal totalCost;
+    private int guests;
 
     @Enumerated (EnumType.STRING)
     private ReservationStatus status;
@@ -32,7 +33,7 @@ public class Reservation {
     public Reservation (){
     }
 
-    public Reservation(Customer customer, Room room, boolean extraBed, LocalDate checkIn, LocalDate checkOut, BigDecimal totalCost, ReservationStatus status) {
+    public Reservation(Customer customer, Room room, boolean extraBed, LocalDate checkIn, LocalDate checkOut, BigDecimal totalCost, ReservationStatus status, int guests) {
         this.customer = customer;
         this.room = room;
         this.extraBed = extraBed;
@@ -40,6 +41,7 @@ public class Reservation {
         this.checkOut = checkOut;
         this.totalCost = totalCost;
         this.status = status;
+        this.guests = guests;
     }
 
     public Long getId() {
@@ -104,5 +106,13 @@ public class Reservation {
 
     public void setStatus(ReservationStatus reservationStatus) {
         this.status = reservationStatus;
+    }
+
+    public int getGuests() {
+        return guests;
+    }
+
+    public void setGuests(int guests) {
+        this.guests = guests;
     }
 }
