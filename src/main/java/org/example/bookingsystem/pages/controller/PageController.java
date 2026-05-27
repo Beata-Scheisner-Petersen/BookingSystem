@@ -2,6 +2,7 @@ package org.example.bookingsystem.pages.controller;
 
 import jakarta.servlet.http.HttpSession;
 import org.example.bookingsystem.customer.model.dto.CustomerInfoRequest;
+import org.example.bookingsystem.exceptionhandler.customexeptions.NotFoundException;
 import org.example.bookingsystem.pages.service.PageService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,9 +37,14 @@ public class PageController {
         if (id == null) {
             return "login";
         }
-        CustomerInfoRequest customer = pageService.getCustomer(id);
-        model.addAttribute("customer", customer);
-        return "my_page";
+        try {
+            CustomerInfoRequest customer = pageService.getCustomer(id);
+            model.addAttribute("customer", customer);
+            return "my_page";
+        } catch (NotFoundException e) {
+            session.invalidate();
+            return "login";
+        }
     }
 
     @GetMapping("/reservation")
