@@ -52,15 +52,19 @@ function renderRooms(rooms) {
                 <div class="col-md-7">
                     <div class="card-body py-2">
                         <p class="card-text mb-1">
-                            Room nummer: ${room.id}
+                            <strong>${room.roomType}</strong>
                         </p>
                         <p class="card-text mb-1">
-                            Size: ${room.roomSize} guests
+                            Max guests: ${room.maxGuests}
                         </p>
                         <p class="card-text mb-1">
                             Room numbers:
                             ${room.roomNumber}
+                        </p>                        
+                        <p class="card-text mb-1">
+                            Extra bed: ${room.extraBedAvailable ? 'Available' : 'Not available'}
                         </p>
+
                     </div>
                 </div>
                 <div class="col-md-2 text-center">
@@ -102,8 +106,8 @@ function showConfirmation(reservation) {
     container.innerHTML = `
         <div class="alert mt-4">
             <h4>Booking Confirmed</h4>
-            <p> Reservation ID: ${reservation.id} </p>
-            <p> Room Number: ${reservation.room.roomNumber} </p>
+            <p> Confirmation number: ${reservation.id} </p>
+            <p> Room: ${reservation.room.roomType} </p>
             <p> Check-in: ${reservation.checkIn} </p>
             <p> Check-out: ${reservation.checkOut} </p>    
         </div>

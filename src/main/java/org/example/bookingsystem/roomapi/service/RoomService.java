@@ -1,10 +1,11 @@
 package org.example.bookingsystem.roomapi.service;
 
+import jakarta.validation.Valid;
+import org.example.bookingsystem.roomapi.dto.AddNewRoomDto;
 import org.example.bookingsystem.roomapi.dto.RoomResponseDto;
 import org.example.bookingsystem.roomapi.dto.UpdateRoomDto;
 import org.example.bookingsystem.roomapi.entity.Room;
 import org.example.bookingsystem.roomapi.repository.RoomRepository;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -38,22 +39,26 @@ public class RoomService {
         return new RoomResponseDto(
                 room.getId(),
                 room.getRoomNumber(),
-                room.getRoomSize(),
-                room.getRoomPrice()
-        );
+                room.getRoomType(),
+                room.getRoomPrice(),
+                room.getMaxGuests(),
+                room.isExtraBedAvailable());
 
     }
 
-    public RoomResponseDto addRoom(int roomNumber, int roomSize, BigDecimal roomPrice) {
+    public RoomResponseDto addRoom(int roomNumber, String roomType, BigDecimal roomPrice, int maxGuests, boolean extraBedAvailable ) {
 
         try {
-            Room returnedRoom = repository.save(new Room(roomNumber, roomSize, roomPrice));
+            Room returnedRoom = repository.save(new Room(roomNumber, roomType, roomPrice, maxGuests, extraBedAvailable));
 
             return new RoomResponseDto(
                     returnedRoom.getId(),
                     returnedRoom.getRoomNumber(),
-                    returnedRoom.getRoomSize(),
-                    returnedRoom.getRoomPrice()
+                    returnedRoom.getRoomType(),
+                    returnedRoom.getRoomPrice(),
+                    returnedRoom.getMaxGuests(),
+                    returnedRoom.isExtraBedAvailable()
+
             );
 
         }catch (Exception e){
@@ -72,7 +77,7 @@ public class RoomService {
         Room fetchedRoom = optionalRoom.get();
 
         fetchedRoom.setRoomNumber(dto.getRoomNumber());
-        fetchedRoom.setRoomSize(dto.getRoomSize());
+        fetchedRoom.setRoomType(dto.getRoomType());
         fetchedRoom.setRoomPrice(dto.getRoomPrice());
 
         try {
@@ -81,9 +86,10 @@ public class RoomService {
             return new RoomResponseDto(
                     resultRoom.getId(),
                     resultRoom.getRoomNumber(),
-                    resultRoom.getRoomSize(),
-                    resultRoom.getRoomPrice()
-            );
+                    resultRoom.getRoomType(),
+                    resultRoom.getRoomPrice(),
+                    resultRoom.getMaxGuests(),
+                    resultRoom.isExtraBedAvailable());
         }catch (Exception e){
             return null;
         }

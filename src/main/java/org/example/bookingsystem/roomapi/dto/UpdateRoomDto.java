@@ -40,4 +40,9 @@ public class UpdateRoomDto {
     public void setRoomPrice(BigDecimal roomPrice) {
         this.roomPrice = roomPrice;
     }
+
+    public String getRoomType() {
+        return "";
+    }
 }
+
