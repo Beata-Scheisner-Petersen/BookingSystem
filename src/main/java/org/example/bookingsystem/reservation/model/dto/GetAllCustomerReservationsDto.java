@@ -10,7 +10,6 @@ public record GetAllCustomerReservationsDto(
         LocalDate checkIn,
         LocalDate checkOut,
         int roomNumber,
-        boolean extraBed,
         BigDecimal totalCost,
         ReservationStatus status
 ) {}

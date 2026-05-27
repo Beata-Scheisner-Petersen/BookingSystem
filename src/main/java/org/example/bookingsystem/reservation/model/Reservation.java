@@ -33,10 +33,9 @@ public class Reservation {
     public Reservation (){
     }
 
-    public Reservation(Customer customer, Room room, boolean extraBed, LocalDate checkIn, LocalDate checkOut, BigDecimal totalCost, ReservationStatus status, int guests) {
+    public Reservation(Customer customer, Room room, LocalDate checkIn, LocalDate checkOut, BigDecimal totalCost, ReservationStatus status, int guests) {
         this.customer = customer;
         this.room = room;
-        this.extraBed = extraBed;
         this.checkIn = checkIn;
         this.checkOut = checkOut;
         this.totalCost = totalCost;
@@ -68,13 +67,6 @@ public class Reservation {
         this.room = room;
     }
 
-    public boolean isExtraBed() {
-        return extraBed;
-    }
-
-    public void setExtraBed(boolean extraBed) {
-        this.extraBed = extraBed;
-    }
 
     public LocalDate getCheckIn() {
         return checkIn;

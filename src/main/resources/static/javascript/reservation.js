@@ -88,7 +88,7 @@ async function createReservation(roomId) {
         checkIn: document.getElementById("checkIn").value,
         checkOut: document.getElementById("checkOut").value,
         guests: guests,
-        extraBed: guests > 2 ? false : guests % 2 !== 0
+
     };
 
     const response = await fetch('api/reservation', {
@@ -96,6 +96,12 @@ async function createReservation(roomId) {
         headers: {"Content-type": "application/json"},
         body: JSON.stringify(reservation)
     })
+
+    if (!response.ok) {
+        const errorMessage = await response.text();
+        alert(errorMessage);
+        return;
+    }
 
     const data = await response.json();
     showConfirmation(data);
@@ -115,5 +121,5 @@ function showConfirmation(reservation) {
 
     // Show toast
     const toast = document.getElementById('confirmationToast')
-    const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toast).show();
+    bootstrap.Toast.getOrCreateInstance(toast).show();
 }
