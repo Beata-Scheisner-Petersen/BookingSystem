@@ -17,5 +17,7 @@ public interface ReservationRepository extends JpaRepository <Reservation, Long>
             LocalDate checkOut);
 
     List<Reservation> findByCustomer_IdAndStatus(long customerId, ReservationStatus status);
+
+    List<Reservation> findAllByCustomer_Id(Long customerId);
 }
 

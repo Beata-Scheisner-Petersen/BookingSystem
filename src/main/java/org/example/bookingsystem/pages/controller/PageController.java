@@ -57,5 +57,14 @@ public class PageController {
         return "delete_account";
     }
 
+    @GetMapping("/myReservations")
+    public String myReservations(HttpSession session) {
+        Long id = (Long) session.getAttribute("customerId");
 
+        if (id == null) {
+            return "login";
+        }
+        return "my_reservation";
+
+    }
 }

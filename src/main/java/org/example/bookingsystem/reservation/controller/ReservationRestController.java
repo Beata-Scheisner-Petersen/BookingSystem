@@ -1,11 +1,13 @@
 package org.example.bookingsystem.reservation.controller;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import org.example.bookingsystem.reservation.model.CreateReservationRequest;
 import org.example.bookingsystem.reservation.model.Reservation;
 import org.example.bookingsystem.reservation.model.UpdateReservationRequest;
+import org.example.bookingsystem.reservation.model.dto.GetAllCustomerReservationsDto;
 import org.example.bookingsystem.reservation.service.ReservationService;
 import org.example.bookingsystem.roomapi.entity.Room;
 import org.springframework.http.HttpStatus;
@@ -33,6 +35,23 @@ public class ReservationRestController {
                 .body(createReservation);
     }
 
+    @GetMapping("/getAllCustomerReservation")
+    public ResponseEntity<List<GetAllCustomerReservationsDto>> getAllCustomerReservation(HttpSession session) {
+        Long id = (Long) session.getAttribute("customerId");
+
+        if (id == null) {
+            System.out.println("id is null");
+            return ResponseEntity.status(302)
+                    .header("Location", "/login")
+                    .build();
+        }
+
+        List<GetAllCustomerReservationsDto> listDto = reservationService.getAllReservationByCustomerId(id);
+        System.out.println("RESERVATIONS FOUND = " + listDto.size());
+
+        return ResponseEntity.ok(listDto);
+    }
+
     @DeleteMapping("/{reservationId}")
     public ResponseEntity<Reservation> cancelReservation(@PathVariable Long reservationId) {
 
@@ -41,7 +60,7 @@ public class ReservationRestController {
     }
 
     @PutMapping("/{reservationId}")
-    public ResponseEntity<Reservation>updateReservation (@PathVariable Long reservationId, @Valid @RequestBody UpdateReservationRequest request){
+    public ResponseEntity<Reservation> updateReservation (@PathVariable Long reservationId, @Valid @RequestBody UpdateReservationRequest request){
         return ResponseEntity.status(HttpStatus.OK)
                 .body(reservationService.updateReservation(reservationId, request.getCheckIn(), request.getCheckOut()));
     }
