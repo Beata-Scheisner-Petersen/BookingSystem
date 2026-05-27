@@ -1,15 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Register</title>
-    <link
-            th:href="@{/vendor/bootstrap.min.css}"
-            rel="stylesheet"
-    />
-    <th:block th:replace="fragments/header :: header"></th:block>
+    <title>Black Cat Retirement</title>
+
+    <!-- css/Bootstrap -->
+    <link th:href="@{/vendor/bootstrap.min.css}" rel="stylesheet"/>
+    <!-- scripts -->
     <script defer th:src="@{/javascript/register.js}"></script>
+    <!-- header block -->
+    <th:block th:replace="~{fragments/header :: header}"></th:block>
+
 </head>
 <body>
 <div class="d-flex m-5 align-content-center justify-content-center">
