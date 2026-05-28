@@ -126,10 +126,19 @@ class CustomerServiceTest {
     }
 
     @Test
-    void deleteCustomer_hasReservation_throwsException() {
-        when(reservationService.getActiveReservationByCustomerId(1L))
-                .thenReturn(List.of(new Reservation()));
+    void deleteCustomer_throwsHaveReservationException() {
+        //Arrange
+        Customer fakeCustomer = new Customer();
+        fakeCustomer.setId(1L);
 
+        when(customerRepository.findById(1L))
+                .thenReturn(Optional.of(fakeCustomer));
+
+        Reservation fakeReservation = new Reservation();
+        when(reservationService.getActiveReservationByCustomerId(1L))
+                .thenReturn(List.of(fakeReservation));
+
+        //Act + Assert
         assertThrows(HaveReservationException.class,
                 () -> customerService.deleteCustomer(1L));
     }
