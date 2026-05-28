@@ -96,16 +96,28 @@ class RoomServiceTest {
     @Test
     void addANewRoomSuccess() {
         //Arrange
-        Room fakeRoom = new Room(104, "standard", BigDecimal.valueOf(1000),2, true);
+        Room fakeRoom = new Room(
+                104,
+                "standard",
+                BigDecimal.valueOf(1000),
+                2,
+                true
+        );
         Mockito.when(roomRepository.save(Mockito.any(Room.class)))
                 .thenReturn(fakeRoom);
 
         //Act
-        RoomResponseDto result = roomService.addRoom(104, "standard", BigDecimal.valueOf(1000), 2, true);
+        RoomResponseDto result = roomService.addRoom(
+                104,
+                "standard",
+                BigDecimal.valueOf(1000),
+                2,
+                true
+        );
 
         //Assert
         assertEquals(104, result.roomNumber());
-        assertEquals(4, result.roomType());
+        assertEquals("standard", result.roomType());
         assertEquals(BigDecimal.valueOf(1000), result.roomPrice());
         assertEquals(2, result.maxGuests());
     }
@@ -130,7 +142,7 @@ class RoomServiceTest {
 
         UpdateRoomDto fakeDto = new UpdateRoomDto();
         fakeDto.setRoomNumber(104);
-        fakeDto.setRoomSize(4);
+        fakeDto.setRoomType("standard");
         fakeDto.setRoomPrice(BigDecimal.valueOf(1000));
 
         Mockito.when(roomRepository.findById(1L))
