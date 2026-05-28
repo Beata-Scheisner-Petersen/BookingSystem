@@ -7,32 +7,37 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.format.ResolverStyle;
-
+/**
+ * This is a custom validator that is connected to an annotation @ValidIdentification.
+ * ConstraintValidator\<ValidIdentification, String\>: Says: "I validate fields that are annotated with @ValidIdentification and that are of type String."
+ * ConstraintValidatorContext is a tool from Jakarta validation and has to be there as it is a requirement from the framework.
+ * Check if format is valid
+ * datePart take out the date part of the identification number.
+ * Convert 6 number to 8 by adding either 19 or 20 in the start.
+ * Makes a strict formatting, so there will be no magical corrections.
+ */
 public class IdentificationValidator implements ConstraintValidator<ValidIdentification, String> {
 
     @Override
-    public boolean isValid(String value, ConstraintValidatorContext context) {
+    public boolean isValid(String identificationNumber, ConstraintValidatorContext context) {
 
-        if (value == null || value.isBlank()) {
+        if (identificationNumber == null || identificationNumber.isBlank()) {
             return false;
         }
 
-        value = value.trim();
+        identificationNumber = identificationNumber.trim();
 
-        // Format: YYMMDD-XXXX or YYYYMMDD-XXXX
-        if (!value.matches("^(\\d{6}|\\d{8})-\\d{4}$")) {
+
+        if (!identificationNumber.matches("^(\\d{6}|\\d{8})-\\d{4}$")) {
             return false;
         }
 
-        // Extract date part
-        String datePart = value.split("-")[0];
+        String datePart = identificationNumber.split("-")[0];
 
-        // Convert 6-digit to 8-digit (assume 19xx or 20xx)
         if (datePart.length() == 6) {
             String year = datePart.substring(0, 2);
             int yearInt = Integer.parseInt(year);
 
-            // Simple rule: 00–24 → 2000–2024, else 1900–1999
             datePart = (yearInt <= 24 ? "20" : "19") + datePart;
         }
 
