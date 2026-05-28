@@ -52,6 +52,11 @@ public class Customer {
         return id;
     }
 
+    //Only used for tests
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public String getFirstname() {
         return firstname;
     }
