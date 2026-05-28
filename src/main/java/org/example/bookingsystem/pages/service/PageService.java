@@ -13,11 +13,9 @@ import java.util.List;
 @Service
 public class PageService {
     private final CustomerRepository customerRepository;
-    private final ReservationRepository reservationRepository;
 
     public PageService(CustomerRepository customerRepository, ReservationRepository reservationRepository) {
         this.customerRepository = customerRepository;
-        this.reservationRepository = reservationRepository;
     }
 
     public CustomerInfoRequest getCustomer(Long id) {

@@ -6,8 +6,10 @@ import org.example.bookingsystem.customer.model.dto.CustomerUpdateRequest;
 import org.example.bookingsystem.customer.repository.CustomerRepository;
 import org.example.bookingsystem.exceptionhandler.customexeptions.AlreadyExistException;
 import org.example.bookingsystem.exceptionhandler.customexeptions.HaveReservationException;
+import org.example.bookingsystem.exceptionhandler.customexeptions.NotFoundException;
 import org.example.bookingsystem.exceptionhandler.customexeptions.WrongEmailOrPasswordException;
 import org.example.bookingsystem.reservation.model.Reservation;
+import org.example.bookingsystem.reservation.repository.ReservationRepository;
 import org.example.bookingsystem.reservation.service.ReservationService;
 import org.example.bookingsystem.security.password.PasswordService;
 import org.junit.jupiter.api.Test;
@@ -33,6 +35,8 @@ class CustomerServiceTest {
     private CustomerRepository customerRepository;
     @Mock
     private PasswordService passwordService;
+    @Mock
+    private ReservationRepository reservationRepository;
     @Mock
     private ReservationService reservationService;
 
@@ -126,21 +130,54 @@ class CustomerServiceTest {
     }
 
     @Test
-    void deleteCustomer_hasReservation_throwsException() {
-        when(reservationService.getActiveReservationByCustomerId(1L))
-                .thenReturn(List.of(new Reservation()));
+    void deleteCustomer_throwsNotFoundException() {
+        Customer fakeCustomer = new Customer();
+        fakeCustomer.setId(1L);
 
+        when(customerRepository.findById(1L))
+                .thenReturn(Optional.empty());
+
+        assertThrows(NotFoundException.class, () -> customerService.deleteCustomer(1L));
+    }
+
+    @Test
+    void deleteCustomer_throwsHaveReservationException() {
+        //Arrange
+        Customer fakeCustomer = new Customer();
+        fakeCustomer.setId(1L);
+
+        when(customerRepository.findById(1L))
+                .thenReturn(Optional.of(fakeCustomer));
+
+        Reservation fakeReservation = new Reservation();
+        when(reservationService.getActiveReservationByCustomerId(1L))
+                .thenReturn(List.of(fakeReservation));
+
+        //Act + Assert
         assertThrows(HaveReservationException.class,
                 () -> customerService.deleteCustomer(1L));
     }
 
     @Test
     void deleteCustomer_success() {
+        //Arrange
+        Customer fakeCustomer = new Customer();
+        fakeCustomer.setId(1L);
+
+        when(customerRepository.findById(1L))
+                .thenReturn(Optional.of(fakeCustomer));
+
+        Reservation fakeReservation = new Reservation();
         when(reservationService.getActiveReservationByCustomerId(1L))
                 .thenReturn(Collections.emptyList());
 
+        when(reservationRepository.findAllByCustomer_Id(1L))
+                .thenReturn(Collections.emptyList());
+
+        //Act
         customerService.deleteCustomer(1L);
 
-        verify(customerRepository).deleteById(1L);
+        //Assert
+        verify(customerRepository).delete(fakeCustomer);
     }
 }
