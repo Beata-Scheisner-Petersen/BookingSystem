@@ -13,6 +13,8 @@ public class UpdateRoomDto {
     @Positive(message = "Room size can't be 0 or below")
     private int roomSize;
 
+    private String roomType;
+
     @PositiveOrZero(message = "Price can't be negative")
     private BigDecimal roomPrice;
 
@@ -42,7 +44,10 @@ public class UpdateRoomDto {
     }
 
     public String getRoomType() {
-        return "";
+        return this.roomType;
+    }
+    public void setRoomType(String roomType) {
+        this.roomType = roomType;
     }
 }
 
