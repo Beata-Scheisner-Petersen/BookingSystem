@@ -7,6 +7,7 @@
 
     <!-- css/Bootstrap -->
     <link th:href="@{/vendor/bootstrap.min.css}" rel="stylesheet"/>
+    <link rel="stylesheet" th:href="@{/css/interaction_button.css}">
     <!-- scripts -->
     <script defer th:src="@{/javascript/delete_account.js}"></script>
     <!-- header block -->
@@ -17,19 +18,15 @@
 
 <div class="d-flex m-5 align-content-center justify-content-center">
     <div>
-        <h3>DELETE Account?</h3>
+        <h3>Delete Account?</h3>
 
         <h5>Are you sure?</h5>
         <div>
             <label class="form-label"></label>
             <div id="delete_error" class="text-danger small"></div>
         </div>
-        <br>
-        <div class="d-flex p-2 bg-info rounded-2 justify-content-center align-content-center">
-            <button onclick="deleteYes()" class="rounded-3 shadow">YES</button>
-            <button onclick="deleteNo()" class="rounded-3 shadow">NO</button>
-        </div>
-
+            <button onclick="deleteYes()" class="rounded-3 shadow interaction-button">YES</button>
+            <button onclick="deleteNo()" class="rounded-3 shadow interaction-button">NO</button>
     </div>
 </div>
 
