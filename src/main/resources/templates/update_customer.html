@@ -7,7 +7,8 @@
 
     <!-- css/Bootstrap -->
     <link href="/vendor/bootstrap.min.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="/css/update_page_style.css">
+    <link rel="stylesheet" href="/css/update_customer_style.css">
+    <link rel="stylesheet" th:href="@{/css/interaction_button.css}">
     <!-- scripts -->
     <!-- header block -->
     <th:block th:replace="~{fragments/header :: header}"></th:block>
@@ -16,23 +17,23 @@
 <body>
 
 <div class="update-page">
-    <h1>Uppdatera konto</h1>
+    <h1>Update Account</h1>
 
     <form action="/api/customers/update" method="post">
 
-        <label>Email:</label>
-        <input type="email" name="email" placeholder="Ny email">
+        <label>Email</label>
+        <input type="email" name="email" placeholder="New email">
 
-        <label>Telefonnummer:</label>
-        <input type="text" name="phoneNumber" placeholder="Nytt telefonnummer">
+        <label>Phone Number</label>
+        <input type="text" name="phoneNumber" placeholder="New phone number">
 
-        <label>Nytt lösenord:</label>
-        <input type="password" name="password" placeholder="Nytt lösenord">
+        <label>Password</label>
+        <input type="password" name="password" placeholder="New password">
 
-        <button type="submit" class="btn">Update</button>
+        <button type="submit" class="btn interaction-button">Update</button>
     </form>
 
-    <a href="/mypage" class="btn-secondary">Tillbaka</a>
+    <a href="/mypage" class="btn-secondary interaction-button">Back</a>
 </div>
 
 </body>
