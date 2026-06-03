@@ -4,6 +4,11 @@ h1 {
     text-align: center;
 }
 
+.thead {
+    border-bottom: black;
+}
+
+
 .status-active {
     color: green;
     font-weight: bold;
