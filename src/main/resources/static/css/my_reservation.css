@@ -8,6 +8,9 @@ h1 {
     border-bottom: black;
 }
 
+tbody {
+    border: white;
+}
 
 .status-active {
     color: green;
