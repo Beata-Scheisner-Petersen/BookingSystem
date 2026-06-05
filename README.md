@@ -20,6 +20,11 @@ _At The Black Cat Retirement Home, your old monster parents enjoy:_
 
 _At The Black Cat, everyone is welcome… as long as they’re not afraid of a little darkness._
 
+## Authors
+
+- [Beata Schleisner-Petersen](https://github.com/Beata-Scheisner-Petersen)
+- [Daniel Evansson](https://github.com/SleepingFores7s)
+- [Valeria Kostova](https://github.com/valeriakostova-source)
 
 ## Table of contents
 * [General Info](#general-information)
@@ -141,10 +146,4 @@ You can find all the information you need [here](https://blog.jetbrains.com/idea
 
 ## Project status
 Project is: _in progress_ 
-
-## Authors
-
-- [Beata Schleisner-Petersen](https://github.com/Beata-Scheisner-Petersen)
-- [Daniel Evansson](https://github.com/SleepingFores7s)
-- [Valeria Kostova](https://github.com/valeriakostova-source)
 
