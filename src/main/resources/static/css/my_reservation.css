@@ -51,6 +51,8 @@
     border: none;
     cursor: pointer;
     border-radius: 4px;
+    width: 80px;
+    text-align: center;
 }
 
 .edit-btn {
