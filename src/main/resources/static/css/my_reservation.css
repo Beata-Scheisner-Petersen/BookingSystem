@@ -62,9 +62,8 @@
     color: white;
 }
 
-.delete-btn {
-    background-color: #231477;
-    color: white;
+.save-btn {
+    text-align: center;
 }
 
 .edit-form {
@@ -74,6 +73,31 @@
     margin-top: 10px;
     border-top: 3px solid #231477;
     border-bottom: 3px solid #231477;
+}
+
+.edit-grid {
+    display: flex;
+    justify-content: center;
+    gap: 80px;
+    margin-bottom: 20px;
+}
+
+.date-block {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+}
+
+.date-block input[type="date"] {
+    width: 122px;
+    height: 35px;
+    text-align: center;
+}
+
+.edit-grid label {
+    font-weight: bold;
+    margin-right: 5px;
 }
 
 #edit-title {

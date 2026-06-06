@@ -46,11 +46,16 @@ function renderReservations(reservations) {
                     <h4 id="edit-title">Edit reservation</h4>
                     
                     <div class="edit-grid">
-                        <label>Check-in date:</label>
-                        <input type="date" id="checkIn-${res.id}" value="${res.checkIn}">
-    
-                        <label>Check-out date:</label>
-                        <input type="date" id="checkOut-${res.id}" value="${res.checkOut}">
+                    
+                        <div class="date-block">
+                            <label>Check-in date:</label>
+                            <input type="date" id="checkIn-${res.id}" value="${res.checkIn}">
+                        </div>
+                        
+                        <div class="date-block">
+                            <label>Check-out date:</label>
+                            <input type="date" id="checkOut-${res.id}" value="${res.checkOut}">
+                        </div> 
                     </div>
                     
                     <button class="action-btn save-btn" onclick="saveChanges(${res.id})">Save changes</button>
