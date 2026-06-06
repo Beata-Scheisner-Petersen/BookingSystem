@@ -57,7 +57,7 @@
     height: 35px;
 }
 
-.edit-btn {
+.edit-btn, .delete-btn, .save-btn {
     background-color: #231477;
     color: white;
 }
