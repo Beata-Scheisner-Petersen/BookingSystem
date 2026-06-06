@@ -21,7 +21,7 @@ function renderReservations(reservations) {
         const row = document.createElement("tr");
 
         row.innerHTML = `
-             <td>${res.checkIn}</td>
+            <td>${res.checkIn}</td>
             <td>${res.checkOut}</td>
             <td>${res.roomNumber}</td>
             <td>${res.extraBed ? "Yes" : "No"}</td>
