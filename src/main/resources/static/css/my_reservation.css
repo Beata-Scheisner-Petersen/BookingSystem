@@ -75,6 +75,12 @@
     border-bottom: 3px solid #231477;
 }
 
+#edit-title {
+    text-align: center;
+    margin-bottom: 25px;
+    background: #231477;
+    color: white;
+}
 .popup-overlay {
     display: none;
     position: fixed;
