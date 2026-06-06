@@ -23,6 +23,7 @@
 #reservationTable {
     width: auto !important;   /* Överskriver Bootstrap */
     margin: 0;
+    text-align: center;
 }
 #reservationTable th,
 #reservationTable td {
