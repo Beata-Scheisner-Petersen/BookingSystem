@@ -4,11 +4,6 @@
     text-align: center;
 }
 
-thead {
-    border-rigght: black;
-    border-style: groove;
-}
-
 #my_reservation_table th {
     background-color: #231477;
     color: white;
