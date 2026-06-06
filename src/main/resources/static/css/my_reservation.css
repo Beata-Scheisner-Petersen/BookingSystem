@@ -2,12 +2,15 @@
     margin-top: 50px;
     margin-bottom: 50px;
     text-align: center;
+    font-family: "Book Antiqua", sans-serif;
+    font-size: xxx-large;
 }
 
 #my_reservation_table th {
     background-color: #231477;
     color: white;
     margin: 50px;
+    text-align: center;
 }
 
 .table-wrapper {
@@ -34,11 +37,6 @@
 
 
 .status-active, .status-canceled {
-    font-weight: bold;
-}
-
-.status-cancelled {
-    color: red;
     font-weight: bold;
 }
 
@@ -71,6 +69,7 @@
     padding: 15px;
     margin-top: 10px;
     border-top: 3px solid #231477;
+    border-bottom: 3px solid #231477;
 }
 
 .popup-overlay {
