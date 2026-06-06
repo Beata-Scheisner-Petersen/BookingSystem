@@ -33,8 +33,7 @@
 }
 
 
-.status-active {
-    color: green;
+.status-active, .status-canceled {
     font-weight: bold;
 }
 
