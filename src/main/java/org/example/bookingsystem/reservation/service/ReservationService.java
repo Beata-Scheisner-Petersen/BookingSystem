@@ -50,13 +50,14 @@ public class ReservationService {
 
         return reservationRepository.findAllByCustomer_Id(customerId)
                 .stream()
-                .map(r -> new GetAllCustomerReservationsDto(
-                        r.getId(),
-                        r.getCheckIn(),
-                        r.getCheckOut(),
-                        r.getRoom().getRoomNumber(),
-                        r.getTotalCost(),
-                        r.getStatus()
+                .sorted(Comparator.comparing(reservation -> reservation.getStatus() != ReservationStatus.ACTIVE))
+                .map(reservation -> new GetAllCustomerReservationsDto(
+                        reservation.getId(),
+                        reservation.getCheckIn(),
+                        reservation.getCheckOut(),
+                        reservation.getRoom().getRoomNumber(),
+                        reservation.getTotalCost(),
+                        reservation.getStatus()
                 ))
                 .toList();
     }
