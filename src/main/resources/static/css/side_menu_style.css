@@ -32,11 +32,11 @@
     margin-right: 10px;
     font-size: 28px;
     padding: 10px 18px;
-    background: #7311809f;
+    background: #070705;
+    color: #ffffff;
     border-radius: 30px;
     border: none;
     cursor: pointer;
-    color: #222;
 }
 
 .side_menu ul {

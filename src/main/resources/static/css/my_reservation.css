@@ -1,15 +1,43 @@
-h1 {
-    margin-top: 30px;
-    margin-bottom: 20px;
+.my_reservation_title {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    text-align: center;
+    font-family: "Book Antiqua", sans-serif;
+    font-size: xxx-large;
 }
 
-.status-active {
-    color: green;
-    font-weight: bold;
+#my_reservation_table th {
+    background-color: #231477;
+    color: white;
+    margin: 50px;
+    text-align: center;
 }
 
-.status-cancelled {
-    color: red;
+.table-wrapper {
+    border: 3px solid #231477;
+    padding: 0;
+    margin: 50px auto;
+    display: table;
+}
+
+#reservationTable {
+    width: auto !important;   /* Överskriver Bootstrap */
+    margin: 0;
+    text-align: center;
+}
+#reservationTable th,
+#reservationTable td {
+    #padding: 4px 8px; /* mindre cell-padding */
+    border-bottom: white;
+    border-top: white;
+}
+
+#header, .header, nav, .top-nav, .menu-bar {
+    margin-bottom: 40px;
+}
+
+
+.status-active, .status-canceled {
     font-weight: bold;
 }
 
@@ -24,16 +52,18 @@ h1 {
     border: none;
     cursor: pointer;
     border-radius: 4px;
+    width: 80px;
+    text-align: center;
+    height: 35px;
 }
 
-.edit-btn {
-    background-color: #007bff;
+.edit-btn, .delete-btn, .save-btn {
+    background-color: #231477;
     color: white;
 }
 
-.delete-btn {
-    background-color: #dc3545;
-    color: white;
+.save-btn {
+    text-align: center;
 }
 
 .edit-form {
@@ -41,9 +71,41 @@ h1 {
     background: #f8f9fa;
     padding: 15px;
     margin-top: 10px;
-    border-left: 3px solid #007bff;
+    border-top: 3px solid #231477;
+    border-bottom: 3px solid #231477;
 }
 
+.edit-grid {
+    display: flex;
+    justify-content: center;
+    gap: 80px;
+    margin-bottom: 20px;
+}
+
+.date-block {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+}
+
+.date-block input[type="date"] {
+    width: 122px;
+    height: 35px;
+    text-align: center;
+}
+
+.edit-grid label {
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+#edit-title {
+    text-align: center;
+    margin-bottom: 25px;
+    background: #231477;
+    color: white;
+}
 .popup-overlay {
     display: none;
     position: fixed;
