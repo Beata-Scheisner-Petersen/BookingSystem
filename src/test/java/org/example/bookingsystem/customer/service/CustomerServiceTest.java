@@ -118,7 +118,7 @@ class CustomerServiceTest {
 //        customer.setId(1L);
 
         CustomerUpdateRequest request = new CustomerUpdateRequest(
-                "new@mail.com", null, null
+                null , null, "new@mail.com", null, null
         );
 
         when(customerRepository.findById(1L)).thenReturn(Optional.of(customer));
