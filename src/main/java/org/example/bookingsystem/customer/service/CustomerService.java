@@ -6,7 +6,6 @@ import org.example.bookingsystem.customer.model.dto.CustomerUpdateRequest;
 import org.example.bookingsystem.customer.repository.CustomerRepository;
 import org.example.bookingsystem.exceptionhandler.customexeptions.*;
 import org.example.bookingsystem.reservation.model.Reservation;
-import org.example.bookingsystem.reservation.model.ReservationStatus;
 import org.example.bookingsystem.reservation.repository.ReservationRepository;
 import org.example.bookingsystem.reservation.service.ReservationService;
 import org.example.bookingsystem.security.password.PasswordService;
