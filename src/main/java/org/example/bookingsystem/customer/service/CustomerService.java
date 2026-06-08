@@ -72,6 +72,14 @@ public class CustomerService {
         Customer customer = customerRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Customer not found"));
 
+        if (request.firstname() != null && !request.firstname().isBlank()) {
+            customer.setFirstname(request.firstname());
+        }
+
+        if (request.lastname() != null && !request.lastname().isBlank()) {
+            customer.setLastname(request.lastname());
+        }
+
         if (request.email() != null && !request.email().isBlank()) {
             if (customerRepository.existsByEmail(request.email())) {
                 throw new AlreadyExistException("Email already exist");
