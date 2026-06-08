@@ -21,7 +21,7 @@ function renderReservations(reservations) {
         const row = document.createElement("tr");
 
         row.innerHTML = `
-             <td>${res.checkIn}</td>
+            <td>${res.checkIn}</td>
             <td>${res.checkOut}</td>
             <td>${res.roomNumber}</td>
             <td>${res.extraBed ? "Yes" : "No"}</td>
@@ -42,16 +42,23 @@ function renderReservations(reservations) {
         formRow.innerHTML = `
             <td colspan="7">
                 <div id="edit-form-${res.id}" class="edit-form">
-                    <h4>Edit reservation</h4>
-
-                    <label>Check-in date:</label>
-                    <input type="date" id="checkIn-${res.id}" value="${res.checkIn}">
-
-                    <label>Check-out date:</label>
-                    <input type="date" id="checkOut-${res.id}" value="${res.checkOut}">
-
-                    <br><br>
-                    <button class="action-btn edit-btn" onclick="saveChanges(${res.id})">Save changes</button>
+                
+                    <h4 id="edit-title">Edit reservation</h4>
+                    
+                    <div class="edit-grid">
+                    
+                        <div class="date-block">
+                            <label>Check-in date:</label>
+                            <input type="date" id="checkIn-${res.id}" value="${res.checkIn}">
+                        </div>
+                        
+                        <div class="date-block">
+                            <label>Check-out date:</label>
+                            <input type="date" id="checkOut-${res.id}" value="${res.checkOut}">
+                        </div> 
+                    </div>
+                    
+                    <button class="action-btn save-btn" onclick="saveChanges(${res.id})">Save changes</button>
                 </div>
             </td>
         `;
