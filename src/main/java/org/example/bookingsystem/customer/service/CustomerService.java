@@ -84,6 +84,14 @@ public class CustomerService {
             customer.setPhoneNumber(request.phoneNumber());
         }
 
+        if (request.firstname() != null) {
+            customer.setFirstname(request.firstname());
+        }
+
+        if (request.lastname() != null) {
+            customer.setLastname(request.lastname());
+        }
+
         if (request.password() != null && !request.password().isBlank()) {
             customer.setPassword(passwordService.hash(request.password()));
         }
