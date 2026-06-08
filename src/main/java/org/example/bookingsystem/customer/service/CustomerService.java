@@ -4,9 +4,11 @@ import org.example.bookingsystem.customer.model.Customer;
 import org.example.bookingsystem.customer.model.dto.CreateCustomerRequest;
 import org.example.bookingsystem.customer.model.dto.CustomerUpdateRequest;
 import org.example.bookingsystem.customer.repository.CustomerRepository;
-import org.example.bookingsystem.exceptionhandler.customexeptions.*;
+import org.example.bookingsystem.exceptionhandler.customexeptions.AlreadyExistException;
+import org.example.bookingsystem.exceptionhandler.customexeptions.HaveReservationException;
+import org.example.bookingsystem.exceptionhandler.customexeptions.NotFoundException;
+import org.example.bookingsystem.exceptionhandler.customexeptions.WrongEmailOrPasswordException;
 import org.example.bookingsystem.reservation.model.Reservation;
-import org.example.bookingsystem.reservation.model.ReservationStatus;
 import org.example.bookingsystem.reservation.repository.ReservationRepository;
 import org.example.bookingsystem.reservation.service.ReservationService;
 import org.example.bookingsystem.security.password.PasswordService;
@@ -70,6 +72,14 @@ public class CustomerService {
         Customer customer = customerRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Customer not found"));
 
+        if (request.firstname() != null && !request.firstname().isBlank()) {
+            customer.setFirstname(request.firstname());
+        }
+
+        if (request.lastname() != null && !request.lastname().isBlank()) {
+            customer.setLastname(request.lastname());
+        }
+
         if (request.email() != null && !request.email().isBlank()) {
             if (customerRepository.existsByEmail(request.email())) {
                 throw new AlreadyExistException("Email already exist");
@@ -93,7 +103,6 @@ public class CustomerService {
 
     public void deleteCustomer(Long id) {
         Customer customer = customerRepository.findById(id).orElseThrow(() -> new NotFoundException("not found"));
-        //List<Reservation> reservationList = reservationService.getAllReservations();
         List<Reservation> reservationList = reservationService.getActiveReservationByCustomerId(customer.getId());
 
         if (!reservationList.isEmpty()) {
