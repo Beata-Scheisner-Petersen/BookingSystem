@@ -93,7 +93,6 @@ public class CustomerService {
 
     public void deleteCustomer(Long id) {
         Customer customer = customerRepository.findById(id).orElseThrow(() -> new NotFoundException("not found"));
-        //List<Reservation> reservationList = reservationService.getAllReservations();
         List<Reservation> reservationList = reservationService.getActiveReservationByCustomerId(customer.getId());
 
         if (!reservationList.isEmpty()) {
