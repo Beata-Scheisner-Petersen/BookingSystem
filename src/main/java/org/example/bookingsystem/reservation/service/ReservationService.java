@@ -167,8 +167,7 @@ public class ReservationService {
     public BigDecimal countTotalPrice(Room room,
                                       LocalDate checkIn,
                                       LocalDate checkOut,
-                                      int guests)
-    {
+                                      int guests) {
         long days = ChronoUnit.DAYS.between(
                 checkIn,
                 checkOut
@@ -189,8 +188,11 @@ public class ReservationService {
 
             extraPriceForHighSeason = BigDecimal.valueOf(1.3);
         }
-        return (roomPricePerDay.add(extraBedPricePerDay)).multiply(extraPriceForHighSeason).multiply(BigDecimal.valueOf(days));
-
+        return (roomPricePerDay
+                .add(extraBedPricePerDay)
+                .multiply(extraPriceForHighSeason)
+                .multiply(BigDecimal.valueOf(days))
+        );
     }
 
     public Reservation cancelReservation(Long reservationId) {
