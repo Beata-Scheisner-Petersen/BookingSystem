@@ -1,5 +1,7 @@
 package org.example.bookingsystem.reservation.model;
+
 import jakarta.persistence.*;
+
 import org.example.bookingsystem.customer.model.Customer;
 import org.example.bookingsystem.roomapi.entity.Room;
 
@@ -7,17 +9,17 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
-@Table (name= "reservation")
+@Table(name = "reservation")
 public class Reservation {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @ManyToOne
-    @JoinColumn (name="customer_id", nullable = true)
+    @JoinColumn(name = "customer_id", nullable = true)
     private Customer customer;
 
-    @ManyToOne (optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "room_id", updatable = false)
     private Room room;
 
@@ -27,13 +29,21 @@ public class Reservation {
     private BigDecimal totalCost;
     private int guests;
 
-    @Enumerated (EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     private ReservationStatus status;
 
-    public Reservation (){
+    public Reservation() {
     }
 
-    public Reservation(Customer customer, Room room, LocalDate checkIn, LocalDate checkOut, BigDecimal totalCost, ReservationStatus status, int guests) {
+    public Reservation(
+            Customer customer,
+            Room room,
+            LocalDate checkIn,
+            LocalDate checkOut,
+            BigDecimal totalCost,
+            ReservationStatus status,
+            int guests
+    ) {
         this.customer = customer;
         this.room = room;
         this.checkIn = checkIn;
