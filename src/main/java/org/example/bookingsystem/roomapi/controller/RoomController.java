@@ -1,10 +1,12 @@
 package org.example.bookingsystem.roomapi.controller;
 
 import jakarta.validation.Valid;
+
 import org.example.bookingsystem.roomapi.dto.AddNewRoomDto;
 import org.example.bookingsystem.roomapi.dto.RoomResponseDto;
 import org.example.bookingsystem.roomapi.dto.UpdateRoomDto;
 import org.example.bookingsystem.roomapi.service.RoomService;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
