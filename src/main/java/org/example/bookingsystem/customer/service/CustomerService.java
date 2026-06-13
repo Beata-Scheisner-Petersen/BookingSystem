@@ -4,13 +4,16 @@ import org.example.bookingsystem.customer.model.Customer;
 import org.example.bookingsystem.customer.model.dto.CreateCustomerRequest;
 import org.example.bookingsystem.customer.model.dto.CustomerUpdateRequest;
 import org.example.bookingsystem.customer.repository.CustomerRepository;
+
 import org.example.bookingsystem.exceptionhandler.customexeptions.AlreadyExistException;
 import org.example.bookingsystem.exceptionhandler.customexeptions.HaveReservationException;
 import org.example.bookingsystem.exceptionhandler.customexeptions.NotFoundException;
 import org.example.bookingsystem.exceptionhandler.customexeptions.WrongEmailOrPasswordException;
+
 import org.example.bookingsystem.reservation.model.Reservation;
 import org.example.bookingsystem.reservation.repository.ReservationRepository;
 import org.example.bookingsystem.reservation.service.ReservationService;
+
 import org.example.bookingsystem.security.password.PasswordService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,7 +30,8 @@ public class CustomerService {
     public CustomerService(CustomerRepository customerRepository,
                            PasswordService passwordService,
                            ReservationService reservationService,
-                           ReservationRepository reservationRepository) {
+                           ReservationRepository reservationRepository
+    ) {
         this.customerRepository = customerRepository;
         this.passwordService = passwordService;
         this.reservationService = reservationService;
@@ -39,8 +43,10 @@ public class CustomerService {
 
         if (customerRepository.existsByEmail(request.email())) {
             throw new AlreadyExistException("Email already exist");
+
         } else if (customerRepository.existsByIdentificationNumber(request.identificationNumber())) {
             throw new AlreadyExistException("Identification number already exist in the system");
+
         } else if (request.phoneNumber() != null && customerRepository.existsByPhoneNumber(request.phoneNumber())) {
             throw new AlreadyExistException("Phone number already exist");
         }
@@ -51,14 +57,17 @@ public class CustomerService {
                 request.identificationNumber(),
                 request.email(),
                 passwordService.hash(request.password()),
-                request.phoneNumber());
+                request.phoneNumber()
+        );
 
         return customerRepository.save(customer);
     }
 
     public Customer loginCustomer(String email, String password) {
         Customer customer = customerRepository.findByEmail(email)
-                .orElseThrow(() -> new WrongEmailOrPasswordException("Wrong email or password"));
+                .orElseThrow(
+                        () -> new WrongEmailOrPasswordException("Wrong email or password")
+                );
 
         if (!passwordService.matches(password, customer.getPassword())) {
             throw new WrongEmailOrPasswordException("Wrong email or password");
@@ -69,18 +78,26 @@ public class CustomerService {
 
     @Transactional
     public void updateCustomerInfo(Long id, CustomerUpdateRequest request) {
-        Customer customer = customerRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Customer not found"));
+        Customer customer = customerRepository
+                .findById(id)
+                .orElseThrow(
+                        () -> new RuntimeException("Customer not found")
+                );
 
         if (request.firstname() != null && !request.firstname().isBlank()) {
-            customer.setFirstname(request.firstname());
+            customer.setFirstname(
+                    request.firstname()
+            );
         }
 
         if (request.lastname() != null && !request.lastname().isBlank()) {
-            customer.setLastname(request.lastname());
+            customer.setLastname(
+                    request.lastname()
+            );
         }
 
         if (request.email() != null && !request.email().isBlank()) {
+
             if (customerRepository.existsByEmail(request.email())) {
                 throw new AlreadyExistException("Email already exist");
             }
@@ -88,6 +105,7 @@ public class CustomerService {
         }
 
         if (request.phoneNumber() != null && !request.phoneNumber().isBlank()) {
+
             if (customerRepository.existsByPhoneNumber(request.phoneNumber())) {
                 throw new AlreadyExistException("Phone number already exist");
             }
@@ -95,23 +113,39 @@ public class CustomerService {
         }
 
         if (request.password() != null && !request.password().isBlank()) {
-            customer.setPassword(passwordService.hash(request.password()));
+            customer.setPassword(
+                    passwordService.hash(
+                            request.password()
+                    )
+            );
         }
 
         customerRepository.save(customer);
     }
 
     public void deleteCustomer(Long id) {
-        Customer customer = customerRepository.findById(id).orElseThrow(() -> new NotFoundException("not found"));
-        List<Reservation> reservationList = reservationService.getActiveReservationByCustomerId(customer.getId());
+        Customer customer = customerRepository.findById(id)
+                .orElseThrow(
+                        () -> new NotFoundException("not found")
+                );
+
+        List<Reservation> reservationList = reservationService
+                .getActiveReservationByCustomerId(
+                        customer.getId()
+                );
 
         if (!reservationList.isEmpty()) {
             throw new HaveReservationException("You cannot delete your account while you have active reservations.");
         }
 
-        List<Reservation> oldReservations = reservationRepository.findAllByCustomer_Id(customer.getId());
+        List<Reservation> oldReservations = reservationRepository
+                .findAllByCustomer_Id(
+                        customer.getId()
+                );
+
         for (Reservation reservation : oldReservations) {
             reservation.setCustomer(null);
+
             reservationRepository.save(reservation);
         }
 
