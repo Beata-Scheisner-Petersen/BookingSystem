@@ -10,11 +10,13 @@ import java.util.List;
 
 public interface ReservationRepository extends JpaRepository <Reservation, Long> {
     List<Reservation> findAllByCustomer(Customer customer);
+
     List<Reservation> findByRoom_IdAndStatusAndCheckInBeforeAndCheckOutAfter (
             Long roomId,
             ReservationStatus reservationStatus,
             LocalDate checkIn,
-            LocalDate checkOut);
+            LocalDate checkOut
+    );
 
     List<Reservation> findByCustomer_IdAndStatus(long customerId, ReservationStatus status);
 
