@@ -3,6 +3,7 @@ package org.example.bookingsystem.exceptionhandler;
 import org.example.bookingsystem.exceptionhandler.customexeptions.AlreadyExistException;
 import org.example.bookingsystem.exceptionhandler.customexeptions.HaveReservationException;
 import org.example.bookingsystem.exceptionhandler.customexeptions.WrongEmailOrPasswordException;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -30,43 +31,59 @@ public class GlobalExceptionHandler {
 
         exception.getBindingResult().
                 getFieldErrors()
-                .forEach(error -> errors
-                        .put(error.getField(), error.getDefaultMessage())
+                .forEach(
+                        error -> errors.put(
+                                error.getField(),
+                                error.getDefaultMessage()
+                        )
                 );
 
-        return ResponseEntity.badRequest().body(errors);
+        return ResponseEntity
+                .badRequest()
+                .body(errors);
     }
 
     @ExceptionHandler(AlreadyExistException.class)
     public ResponseEntity<String> handleUsernameExists(AlreadyExistException e) {
         return ResponseEntity
-                .status(HttpStatus.CONFLICT)
-                .body(e.getMessage());
+                .status(
+                        HttpStatus.CONFLICT
+                ).body(
+                        e.getMessage()
+                );
     }
 
     @ExceptionHandler(WrongEmailOrPasswordException.class)
     public ResponseEntity<String> handleWrongEmailOrPassword(WrongEmailOrPasswordException e) {
         return ResponseEntity
-                .status(HttpStatus.CONFLICT)
-                .body(e.getMessage());
+                .status(
+                        HttpStatus.CONFLICT
+                ).body(
+                        e.getMessage()
+                );
     }
 
     @ExceptionHandler(HaveReservationException.class)
     public ResponseEntity<String> HaveReservation(HaveReservationException e) {
         return ResponseEntity
-                .status(HttpStatus.CONFLICT)
-                .body(e.getMessage());
+                .status(
+                        HttpStatus.CONFLICT
+                ).body(
+                        e.getMessage()
+                );
     }
 
 
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<String> handleIllegalArgument(
-            IllegalArgumentException e
-    ) {
+            IllegalArgumentException e) {
 
         return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
-                .body(e.getMessage());
+                .status(
+                        HttpStatus.BAD_REQUEST
+                ).body(
+                        e.getMessage()
+                );
     }
 
 }
