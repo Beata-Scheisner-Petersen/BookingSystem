@@ -6,10 +6,16 @@ import org.springframework.stereotype.*;
 @Service
 public class PasswordService {
     public String hash(String rawPassword) {
-        return BCrypt.hashpw(rawPassword, BCrypt.gensalt());
+        return BCrypt.hashpw(
+                rawPassword,
+                BCrypt.gensalt()
+        );
     }
 
     public boolean matches(String rawPassword, String hashedPassword) {
-        return BCrypt.checkpw(rawPassword, hashedPassword);
+        return BCrypt.checkpw(
+                rawPassword,
+                hashedPassword
+        );
     }
 }
