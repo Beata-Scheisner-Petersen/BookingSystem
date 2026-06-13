@@ -15,7 +15,9 @@ public class PageService {
 
     public CustomerInfoRequest getCustomer(Long id) {
         return customerRepository
-                .getCustomersById(id).orElseThrow(() -> new NotFoundException("Customer not found"));
+                .getCustomersById(id)
+                .orElseThrow(() ->
+                        new NotFoundException("Customer not found"));
     }
 
 }
