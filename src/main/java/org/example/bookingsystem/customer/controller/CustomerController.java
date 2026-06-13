@@ -118,7 +118,7 @@ public class CustomerController {
         return ResponseEntity.status(302)
                 .header(
                         "Location",
-                        "/myPage"
+                        "/mypage"
                 )
                 .build();
     }
