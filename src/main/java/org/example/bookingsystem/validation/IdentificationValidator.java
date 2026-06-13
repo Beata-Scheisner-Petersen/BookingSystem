@@ -51,8 +51,6 @@ public class IdentificationValidator implements ConstraintValidator<ValidIdentif
         } catch (DateTimeParseException e) {
             return false;
         }
-
-
         return true;
     }
 }
