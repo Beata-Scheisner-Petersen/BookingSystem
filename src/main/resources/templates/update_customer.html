@@ -14,17 +14,17 @@
         <!-- header block -->
         <th:block th:replace="~{fragments/header :: header}"></th:block>
 
-</head>
-<body>
+    </head>
 
-<div class="update-page">
-    <h1>Update Account</h1>
+    <body>
+        <div class="update-page">
+            
+            <h1>Update Account</h1>
 
-    <form action="/api/customers/update" method="post">
-
-        <label>Firstname <br>
-        <input type="text" name="firstname" placeholder="New firstname">
-        </label>
+            <form id="update">
+                <label>Firstname <br>
+                    <input type="text" name="firstname" placeholder="New firstname">
+                </label>
 
         <label>Lastname <br>
             <input type="text" name="lastname" placeholder="New lastname">
