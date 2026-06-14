@@ -7,6 +7,7 @@ import org.example.bookingsystem.customer.model.dto.CreateCustomerRequest;
 import org.example.bookingsystem.customer.model.dto.CustomerLoginRequest;
 import org.example.bookingsystem.customer.model.dto.CustomerUpdateRequest;
 import org.example.bookingsystem.customer.service.CustomerService;
+import org.example.bookingsystem.exceptionhandler.customexeptions.AlreadyExistException;
 import org.example.bookingsystem.exceptionhandler.customexeptions.HaveReservationException;
 import org.example.bookingsystem.exceptionhandler.customexeptions.WrongEmailOrPasswordException;
 import org.springframework.http.HttpStatus;
@@ -33,12 +34,22 @@ public class CustomerController {
 
         if (result.hasErrors()) {
             Map<String, String> errors = new HashMap<>();
-            result.getFieldErrors().forEach(error ->
-                    errors.put(error.getField(), error.getDefaultMessage())
-            );
-            return ResponseEntity.badRequest().body(errors);
+
+            result
+                    .getFieldErrors()
+                    .forEach(error -> errors.put(
+                                    error.getField(),
+                                    error.getDefaultMessage()
+                            )
+                    );
+            return ResponseEntity
+                    .badRequest()
+                    .body(errors);
         }
-        return ResponseEntity.status(HttpStatus.CREATED).body(customerService.createNewCustomer(customer));
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(customerService.createNewCustomer(customer)
+                );
     }
 
     @PostMapping("/login")
@@ -49,37 +60,108 @@ public class CustomerController {
     ) {
         if (result.hasErrors()) {
             Map<String, String> errors = new HashMap<>();
-            result.getFieldErrors().forEach(error ->
-                    errors.put(error.getField(), error.getDefaultMessage())
-            );
-            return ResponseEntity.badRequest().body(errors);
+
+            result.getFieldErrors()
+                    .forEach(error -> errors.put(
+                                    error.getField(),
+                                    error.getDefaultMessage()
+                            )
+                    );
+            return ResponseEntity
+                    .badRequest()
+                    .body(errors);
         }
 
         try {
-            Customer customer = customerService.loginCustomer(request.email(), request.password());
-            session.setAttribute("customerId", customer.getId());
-            return ResponseEntity.ok().body(Map.of("message", "login successful"));
+            Customer customer = customerService
+                    .loginCustomer(
+                            request.email(),
+                            request.password()
+                    );
+
+            session.setAttribute(
+                    "customerId",
+                    customer.getId()
+            );
+
+            return ResponseEntity.ok()
+                    .body(
+                            Map.of(
+                                    "message",
+                                    "login successful"
+                            )
+                    );
+
         } catch (WrongEmailOrPasswordException e) {
-            return ResponseEntity.status(409).body(e.getMessage());
+            return ResponseEntity.status(409)
+                    .body(e.getMessage());
         }
 
     }
 
     @PostMapping("/update")
-    public ResponseEntity<Void> updateCustomer(HttpSession session, CustomerUpdateRequest request) {
+    public ResponseEntity<?> updateCustomer(HttpSession session,
+                                            CustomerUpdateRequest request) {
         Long id = (Long) session.getAttribute("customerId");
 
         if (id == null) {
-            return ResponseEntity.status(302)
-                    .header("Location", "/login")
-                    .build();
+            return ResponseEntity
+                    .status(401)
+                    .body(
+                            Map.of(
+                                    "error",
+                                    "Not logged in"
+                            )
+                    );
         }
 
-        customerService.updateCustomerInfo(id, request);
+        try {
+            customerService
+                    .updateCustomerInfo(
+                            id,
+                            request
+                    )
+            ;
+            return ResponseEntity.ok(
+                    Map.of(
+                            "success",
+                            true
+                    )
+            );
 
-        return ResponseEntity.status(302)
-                .header("Location", "/mypage")
-                .build();
+        } catch (AlreadyExistException error) {
+
+            if (error.getMessage().contains("Email")) {
+                return ResponseEntity
+                        .badRequest()
+                        .body(
+                                Map.of(
+                                        "emailError",
+                                        error.getMessage()
+                                )
+                        );
+            }
+
+            if (error.getMessage().contains("Phone")) {
+                return ResponseEntity
+                        .badRequest()
+                        .body(
+                                Map.of(
+                                        "phoneError",
+                                        error.getMessage()
+                                )
+                        );
+            }
+
+            return ResponseEntity
+                    .badRequest()
+                    .body(
+                            Map.of(
+                                    "error",
+                                    "Unknown error"
+                            )
+                    );
+        }
     }
 
 
@@ -89,14 +171,37 @@ public class CustomerController {
         Long id = (Long) session.getAttribute("customerId");
 
         if (id == null) {
-            return ResponseEntity.status(HttpStatus.NETWORK_AUTHENTICATION_REQUIRED).body(Map.of("error", "authorization failed"));
+            return ResponseEntity
+                    .status(
+                            HttpStatus.NETWORK_AUTHENTICATION_REQUIRED
+                    ).body(
+                            Map.of(
+                                    "error",
+                                    "authorization failed"
+                            )
+                    );
         }
 
         try {
             customerService.deleteCustomer(id);
-            return ResponseEntity.ok().body(Map.of("message", "account deleted"));
+
+            return ResponseEntity.ok()
+                    .body(
+                            Map.of(
+                                    "message",
+                                    "account deleted"
+                            )
+                    );
+
         } catch (HaveReservationException e) {
-            return ResponseEntity.status(409).body(Map.of("error",  e.getMessage()));
+            return ResponseEntity
+                    .status(409)
+                    .body(
+                            Map.of(
+                                    "error",
+                                    e.getMessage()
+                            )
+                    );
         }
 
     }

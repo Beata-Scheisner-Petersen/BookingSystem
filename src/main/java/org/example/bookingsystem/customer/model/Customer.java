@@ -39,7 +39,14 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(String firstname, String lastname, String identificationNumber, String email, String password, String phoneNumber) {
+    public Customer(
+            String firstname,
+            String lastname,
+            String identificationNumber,
+            String email,
+            String password,
+            String phoneNumber
+    ) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.identificationNumber = identificationNumber;

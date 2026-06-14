@@ -32,7 +32,7 @@ public class PageController {
     }
 
     @GetMapping("/mypage")
-    public String mypage(HttpSession session, Model model) {
+    public String myPage(HttpSession session, Model model) {
         Long id = (Long) session.getAttribute("customerId");
         if (id == null) {
             return "login";

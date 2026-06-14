@@ -1,10 +1,12 @@
 package org.example.bookingsystem.roomapi.controller;
 
 import jakarta.validation.Valid;
+
 import org.example.bookingsystem.roomapi.dto.AddNewRoomDto;
 import org.example.bookingsystem.roomapi.dto.RoomResponseDto;
 import org.example.bookingsystem.roomapi.dto.UpdateRoomDto;
 import org.example.bookingsystem.roomapi.service.RoomService;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +20,7 @@ public class RoomController {
     }
 
     @GetMapping("/api/room")
-    public ResponseEntity<?>  getRooms(){
+    public ResponseEntity<?> getRooms() {
         if (service.getAllRooms().isEmpty()) {
             return ResponseEntity.status(404).body("No rooms found");
         }
@@ -46,7 +48,8 @@ public class RoomController {
     @GetMapping("/api/room/{id}")
     public ResponseEntity<?> getRoomById(@PathVariable Integer id) {
         RoomResponseDto resultDto = service.getRoomById(id);
-        if(resultDto == null) {
+
+        if (resultDto == null) {
             return ResponseEntity.status(404).body("Room not found");
         }
         return ResponseEntity.ok(resultDto);
@@ -56,7 +59,11 @@ public class RoomController {
     public ResponseEntity<?> roomUpdate(@PathVariable Long id,
                                         @Valid @RequestBody UpdateRoomDto roomDto) {
 
-        RoomResponseDto resultDto = service.updateRoom(id, roomDto);
+        RoomResponseDto resultDto = service
+                .updateRoom(
+                        id,
+                        roomDto
+                );
 
         if (resultDto == null) {
             return ResponseEntity.status(404).body("Room could not be found");
