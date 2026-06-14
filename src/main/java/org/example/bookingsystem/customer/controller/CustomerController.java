@@ -7,6 +7,7 @@ import org.example.bookingsystem.customer.model.dto.CreateCustomerRequest;
 import org.example.bookingsystem.customer.model.dto.CustomerLoginRequest;
 import org.example.bookingsystem.customer.model.dto.CustomerUpdateRequest;
 import org.example.bookingsystem.customer.service.CustomerService;
+import org.example.bookingsystem.exceptionhandler.customexeptions.AlreadyExistException;
 import org.example.bookingsystem.exceptionhandler.customexeptions.HaveReservationException;
 import org.example.bookingsystem.exceptionhandler.customexeptions.WrongEmailOrPasswordException;
 import org.springframework.http.HttpStatus;
@@ -99,26 +100,68 @@ public class CustomerController {
     }
 
     @PostMapping("/update")
-    public ResponseEntity<Void> updateCustomer(HttpSession session, CustomerUpdateRequest request) {
+    public ResponseEntity<?> updateCustomer(HttpSession session,
+                                            CustomerUpdateRequest request) {
         Long id = (Long) session.getAttribute("customerId");
 
         if (id == null) {
-            return ResponseEntity.status(302)
-                    .header(
-                            "Location",
-                            "/login"
-                    )
-                    .build();
+            return ResponseEntity
+                    .status(401)
+                    .body(
+                            Map.of(
+                                    "error",
+                                    "Not logged in"
+                            )
+                    );
         }
 
-        customerService.updateCustomerInfo(id, request);
+        try {
+            customerService
+                    .updateCustomerInfo(
+                            id,
+                            request
+                    )
+            ;
+            return ResponseEntity.ok(
+                    Map.of(
+                            "success",
+                            true
+                    )
+            );
 
-        return ResponseEntity.status(302)
-                .header(
-                        "Location",
-                        "/mypage"
-                )
-                .build();
+        } catch (AlreadyExistException error) {
+
+            if (error.getMessage().contains("Email")) {
+                return ResponseEntity
+                        .badRequest()
+                        .body(
+                                Map.of(
+                                        "emailError",
+                                        error.getMessage()
+                                )
+                        );
+            }
+
+            if (error.getMessage().contains("Phone")) {
+                return ResponseEntity
+                        .badRequest()
+                        .body(
+                                Map.of(
+                                        "phoneError",
+                                        error.getMessage()
+                                )
+                        );
+            }
+
+            return ResponseEntity
+                    .badRequest()
+                    .body(
+                            Map.of(
+                                    "error",
+                                    "Unknown error"
+                            )
+                    );
+        }
     }
 
 
