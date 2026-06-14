@@ -36,9 +36,8 @@ public class CustomerController {
 
             result
                     .getFieldErrors()
-                    .forEach(error ->
-                            errors.put(error
-                                    .getField(),
+                    .forEach(error -> errors.put(
+                                    error.getField(),
                                     error.getDefaultMessage()
                             )
                     );
@@ -48,8 +47,7 @@ public class CustomerController {
         }
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(customerService
-                        .createNewCustomer(customer)
+                .body(customerService.createNewCustomer(customer)
                 );
     }
 
@@ -62,15 +60,15 @@ public class CustomerController {
         if (result.hasErrors()) {
             Map<String, String> errors = new HashMap<>();
 
-            result
-                    .getFieldErrors()
-                    .forEach(error ->
-                            errors.put(error
-                                    .getField(), error
-                                    .getDefaultMessage()
+            result.getFieldErrors()
+                    .forEach(error -> errors.put(
+                                    error.getField(),
+                                    error.getDefaultMessage()
                             )
                     );
-            return ResponseEntity.badRequest().body(errors);
+            return ResponseEntity
+                    .badRequest()
+                    .body(errors);
         }
 
         try {
@@ -131,9 +129,9 @@ public class CustomerController {
 
         if (id == null) {
             return ResponseEntity
-                    .status(HttpStatus
-                            .NETWORK_AUTHENTICATION_REQUIRED)
-                    .body(
+                    .status(
+                            HttpStatus.NETWORK_AUTHENTICATION_REQUIRED
+                    ).body(
                             Map.of(
                                     "error",
                                     "authorization failed"
